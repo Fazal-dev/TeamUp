@@ -1,12 +1,11 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-
+import { Grid } from "@mui/material";
+import SideNav from "./SideNav";
 const DefoultLayout = () => {
   return (
     <div>
-      <main>
-        <Outlet />
-      </main>
+      <Grid sx={{ display: "flex" }}>
+        <SideNav />
+      </Grid>
     </div>
   );
 };

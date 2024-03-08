@@ -43,7 +43,7 @@ const SignUp = () => {
           </Grid>
           {/* right side: Login Form */}
           <Grid item xs={12} sm={6}>
-            <form>
+            <form autoComplete="false">
               <Grid container spacing={2}>
                 <Grid item xs={12} textAlign={"center"}>
                   <Typography variant="h5">Sign Up</Typography>
@@ -59,6 +59,7 @@ const SignUp = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    type="email"
                     label="Email"
                     variant="outlined"
                     fullWidth
@@ -67,13 +68,11 @@ const SignUp = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth>
-                    <InputLabel id="demo-select-small-label">
-                      User Type
-                    </InputLabel>
+                    <InputLabel id="user-type">User Type</InputLabel>
                     <Select
                       fullWidth
-                      labelId="demo-select-small-label"
-                      id="demo-select-small"
+                      labelId="user-type"
+                      id="user-type"
                       value={userType}
                       label="userType"
                       onChange={handleChange}
@@ -98,6 +97,7 @@ const SignUp = () => {
                     color="primary"
                     fullWidth
                     type="submit"
+                    sx={{ height: "45px" }}
                   >
                     Sign Up
                   </Button>

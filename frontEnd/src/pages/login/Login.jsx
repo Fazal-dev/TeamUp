@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
   Container,
   Grid,
@@ -32,6 +30,7 @@ const Login = () => {
               goals together!
             </Typography>
           </Grid>
+
           {/* right side: Login Form */}
           <Grid item xs={12} sm={6}>
             <form>
@@ -62,6 +61,7 @@ const Login = () => {
                     color="primary"
                     fullWidth
                     type="submit"
+                    sx={{ height: "45px", bgcolor: "#10A37F" }}
                   >
                     Sign In
                   </Button>
