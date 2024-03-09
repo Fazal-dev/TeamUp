@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import { dbConnection } from "./db/index.js";
-import TeamTask from "./model/TeamTaskModel.js";
+import TeamTaskRouter from "./routes/TeamTaskRoute.js";
+
 const app = express();
 
 // middleware for parsing request body
@@ -17,9 +18,9 @@ try {
 } catch (error) {
   console.error("COULD NOT CONNECT TO DATABASE:", error.message);
 }
+// routes
+app.use("/api/teamTasks", TeamTaskRouter);
 
 app.get("/", function (req, res) {
   res.send("hello world");
 });
-// routes
-// app.use("/books", booksRoute);

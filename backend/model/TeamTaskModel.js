@@ -11,7 +11,16 @@ const teamTaskSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    state: String,
+    status: {
+      type: String,
+      enum: ["completed", "uncompleted"],
+      default: "uncompleted",
+    },
+    teamID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Team",
+      required: false,
+    },
   },
   {
     timestamps: true,
