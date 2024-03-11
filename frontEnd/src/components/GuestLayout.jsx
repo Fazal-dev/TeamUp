@@ -9,7 +9,7 @@ const GuestLayout = () => {
   return (
     <div>
       <Box>
-        <AppBar sx={{ bgcolor: "#2d6668" }}>
+        <AppBar>
           <Toolbar>
             <Avatar sx={{ mr: 3 }} />
             <Typography variant="h6" component="div">

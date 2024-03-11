@@ -192,6 +192,7 @@ function MiniDrawer() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
+        {/* main content */}
         <Outlet />
       </Box>
     </Box>

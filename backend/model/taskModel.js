@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
 
-const teamTaskSchema = new Schema(
+const TaskSchema = new Schema(
   {
     task_title: String,
     description: String,
@@ -16,17 +16,12 @@ const teamTaskSchema = new Schema(
       enum: ["completed", "uncompleted"],
       default: "uncompleted",
     },
-    teamID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Team",
-      required: false,
-    },
   },
   {
     timestamps: true,
   }
 );
 
-const TeamTask = model("TeamTask", teamTaskSchema);
+const task = model("task", TaskSchema);
 
-export default TeamTask;
+export default task;

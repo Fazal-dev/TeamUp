@@ -15,11 +15,6 @@ import {
 import { useState } from "react";
 
 const SignUp = () => {
-  const [userType, setUserType] = useState("");
-
-  const handleChange = (event) => {
-    setUserType(event.target.value);
-  };
   return (
     <Box
       display="flex"
@@ -66,22 +61,7 @@ const SignUp = () => {
                     required
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id="user-type">User Type</InputLabel>
-                    <Select
-                      fullWidth
-                      labelId="user-type"
-                      id="user-type"
-                      value={userType}
-                      label="userType"
-                      onChange={handleChange}
-                    >
-                      <MenuItem value={"Admin"}>Admin</MenuItem>
-                      <MenuItem value={"Member"}>Member</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
+
                 <Grid item xs={12}>
                   <TextField
                     label="Password"

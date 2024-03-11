@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import TeamTask from "../model/TeamTaskModel.js";
+import ProjectTask from "../model/projectTaskModel.js";
 // create a team task
-const createTeamTask = async (req, res) => {
+const createProjectTask = async (req, res) => {
   const { task_title, description, date, assignee, state } = req.body;
   try {
-    const task = await TeamTask.create({
+    const task = await ProjectTask.create({
       task_title,
       description,
       date,
@@ -16,17 +16,17 @@ const createTeamTask = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-// getall the team task
-const getAllTeamTask = async (req, res) => {
+// getall the ProjectTask
+const getAllProjectTask = async (req, res) => {
   try {
-    const allTeamTask = await TeamTask.find({});
+    const allProjectTask = await ProjectTask.find({});
     res.status(200).json(allTeamTask);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
-// get single team task
-const getSingleTeamTask = async (req, res) => {
+// get single ProjectTask
+const getSingleProjectTask = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -34,42 +34,45 @@ const getSingleTeamTask = async (req, res) => {
   }
 
   try {
-    const singleTask = await TeamTask.findById(id);
+    const singleTask = await ProjectTask.findById(id);
     res.status(200).json(singleTask);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
-// update teamtask
-const updateTeamTask = async (req, res) => {
+// update ProjectTask
+const updateProjectTask = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ message: "task not found" });
   }
   try {
-    const task = await TeamTask.findByIdAndUpdate({ _id: id }, { ...req.body });
+    const task = await ProjectTask.findByIdAndUpdate(
+      { _id: id },
+      { ...req.body }
+    );
     res.status(200).json(task);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 // delete team task
-const deleteTeamTask = async (req, res) => {
+const deleteProjectTask = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ message: "task not found" });
   }
   try {
-    const task = await TeamTask.findByIdAndDelete(id);
+    const task = await ProjectTask.findByIdAndDelete(id);
     res.status(200).json({});
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 export default {
-  createTeamTask,
-  getAllTeamTask,
-  getSingleTeamTask,
-  updateTeamTask,
-  deleteTeamTask,
+  createProjectTask,
+  getAllProjectTask,
+  getSingleProjectTask,
+  updateProjectTask,
+  deleteProjectTask,
 };

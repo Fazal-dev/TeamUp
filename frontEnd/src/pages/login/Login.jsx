@@ -61,7 +61,7 @@ const Login = () => {
                     color="primary"
                     fullWidth
                     type="submit"
-                    sx={{ height: "45px", bgcolor: "#10A37F" }}
+                    sx={{ height: "45px" }}
                   >
                     Sign In
                   </Button>

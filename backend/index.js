@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import { dbConnection } from "./db/index.js";
-import TeamTaskRouter from "./routes/TeamTaskRoute.js";
+import ProjectTaskRouter from "./routes/ProjectTaskRoute.js";
 
 const app = express();
 
@@ -19,7 +19,7 @@ try {
   console.error("COULD NOT CONNECT TO DATABASE:", error.message);
 }
 // routes
-app.use("/api/teamTasks", TeamTaskRouter);
+app.use("/api/projectTask", ProjectTaskRouter);
 
 app.get("/", function (req, res) {
   res.send("hello world");
