@@ -6,6 +6,7 @@ import {
   Button,
   Box,
   Link,
+  Card,
 } from "@mui/material";
 
 const Login = () => {
@@ -33,53 +34,55 @@ const Login = () => {
 
           {/* right side: Login Form */}
           <Grid item xs={12} sm={6}>
-            <form>
-              <Grid container spacing={2}>
-                <Grid item xs={12} textAlign={"center"}>
-                  <Typography variant="h5">Sign In</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Email"
-                    variant="outlined"
-                    fullWidth
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Password"
-                    variant="outlined"
-                    type="password"
-                    fullWidth
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    type="submit"
-                    sx={{ height: "45px" }}
-                  >
-                    Sign In
-                  </Button>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid
-                    item
-                    display={"flex"}
-                    alignItems={"center"}
-                    justifyContent={"center"}
-                  >
-                    <Link href={"/signup"}>
-                      {"Don't have an account? Sign Up"}
-                    </Link>
+            <Card sx={{ p: 3 }}>
+              <form>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} textAlign={"center"}>
+                    <Typography variant="h5">Sign In</Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Email"
+                      variant="outlined"
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Password"
+                      variant="outlined"
+                      type="password"
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      type="submit"
+                      sx={{ height: "45px" }}
+                    >
+                      Sign In
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Grid
+                      item
+                      display={"flex"}
+                      alignItems={"center"}
+                      justifyContent={"center"}
+                    >
+                      <Link href={"/signup"}>
+                        {"Don't have an account? Sign Up"}
+                      </Link>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </form>
+              </form>
+            </Card>
           </Grid>
         </Grid>
       </Container>
