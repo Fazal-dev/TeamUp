@@ -22,13 +22,11 @@ const Login = () => {
           {/* left side: Welcome Text */}
           <Grid item xs={12} sm={6} textAlign={"center"}>
             <Typography variant="h4" marginY={3}>
-              Welcome to TeamUp!
+              Transform your work and life , finally
             </Typography>
-            <Typography variant="body1">
-              Think of us as your study buddy in the digital world. With Team
-              Up, you and your friends can tackle your study tasks together,
-              making everything easier and more fun. Let's team up and ace those
-              goals together!
+            <Typography variant="subtitle">
+              Become focused,organized with <span>TEAM UP</span>. The world's
+              task management app.
             </Typography>
           </Grid>
 

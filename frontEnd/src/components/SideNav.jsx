@@ -1,18 +1,19 @@
 import * as React from "react";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import LogoutIcon from "@mui/icons-material/Logout";
 import TaskIcon from "@mui/icons-material/Task";
-import { styled, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
@@ -21,8 +22,10 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Link, Outlet } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import NavBar from "./NavBar";
 import { Button } from "@mui/material";
-
+import styled from "@emotion/styled";
+import StarIcon from "@mui/icons-material/Star";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -54,24 +57,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -92,6 +77,7 @@ const Drawer = styled(MuiDrawer, {
 function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [Listopen, ListsetOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -100,30 +86,16 @@ function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  // project drop down
+  const handleClick = () => {
+    ListsetOpen(!Listopen);
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Team Up
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
+      {/* nav bar */}
+      <NavBar open={open} handleDrawerOpen={handleDrawerOpen} />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
@@ -135,6 +107,35 @@ function MiniDrawer() {
           </IconButton>
         </DrawerHeader>
         <Divider />
+        {/* add task button */}
+        <List>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                borderRadius: "15px",
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              ></ListItemIcon>
+              <Button
+                sx={{ opacity: open ? 1 : 0 }}
+                variant={"contained"}
+                startIcon={<AddIcon />}
+              >
+                Add new task
+              </Button>
+            </ListItemButton>
+          </ListItem>
+        </List>
+
         <List>
           {/* dashbord */}
           <Link
@@ -166,40 +167,13 @@ function MiniDrawer() {
             </ListItem>
           </Link>
         </List>
-        <List>
-          {/* create project */}
-          <Link
-            to={"/dashbord"}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <DashboardIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={"create project"}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-        </List>
+
         <List>
           {/*tasks */}
-          <Link to={"/task"} style={{ textDecoration: "none", color: "black" }}>
+          <Link
+            to={"/tasks"}
+            style={{ textDecoration: "none", color: "black" }}
+          >
             <ListItem disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
@@ -225,6 +199,50 @@ function MiniDrawer() {
             </ListItem>
           </Link>
         </List>
+        <Divider />
+        {/* projects */}
+        <List>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={handleClick}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <PeopleOutlineIcon />
+              </ListItemIcon>
+              <ListItemText primary="projects" />
+              {Listopen ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Collapse in={Listopen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ ml: 8 }}>
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <StarIcon />
+              </ListItemIcon>
+
+              <ListItemText primary="Starred" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+        {/* create project */}
         <List>
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
@@ -250,7 +268,38 @@ function MiniDrawer() {
             </ListItemButton>
           </ListItem>
         </List>
-
+        <Divider />
+        {/* profile */}
+        <List>
+          <Link
+            to={"/profile"}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <AccountBoxIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"profile"}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        </List>
         {/* logout */}
         <List>
           <Link
@@ -282,9 +331,11 @@ function MiniDrawer() {
             </ListItem>
           </Link>
         </List>
-        <Divider />
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, p: 3, backgroundColor: "#f0f2f5" }}
+      >
         <DrawerHeader />
         {/* main content */}
         <Outlet />

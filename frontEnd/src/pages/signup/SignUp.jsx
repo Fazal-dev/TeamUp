@@ -7,10 +7,6 @@ import {
   Button,
   Box,
   Link,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
   Card,
 } from "@mui/material";
 
@@ -26,14 +22,12 @@ const SignUp = () => {
         <Grid container spacing={3}>
           {/* left side: Welcome Text */}
           <Grid marginTop={10} item xs={12} sm={6} textAlign={"center"}>
-            <Typography variant="h5" marginY={3}>
-              Ready to join Team Up?
+            <Typography variant="h4" marginY={3}>
+              Let's get started on this exciting journey together!
             </Typography>
             <Typography variant="body1">
-              Let's make studying more fun and productive together! Sign up now
-              to start collaborating with your friends on study tasks and reach
-              your academic goals faster. Let's get started on this exciting
-              journey together!
+              Streamline your day, boost productivity, and achieve your goals
+              effortlessly.
             </Typography>
           </Grid>
           {/* right side: Login Form */}
