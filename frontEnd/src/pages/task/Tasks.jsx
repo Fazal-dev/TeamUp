@@ -1,11 +1,12 @@
 import React from "react";
+import AddTaskModal from "../../Modals/AddTaskModal";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import AddIcon from "@mui/icons-material/Add";
-import { Box, Button, Card, Container, Typography } from "@mui/material";
+
+import { Box, Container, Paper, Typography } from "@mui/material";
 
 const Tasks = () => {
   const tasks = [
@@ -87,16 +88,14 @@ const Tasks = () => {
           }}
         >
           <Box>
-            <Typography variant="h5">Tasks</Typography>
+            <Typography variant="h5">Project Tasks</Typography>
           </Box>
           <Box>
-            <Button variant="contained" startIcon={<AddIcon />}>
-              Add new task
-            </Button>
+            <AddTaskModal />
           </Box>
         </Box>
 
-        <Card sx={{ p: 2 }}>
+        <Paper elevation={2} sx={{ p: 2 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -124,7 +123,7 @@ const Tasks = () => {
               ))}
             </TableBody>
           </Table>
-        </Card>
+        </Paper>
       </Container>
     </div>
   );

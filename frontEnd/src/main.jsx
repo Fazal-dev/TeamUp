@@ -1,4 +1,6 @@
 import React from "react";
+import "@fontsource/inter";
+
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import router from "./router/router.jsx";
