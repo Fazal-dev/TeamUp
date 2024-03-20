@@ -24,10 +24,10 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // custom style
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
   },
   "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
   },
 }));
 

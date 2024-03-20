@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Avatar } from "@mui/material";
-import theme from "../theme";
+
 const GuestLayout = () => {
   return (
     <div>

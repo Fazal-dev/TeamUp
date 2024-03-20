@@ -6,8 +6,8 @@ import Login from "../pages/login/Login";
 import SignUp from "../pages/signup/SignUp";
 import NotFound from "../pages/NotFound";
 import Dashbord from "../pages/Dashbord/Dashbord";
-
 import Tasks from "../pages/task/Tasks";
+
 const router = createBrowserRouter([
   {
     path: "/",

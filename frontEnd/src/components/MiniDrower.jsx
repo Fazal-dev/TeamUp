@@ -26,6 +26,7 @@ import NavBar from "./NavBar";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
 import StarIcon from "@mui/icons-material/Star";
+import CreateProjectModal from "../Modals/CreateProjectModal";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -242,9 +243,8 @@ const MiniDrower = () => {
           </List>
         </Collapse>
         {/* create project */}
-        <List>
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
+
+        {/* <ListItemButton
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
@@ -264,7 +264,10 @@ const MiniDrower = () => {
                 primary={"create project"}
                 sx={{ opacity: open ? 1 : 0 }}
               />
-            </ListItemButton>
+            </ListItemButton> */}
+        <List>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <CreateProjectModal open={open} />
           </ListItem>
         </List>
         <Divider />
