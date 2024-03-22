@@ -75,9 +75,10 @@ const Login = () => {
                         alignItems={"center"}
                         justifyContent={"center"}
                       >
-                        <Link href={"/signup"}>
-                          {"Don't have an account? Sign Up"}
-                        </Link>
+                        <em>
+                          Don't have an account?
+                          <Link href={"/signup"}>{" Sign Up"}</Link>
+                        </em>
                       </Grid>
                     </Grid>
                   </Grid>

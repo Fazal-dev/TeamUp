@@ -5,12 +5,15 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import ListIcon from "@mui/icons-material/List";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import SpaceDashboardSharpIcon from "@mui/icons-material/SpaceDashboardSharp";
 import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
+
 import {
   Box,
   Button,
+  Chip,
   Container,
   Link,
   Paper,
@@ -18,7 +21,6 @@ import {
   Typography,
 } from "@mui/material";
 import AddMyTaskModal from "../../Modals/AddMyTaskModal";
-import TaskCard from "../../components/TaskCard";
 import TaskCards from "../../components/TaskCards";
 const tasks = [
   {
@@ -26,56 +28,56 @@ const tasks = [
     description: "Description of Task 1",
     date: "2024-03-16",
     priority: "High",
-    status: "In Progress",
+    status: "complete",
   },
   {
     task_title: "Task 2",
     description: "Description of Task 2",
     date: "2024-03-17",
     priority: "Medium",
-    status: "Pending",
+    status: "complete",
   },
   {
     task_title: "Task 3",
     description: "Description of Task 3",
     date: "2024-03-18",
     priority: "Low",
-    status: "Completed",
+    status: "complete",
   },
   {
     task_title: "Task 4",
     description: "Description of Task 4",
     date: "2024-03-19",
     priority: "High",
-    status: "In Progress",
+    status: "complete",
   },
   {
     task_title: "Task 5",
     description: "Description of Task 5",
     date: "2024-03-20",
     priority: "Medium",
-    status: "Pending",
+    status: "complete",
   },
   {
     task_title: "Task 6",
     description: "Description of Task 6",
     date: "2024-03-21",
     priority: "Low",
-    status: "Completed",
+    status: "complete",
   },
   {
     task_title: "Task 7",
     description: "Description of Task 7",
     date: "2024-03-22",
     priority: "High",
-    status: "In Progress",
+    status: "incomplete",
   },
   {
     task_title: "Task 8",
     description: "Description of Task 8",
     date: "2024-03-23",
     priority: "Medium",
-    status: "Pending",
+    status: "complete",
   },
 ];
 const MyTask = () => {
@@ -130,7 +132,7 @@ const MyTask = () => {
                   <TableCell>Date</TableCell>
                   <TableCell>priority</TableCell>
                   <TableCell>Status</TableCell>
-                  <TableCell>Actions</TableCell>
+                  <TableCell>Actions </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -143,7 +145,16 @@ const MyTask = () => {
                     <TableCell>{task.description}</TableCell>
                     <TableCell>{task.date}</TableCell>
                     <TableCell>{task.priority}</TableCell>
-                    <TableCell>{task.status}</TableCell>
+                    <TableCell>
+                      <Chip
+                        size="small"
+                        variant="outlined"
+                        label={task.status}
+                        color={
+                          task.status === "complete" ? "success" : "warning"
+                        }
+                      />
+                    </TableCell>
                     <TableCell>
                       <Stack direction={"row"} spacing={1}>
                         <Box>
@@ -165,7 +176,7 @@ const MyTask = () => {
           </Paper>
         ) : (
           <div>
-            <TaskCards />
+            <TaskCards tasks={tasks} />
           </div>
         )}
       </Container>

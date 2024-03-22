@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import SideNav from "./SideNav";
+import SideNav from "../components/SideNav";
 const DefoultLayout = () => {
   return (
     <div>

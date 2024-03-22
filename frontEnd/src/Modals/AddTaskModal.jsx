@@ -21,6 +21,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 // custom style
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -74,7 +75,7 @@ const AddTaskModal = () => {
   const handleDateChange = (date) => {
     setFormData({
       ...formData,
-      dueDate: date.toISOString(),
+      dueDate: date ? date.toISOString() : null,
     });
   };
   return (
@@ -150,8 +151,8 @@ const AddTaskModal = () => {
                   <DatePicker
                     label="Due Date"
                     name="dueDate"
-                    value={formData.dueDate}
-                    onChange={handleDateChange}
+                    value={formData.dueDate ? dayjs(formData.dueDate) : null}
+                    onChange={(date) => handleDateChange(date)}
                   />
                 </LocalizationProvider>
               </Grid>

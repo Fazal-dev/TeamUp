@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import AddTaskModal from "../../Modals/AddTaskModal";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
+import { Chip, Menu, MenuItem } from "@mui/material";
+import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
 import { Box, Container, Paper, Typography } from "@mui/material";
 
 const Tasks = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
   const tasks = [
     {
       task_title: "Task 1",
@@ -16,7 +24,7 @@ const Tasks = () => {
       date: "2024-03-16",
       assignee: "John Doe",
       priority: "High",
-      status: "In Progress",
+      status: "completed",
     },
     {
       task_title: "Task 2",
@@ -24,7 +32,7 @@ const Tasks = () => {
       date: "2024-03-17",
       assignee: "Jane Smith",
       priority: "Medium",
-      status: "Pending",
+      status: "incomplete",
     },
     {
       task_title: "Task 3",
@@ -32,7 +40,7 @@ const Tasks = () => {
       date: "2024-03-18",
       assignee: "Alice Johnson",
       priority: "Low",
-      status: "Completed",
+      status: "completed",
     },
     {
       task_title: "Task 4",
@@ -40,7 +48,7 @@ const Tasks = () => {
       date: "2024-03-19",
       assignee: "Bob Anderson",
       priority: "High",
-      status: "In Progress",
+      status: "completed",
     },
     {
       task_title: "Task 5",
@@ -48,7 +56,7 @@ const Tasks = () => {
       date: "2024-03-20",
       assignee: "Emily Williams",
       priority: "Medium",
-      status: "Pending",
+      status: "incomplete",
     },
     {
       task_title: "Task 6",
@@ -56,7 +64,7 @@ const Tasks = () => {
       date: "2024-03-21",
       assignee: "David Brown",
       priority: "Low",
-      status: "Completed",
+      status: "completed",
     },
     {
       task_title: "Task 7",
@@ -64,7 +72,7 @@ const Tasks = () => {
       date: "2024-03-22",
       assignee: "Sarah Garcia",
       priority: "High",
-      status: "In Progress",
+      status: "completed",
     },
     {
       task_title: "Task 8",
@@ -72,7 +80,7 @@ const Tasks = () => {
       date: "2024-03-23",
       assignee: "Michael Martinez",
       priority: "Medium",
-      status: "Pending",
+      status: "incomplete",
     },
   ];
   return (
@@ -83,7 +91,7 @@ const Tasks = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            mb: 10,
+            mb: 5,
             mt: 3,
           }}
         >
@@ -105,6 +113,7 @@ const Tasks = () => {
                 <TableCell>Assignee</TableCell>
                 <TableCell>priority</TableCell>
                 <TableCell>Status</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -118,7 +127,39 @@ const Tasks = () => {
                   <TableCell>{task.date}</TableCell>
                   <TableCell>{task.assignee}</TableCell>
                   <TableCell>{task.priority}</TableCell>
-                  <TableCell>{task.status}</TableCell>
+                  <TableCell>
+                    <Chip
+                      size="small"
+                      variant="outlined"
+                      label={task.status}
+                      color={
+                        task.status === "completed" ? "success" : "warning"
+                      }
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <div>
+                      <MoreVertSharpIcon onClick={handleMenu} />
+                      <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        <MenuItem onClick={handleClose}>Edit</MenuItem>
+                        <MenuItem onClick={handleClose}>Delete</MenuItem>
+                      </Menu>
+                    </div>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
