@@ -1,9 +1,6 @@
 import React from "react";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
-import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+import FormatListNumberedRtlIcon from "@mui/icons-material/FormatListNumberedRtl";
 import LogoutIcon from "@mui/icons-material/Logout";
 import TaskIcon from "@mui/icons-material/Task";
 import { useTheme } from "@mui/material/styles";
@@ -107,34 +104,6 @@ const MiniDrower = () => {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        {/* add task button */}
-        <List>
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                borderRadius: "15px",
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              ></ListItemIcon>
-              <Button
-                sx={{ opacity: open ? 1 : 0 }}
-                variant={"contained"}
-                startIcon={<AddIcon />}
-              >
-                Add new task
-              </Button>
-            </ListItemButton>
-          </ListItem>
-        </List>
 
         <List>
           {/* dashbord */}
@@ -171,7 +140,39 @@ const MiniDrower = () => {
         <List>
           {/*tasks */}
           <Link
-            to={"/tasks"}
+            to={"/Mytasks"}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <FormatListNumberedRtlIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"My Day"}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        </List>
+        <Divider />
+        {/* projects */}
+        <List>
+          <Link
+            to={"/projectTask"}
             style={{ textDecoration: "none", color: "black" }}
           >
             <ListItem disablePadding sx={{ display: "block" }}>
@@ -199,72 +200,9 @@ const MiniDrower = () => {
             </ListItem>
           </Link>
         </List>
-        <Divider />
-        {/* projects */}
-        <List>
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-              onClick={handleClick}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <PeopleOutlineIcon />
-              </ListItemIcon>
-              <ListItemText primary="projects" />
-              {Listopen ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Collapse in={Listopen} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ ml: 8 }}>
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <StarIcon />
-              </ListItemIcon>
 
-              <ListItemText primary="Starred" />
-            </ListItemButton>
-          </List>
-        </Collapse>
         {/* create project */}
 
-        {/* <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <AddIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={"create project"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton> */}
         <List>
           <ListItem disablePadding sx={{ display: "block" }}>
             <CreateProjectModal open={open} />
