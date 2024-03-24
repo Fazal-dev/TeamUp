@@ -10,7 +10,15 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 const TaskCard = ({ task }) => {
   return (
     <>
-      <Card sx={{ maxWidth: 340, p: 1 }}>
+      <Card
+        sx={{
+          maxWidth: 340,
+          p: 1,
+          borderRight: `4px solid ${
+            task.status === "complete" ? "#5cb85c" : "#ff4545"
+          }`,
+        }}
+      >
         <CardContent>
           <Typography variant="h6" color="text.secondary" gutterBottom>
             {task.task_title}
@@ -23,7 +31,13 @@ const TaskCard = ({ task }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Grid container spacing={5}>
+          <Grid
+            container
+            spacing={5}
+            direction={"row"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+          >
             <Grid item>
               <Typography color="text.secondary" gutterBottom>
                 <Chip
@@ -35,13 +49,9 @@ const TaskCard = ({ task }) => {
               </Typography>
             </Grid>
             <Grid item>
-              <Stack
-                direction={"row"}
-                spacing={5}
-                justifyContent={"flex-start"}
-              >
+              <Stack direction={"row"} spacing={3}>
                 <Grid>
-                  <Link sx={{ color: "red" }}>
+                  <Link sx={{ color: "orange" }}>
                     <DeleteForeverIcon />
                   </Link>
                 </Grid>

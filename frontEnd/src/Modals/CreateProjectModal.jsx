@@ -1,4 +1,13 @@
-import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Grid,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import {
   Button,
   Box,
@@ -63,6 +72,7 @@ const CreateProjectModal = ({ open }) => {
           sx={{ opacity: open ? 1 : 0 }}
         />
       </ListItemButton>
+
       {/* modal */}
       <BootstrapDialog
         onClose={handleClose}
@@ -96,6 +106,26 @@ const CreateProjectModal = ({ open }) => {
                 fullWidth
               />
             </Box>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                label="Project description"
+                name="project_Description"
+                size="normal"
+                fullWidth
+              />
+            </Box>
+            <Grid container spacing={2} sx={{ mb: 2 }}>
+              <Grid item xs={6} sm={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker label="Start Date" name="startDate" />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker label="End Date" name="endDate" />
+                </LocalizationProvider>
+              </Grid>
+            </Grid>
           </form>
         </DialogContent>
         <DialogActions>

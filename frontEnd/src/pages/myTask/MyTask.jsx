@@ -5,7 +5,6 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import ListIcon from "@mui/icons-material/List";
-
 import DeleteIcon from "@mui/icons-material/Delete";
 import SpaceDashboardSharpIcon from "@mui/icons-material/SpaceDashboardSharp";
 import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
@@ -15,9 +14,11 @@ import {
   Button,
   Chip,
   Container,
+  Grid,
   Link,
   Paper,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material";
 import AddMyTaskModal from "../../Modals/AddMyTaskModal";
@@ -95,20 +96,21 @@ const MyTask = () => {
           }}
         >
           <Box>
-            <Typography variant="h5">My Day</Typography>
+            <Typography variant="h5">To Do</Typography>
           </Box>
           <Box>
             <AddMyTaskModal />
           </Box>
         </Box>
-        <Stack direction={"row"} spacing={2} p={2}>
+
+        <Stack direction={"row"} spacing={2} p={1}>
           <Box>
             <Button
               onClick={() => setShowType("table")}
               variant="text"
               startIcon={<ListIcon />}
             >
-              LIST
+              list
             </Button>
           </Box>
           <Box>
@@ -120,6 +122,22 @@ const MyTask = () => {
               card
             </Button>
           </Box>
+          <Grid container alignItems={"center"} justifyContent={"end"}>
+            <Grid
+              item
+              sx={{
+                paddingY: 1,
+                display: `${showType === "table" ? "block" : "none"}`,
+              }}
+            >
+              <TextField
+                size="small"
+                id="search"
+                label="Search for Task"
+                variant="filled"
+              />
+            </Grid>
+          </Grid>
         </Stack>
 
         {showType === "table" ? (
@@ -148,7 +166,6 @@ const MyTask = () => {
                     <TableCell>
                       <Chip
                         size="small"
-                        variant="outlined"
                         label={task.status}
                         color={
                           task.status === "complete" ? "success" : "warning"

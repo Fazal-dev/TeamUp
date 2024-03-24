@@ -11,12 +11,15 @@ import { Box, Container, Paper, Typography } from "@mui/material";
 
 const Tasks = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const tasks = [
     {
       task_title: "Task 1",

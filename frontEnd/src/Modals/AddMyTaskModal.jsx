@@ -37,7 +37,6 @@ const AddMyTaskModal = () => {
   const [formData, setFormData] = useState({
     taskTitle: "",
     description: "",
-
     dueDate: null,
   });
 

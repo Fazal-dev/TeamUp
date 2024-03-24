@@ -8,6 +8,7 @@ import NotFound from "../pages/NotFound";
 import Dashbord from "../pages/Dashbord/Dashbord";
 import Tasks from "../pages/task/Tasks";
 import MyTask from "../pages/myTask/MyTask";
+import Projects from "../pages/projects/Projects";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/projectTask",
         element: <Tasks />,
+      },
+      {
+        path: "/projects",
+        element: <Projects />,
       },
     ],
   },

@@ -7,6 +7,7 @@ import { useTheme } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
+import DvrIcon from "@mui/icons-material/Dvr";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -20,9 +21,9 @@ import ListItemText from "@mui/material/ListItemText";
 import { Link, Outlet } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import NavBar from "./NavBar";
-import { Button } from "@mui/material";
+
 import styled from "@emotion/styled";
-import StarIcon from "@mui/icons-material/Star";
+
 import CreateProjectModal from "../Modals/CreateProjectModal";
 const drawerWidth = 240;
 
@@ -161,7 +162,7 @@ const MiniDrower = () => {
                   <FormatListNumberedRtlIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={"My Day"}
+                  primary={"My Task"}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
@@ -172,7 +173,7 @@ const MiniDrower = () => {
         {/* projects */}
         <List>
           <Link
-            to={"/projectTask"}
+            to={"/projects"}
             style={{ textDecoration: "none", color: "black" }}
           >
             <ListItem disablePadding sx={{ display: "block" }}>
@@ -190,10 +191,10 @@ const MiniDrower = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <TaskIcon />
+                  <DvrIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={"Tasks"}
+                  primary={"Projects"}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
