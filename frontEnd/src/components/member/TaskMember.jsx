@@ -12,8 +12,74 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import Members from "../members/Members";
-const Tasks = () => {
+import MemberUser from "./MemberUser";
+const tasks = [
+  {
+    task_title: "Task 1",
+    description: "Description of Task 1",
+    date: "2024-03-16",
+    assignee: "John Doe",
+    priority: "High",
+    status: "completed",
+  },
+  {
+    task_title: "Task 2",
+    description: "Description of Task 2",
+    date: "2024-03-17",
+    assignee: "Jane Smith",
+    priority: "Medium",
+    status: "incomplete",
+  },
+  {
+    task_title: "Task 3",
+    description: "Description of Task 3",
+    date: "2024-03-18",
+    assignee: "Alice Johnson",
+    priority: "Low",
+    status: "completed",
+  },
+  {
+    task_title: "Task 4",
+    description: "Description of Task 4",
+    date: "2024-03-19",
+    assignee: "Bob Anderson",
+    priority: "High",
+    status: "completed",
+  },
+  {
+    task_title: "Task 5",
+    description: "Description of Task 5",
+    date: "2024-03-20",
+    assignee: "Emily Williams",
+    priority: "Medium",
+    status: "incomplete",
+  },
+  {
+    task_title: "Task 6",
+    description: "Description of Task 6",
+    date: "2024-03-21",
+    assignee: "David Brown",
+    priority: "Low",
+    status: "completed",
+  },
+  {
+    task_title: "Task 7",
+    description: "Description of Task 7",
+    date: "2024-03-22",
+    assignee: "Sarah Garcia",
+    priority: "High",
+    status: "completed",
+  },
+  {
+    task_title: "Task 8",
+    description: "Description of Task 8",
+    date: "2024-03-23",
+    assignee: "Michael Martinez",
+    priority: "Medium",
+    status: "incomplete",
+  },
+];
+const TaskMember = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   // tab
   const [value, setValue] = React.useState("Task");
@@ -28,72 +94,6 @@ const Tasks = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const tasks = [
-    {
-      task_title: "Task 1",
-      description: "Description of Task 1",
-      date: "2024-03-16",
-      assignee: "John Doe",
-      priority: "High",
-      status: "completed",
-    },
-    {
-      task_title: "Task 2",
-      description: "Description of Task 2",
-      date: "2024-03-17",
-      assignee: "Jane Smith",
-      priority: "Medium",
-      status: "incomplete",
-    },
-    {
-      task_title: "Task 3",
-      description: "Description of Task 3",
-      date: "2024-03-18",
-      assignee: "Alice Johnson",
-      priority: "Low",
-      status: "completed",
-    },
-    {
-      task_title: "Task 4",
-      description: "Description of Task 4",
-      date: "2024-03-19",
-      assignee: "Bob Anderson",
-      priority: "High",
-      status: "completed",
-    },
-    {
-      task_title: "Task 5",
-      description: "Description of Task 5",
-      date: "2024-03-20",
-      assignee: "Emily Williams",
-      priority: "Medium",
-      status: "incomplete",
-    },
-    {
-      task_title: "Task 6",
-      description: "Description of Task 6",
-      date: "2024-03-21",
-      assignee: "David Brown",
-      priority: "Low",
-      status: "completed",
-    },
-    {
-      task_title: "Task 7",
-      description: "Description of Task 7",
-      date: "2024-03-22",
-      assignee: "Sarah Garcia",
-      priority: "High",
-      status: "completed",
-    },
-    {
-      task_title: "Task 8",
-      description: "Description of Task 8",
-      date: "2024-03-23",
-      assignee: "Michael Martinez",
-      priority: "Medium",
-      status: "incomplete",
-    },
-  ];
   return (
     <div>
       <Container sx={{ width: "100vw" }}>
@@ -106,20 +106,6 @@ const Tasks = () => {
               </TabList>
             </Box>
             <TabPanel value="Task">
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  mb: 5,
-                  mt: 0,
-                }}
-              >
-                <Box></Box>
-                <Box>
-                  <AddTaskModal />
-                </Box>
-              </Box>
               <Paper elevation={2} sx={{ p: 2 }}>
                 <Table>
                   <TableHead>
@@ -130,7 +116,6 @@ const Tasks = () => {
                       <TableCell>Assignee</TableCell>
                       <TableCell>priority</TableCell>
                       <TableCell>Status</TableCell>
-                      <TableCell>Actions</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -158,29 +143,6 @@ const Tasks = () => {
                             }
                           />
                         </TableCell>
-                        <TableCell>
-                          <div>
-                            <MoreVertSharpIcon onClick={handleMenu} />
-                            <Menu
-                              id="menu-appbar"
-                              anchorEl={anchorEl}
-                              anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                              }}
-                              keepMounted
-                              transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                              }}
-                              open={Boolean(anchorEl)}
-                              onClose={handleClose}
-                            >
-                              <MenuItem onClick={handleClose}>Edit</MenuItem>
-                              <MenuItem onClick={handleClose}>Delete</MenuItem>
-                            </Menu>
-                          </div>
-                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -188,7 +150,7 @@ const Tasks = () => {
               </Paper>
             </TabPanel>
             <TabPanel value="Members">
-              <Members />
+              <MemberUser />
             </TabPanel>
           </TabContext>
         </Box>
@@ -197,4 +159,4 @@ const Tasks = () => {
   );
 };
 
-export default Tasks;
+export default TaskMember;

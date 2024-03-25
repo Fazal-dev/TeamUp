@@ -9,6 +9,9 @@ import Dashbord from "../pages/Dashbord/Dashbord";
 import Tasks from "../pages/task/Tasks";
 import MyTask from "../pages/myTask/MyTask";
 import Projects from "../pages/projects/Projects";
+import MemberLayout from "../layout/MemberLayout";
+import ProjectsMember from "../components/member/ProjectsMember";
+import TaskMember from "../components/member/TaskMember";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +57,24 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <NotFound />,
+  },
+  {
+    path: "/",
+    element: <MemberLayout />,
+    children: [
+      {
+        path: "/memberTask",
+        element: <MyTask />,
+      },
+      {
+        path: "/memberProject",
+        element: <ProjectsMember />,
+      },
+      {
+        path: "/projectTaskMember",
+        element: <TaskMember />,
+      },
+    ],
   },
 ]);
 export default router;

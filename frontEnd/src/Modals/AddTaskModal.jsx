@@ -116,7 +116,7 @@ const AddTaskModal = () => {
                 name="taskTitle"
                 value={formData.taskTitle}
                 onChange={handleInputChange}
-                size="normal"
+                size="small"
                 fullWidth
               />
             </Box>
@@ -126,7 +126,7 @@ const AddTaskModal = () => {
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                size="normal"
+                size="small"
                 fullWidth
               />
             </Box>
@@ -159,7 +159,7 @@ const AddTaskModal = () => {
             </Grid>
             <Grid container spacing={2} sx={{ mb: 2 }}>
               <Grid item xs={6} sm={6}>
-                <FormControl fullWidth>
+                <FormControl size="small" fullWidth>
                   <InputLabel id="demo-simple-select-label">
                     Priority
                   </InputLabel>
@@ -182,7 +182,7 @@ const AddTaskModal = () => {
                   name="assignedTo"
                   value={formData.assignedTo}
                   onChange={handleInputChange}
-                  size="normal"
+                  size="small"
                   fullWidth
                 />
               </Grid>

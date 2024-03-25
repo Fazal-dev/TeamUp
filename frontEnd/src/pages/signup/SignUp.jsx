@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Grid,
@@ -9,9 +9,19 @@ import {
   Link,
   Card,
   Paper,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 const SignUp = () => {
+  const [userType, setUserType] = useState("");
+
+  const handleChange = (event) => {
+    setUserType(event.target.value);
+  };
+
   return (
     <Box
       display="flex"
@@ -34,7 +44,7 @@ const SignUp = () => {
           {/* right side: Login Form */}
           <Grid item xs={12} sm={6}>
             <Paper elevation={3}>
-              <Card sx={{ p: 3 }}>
+              <Card sx={{ p: 4 }}>
                 <form autoComplete="false">
                   <Grid container spacing={2}>
                     <Grid item xs={12} textAlign={"center"}>
@@ -48,6 +58,23 @@ const SignUp = () => {
                         fullWidth
                         required
                       />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth size="normal">
+                        <InputLabel id="demo-select-small-label">
+                          UserType
+                        </InputLabel>
+                        <Select
+                          labelId="demo-select-small-label"
+                          id="demo-select-small"
+                          value={userType}
+                          label="UserType"
+                          onChange={handleChange}
+                        >
+                          <MenuItem value={"Admin"}>Admin</MenuItem>
+                          <MenuItem value={"Member"}>Member</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField

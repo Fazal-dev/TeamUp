@@ -113,7 +113,7 @@ const AddMyTaskModal = () => {
                 name="taskTitle"
                 value={formData.taskTitle}
                 onChange={handleInputChange}
-                size="normal"
+                size="small"
                 fullWidth
               />
             </Box>
@@ -123,7 +123,7 @@ const AddMyTaskModal = () => {
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                size="normal"
+                size="small"
                 fullWidth
               />
             </Box>
