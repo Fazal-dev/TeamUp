@@ -1,24 +1,24 @@
 import mongoose from "mongoose";
-
+import User from "./userModel.js";
 const { Schema, model } = mongoose;
 
 const projectTaskSchema = new Schema(
   {
-    task_title: String,
+    taskTitle: String,
     description: String,
     date: Date,
-    assignee: {
+    assignedTo: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
     status: {
       type: String,
-      enum: ["completed", "uncompleted"],
-      default: "uncompleted",
+      enum: ["completed", "incomplete"],
+      default: "incomplete",
     },
     projectID: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "project",
+      ref: "Project",
       required: false,
     },
   },

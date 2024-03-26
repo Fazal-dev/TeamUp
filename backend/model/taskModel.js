@@ -1,27 +1,37 @@
 import mongoose from "mongoose";
-
+import User from "userModel.js";
 const { Schema, model } = mongoose;
 
 const TaskSchema = new Schema(
   {
-    task_title: String,
-    description: String,
-    date: Date,
-    assignee: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    task_title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    date: Date,
     status: {
       type: String,
-      enum: ["completed", "uncompleted"],
-      default: "uncompleted",
+      enum: ["completed", "incomplete"],
+      default: "incomplete",
+    },
+    priority: {
+      type: String,
+      enum: ["high", "medium", "low"],
+      default: "low",
     },
   },
   {
     timestamps: true,
   }
 );
-
-const task = model("task", TaskSchema);
-
-export default task;
+TaskSchema.index({ status: 1, priority: 1 });
+const Task = model("Task", TaskSchema);
+export default Task;

@@ -1,12 +1,18 @@
 import express from "express";
-import ProjectTaskController from "../controller/ProjectTaskController.js";
+import {
+  createProjectTask,
+  getAllProjectTask,
+  getSingleProjectTask,
+  updateProjectTask,
+  deleteProjectTask,
+} from "../controller/ProjectTaskController.js";
 
 const ProjectTaskRouter = express.Router();
 
-ProjectTaskRouter.post("/", ProjectTaskController.createProjectTask);
-ProjectTaskRouter.get("/", ProjectTaskController.getAllProjectTask);
-ProjectTaskRouter.get("/:id", ProjectTaskController.getSingleProjectTask);
-ProjectTaskRouter.patch("/:id", ProjectTaskController.updateProjectTask);
-ProjectTaskRouter.delete("/:id", ProjectTaskController.deleteProjectTask);
+ProjectTaskRouter.post("/", createProjectTask);
+ProjectTaskRouter.get("/", getAllProjectTask);
+ProjectTaskRouter.get("/:id", getSingleProjectTask);
+ProjectTaskRouter.patch("/:id", updateProjectTask);
+ProjectTaskRouter.delete("/:id", deleteProjectTask);
 
 export default ProjectTaskRouter;

@@ -3,7 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import { dbConnection } from "./db/index.js";
 import ProjectTaskRouter from "./routes/ProjectTaskRoute.js";
-
+// import UserRouter from "./routes/UserRoute.js";
 const app = express();
 
 // middleware for parsing request body
@@ -20,6 +20,7 @@ try {
 }
 // routes
 app.use("/api/projectTask", ProjectTaskRouter);
+// app.use("/api/user", UserRouter);
 
 app.get("/", function (req, res) {
   res.send("hello world");
