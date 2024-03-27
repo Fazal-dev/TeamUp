@@ -1,4 +1,4 @@
-import { Paper, Box, Button, Container } from "@mui/material";
+import { Paper, Box, Button } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -85,21 +85,32 @@ const Members = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {members.map((user) => (
-              <TableRow
-                key={user.id}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                }}
-              >
-                <TableCell>{user.username}</TableCell>
-                <TableCell>{user.email}</TableCell>
-
-                <TableCell>
-                  <Button>Remove</Button>
+            {members.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={3}>
+                  <Typography variant="body1" align="center">
+                    No members have been added yet. Click the button above to
+                    add a new member.
+                  </Typography>
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              members.map((user) => (
+                <TableRow
+                  key={user.id}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                  }}
+                >
+                  <TableCell>{user.username}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+
+                  <TableCell>
+                    <Button>Remove</Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </Paper>
