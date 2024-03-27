@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import ProjectTask from "../model/projectTaskModel.js";
 import Project from "../model/projectModel.js";
 // create a team task
-const createProjectTask = async (req, res) => {
+export const createProjectTask = async (req, res) => {
   const { task_title, description, date, assignedTo, status, projectID } =
     req.body;
   try {
@@ -26,7 +26,7 @@ const createProjectTask = async (req, res) => {
   }
 };
 // getall the ProjectTask
-const getAllProjectTask = async (req, res) => {
+export const getAllProjectTask = async (req, res) => {
   try {
     const allProjectTask = await ProjectTask.find({});
     res.status(200).json(allProjectTask);
@@ -35,7 +35,7 @@ const getAllProjectTask = async (req, res) => {
   }
 };
 // get single ProjectTask
-const getSingleProjectTask = async (req, res) => {
+export const getSingleProjectTask = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -50,7 +50,7 @@ const getSingleProjectTask = async (req, res) => {
   }
 };
 // update ProjectTask
-const updateProjectTask = async (req, res) => {
+export const updateProjectTask = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ message: "task not found" });
@@ -66,7 +66,7 @@ const updateProjectTask = async (req, res) => {
   }
 };
 // delete ProjectTask
-const deleteProjectTask = async (req, res) => {
+export const deleteProjectTask = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ message: "task not found" });
@@ -77,11 +77,4 @@ const deleteProjectTask = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
-export default {
-  createProjectTask,
-  getAllProjectTask,
-  getSingleProjectTask,
-  updateProjectTask,
-  deleteProjectTask,
 };

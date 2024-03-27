@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import { dbConnection } from "./db/index.js";
 import ProjectTaskRouter from "./routes/ProjectTaskRoute.js";
+import ProjectRouter from "./routes/ProjectRoute.js";
 // import UserRouter from "./routes/UserRoute.js";
 const app = express();
 
@@ -20,6 +21,7 @@ try {
 }
 // routes
 app.use("/api/projectTask", ProjectTaskRouter);
+app.use("/api/project", ProjectRouter);
 // app.use("/api/user", UserRouter);
 
 app.get("/", function (req, res) {
