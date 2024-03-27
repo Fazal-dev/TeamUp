@@ -4,6 +4,8 @@ import {
   getAllProject,
   deleteProject,
   updateProject,
+  getAllMembersInProject,
+  addMemberToProject,
 } from "../controller/ProjectController.js";
 
 const ProjectRouter = express.Router();
@@ -11,6 +13,10 @@ const ProjectRouter = express.Router();
 ProjectRouter.post("/", createProject);
 
 ProjectRouter.get("/", getAllProject);
+
+ProjectRouter.get("/:projectId/members", getAllMembersInProject);
+
+ProjectRouter.post("/:projectId/members", addMemberToProject);
 
 // ProjectRouter.get("/:id", getSingleProjectTask);
 

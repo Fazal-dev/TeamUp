@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import User from "userModel.js";
+import User from "./userModel.js";
 const { Schema, model } = mongoose;
 
 const TaskSchema = new Schema(

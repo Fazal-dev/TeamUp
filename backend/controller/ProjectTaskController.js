@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import ProjectTask from "../model/projectTaskModel.js";
 import Project from "../model/projectModel.js";
-// create a team task
+// create a project task
 export const createProjectTask = async (req, res) => {
   const { task_title, description, date, assignedTo, status, projectID } =
     req.body;
@@ -25,7 +25,7 @@ export const createProjectTask = async (req, res) => {
     res.status(500).json({ error: "Internal server error." });
   }
 };
-// getall the ProjectTask
+// getall the Project Task
 export const getAllProjectTask = async (req, res) => {
   try {
     const allProjectTask = await ProjectTask.find({});
@@ -34,7 +34,7 @@ export const getAllProjectTask = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-// get single ProjectTask
+// get single Project Task
 export const getSingleProjectTask = async (req, res) => {
   const { id } = req.params;
 
@@ -49,7 +49,7 @@ export const getSingleProjectTask = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-// update ProjectTask
+// update Project Task
 export const updateProjectTask = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -65,7 +65,7 @@ export const updateProjectTask = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-// delete ProjectTask
+// delete Project Task
 export const deleteProjectTask = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
