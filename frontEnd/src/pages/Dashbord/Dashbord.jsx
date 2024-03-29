@@ -1,6 +1,6 @@
 import "react-calendar/dist/Calendar.css";
 import { Box, Card, CardContent, Grid, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import styled from "@emotion/styled";
@@ -37,6 +37,11 @@ const StyledCard = styled(Card)({ width: 40 + "%", height: 140 });
 
 const Dashbord = () => {
   const [value, setValue] = useState(new Date());
+
+  useEffect(() => {
+    // fetch total project
+    // fetch all complete
+  }, []);
 
   return (
     <>

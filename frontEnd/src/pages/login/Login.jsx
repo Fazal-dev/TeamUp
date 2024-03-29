@@ -1,14 +1,5 @@
-import {
-  Container,
-  Grid,
-  Typography,
-  TextField,
-  Button,
-  Box,
-  Link,
-  Card,
-  Paper,
-} from "@mui/material";
+import { Container, Grid, Typography, Card, Paper } from "@mui/material";
+import LoginForm from "../../components/forms/LoginForm";
 
 const Login = () => {
   return (
@@ -38,58 +29,12 @@ const Login = () => {
           </Typography>
         </Grid>
 
-        {/* right side: Login Form */}
+        {/* right side */}
         <Grid item xs={12} sm={6}>
           <Paper elevation={3}>
             <Card sx={{ p: 3 }}>
-              <form>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} textAlign={"center"}>
-                    <Typography variant="h5">Sign In</Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Email"
-                      variant="outlined"
-                      fullWidth
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Password"
-                      variant="outlined"
-                      type="password"
-                      fullWidth
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                      type="submit"
-                      sx={{ height: "45px" }}
-                    >
-                      Sign In
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid
-                      item
-                      display={"flex"}
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                    >
-                      <em>
-                        Don't have an account?
-                        <Link href={"/signup"}>{" Sign Up"}</Link>
-                      </em>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </form>
+              {/* loginform */}
+              <LoginForm />
             </Card>
           </Paper>
         </Grid>
