@@ -1,10 +1,13 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import MuiAppBar from "@mui/material/AppBar";
 import { Box, Grid, IconButton, Stack, Toolbar } from "@mui/material";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -25,6 +28,29 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 const NavBar = ({ open, handleDrawerOpen }) => {
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    // Fetch user ID from the token
+    const token = localStorage.getItem("token");
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.id;
+
+    // Fetch user name using user ID
+    const fetchUserName = async (userId) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/user/${userId}`
+        );
+        const userName = response.data.userName;
+        setUserName(userName);
+      } catch (error) {
+        console.error("Error fetching user name:", error);
+      }
+    };
+
+    fetchUserName(userId);
+  }, []);
   return (
     <>
       <AppBar position="fixed" open={open}>
@@ -59,7 +85,7 @@ const NavBar = ({ open, handleDrawerOpen }) => {
                 alignItems={"center"}
                 justifyContent={"center"}
               >
-                <Grid item>user_name</Grid>
+                <Grid item>{userName}</Grid>
                 <Grid item>
                   <IconButton
                     size="large"

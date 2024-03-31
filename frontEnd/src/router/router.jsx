@@ -13,18 +13,16 @@ import MemberLayout from "../layout/MemberLayout";
 import ProjectsMember from "../components/member/ProjectsMember";
 import TaskMember from "../components/member/TaskMember";
 
+const logged = localStorage.getItem("isLoggedIn");
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <DefoultLayout />,
     children: [
       {
-        path: "/",
-        element: <Navigate to="/login" />,
-      },
-      {
         path: "/dashbord",
-        element: <Dashbord />,
+        element: !logged ? <Dashbord /> : <Navigate to="/login" />,
       },
       {
         path: "/Mytasks",
@@ -64,7 +62,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/memberTask",
-        element: <MyTask />,
+        element: !logged ? <MyTask /> : <Navigate to="/login" />,
       },
       {
         path: "/memberProject",

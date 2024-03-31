@@ -87,6 +87,7 @@ const MiniDrower = () => {
   };
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("isloggedIn");
     navigate("/login");
   };
 

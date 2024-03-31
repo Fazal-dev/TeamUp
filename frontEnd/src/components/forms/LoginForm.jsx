@@ -22,7 +22,7 @@ const LoginForm = () => {
       const token = user.data.token;
       // store token in local storage
       localStorage.setItem("token", token);
-
+      localStorage.setItem("isloggedIn", true);
       // alert show to user login sucessfully
       enqueueSnackbar(user.data.message, {
         variant: "success",

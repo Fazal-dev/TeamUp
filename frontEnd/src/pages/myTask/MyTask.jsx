@@ -8,7 +8,6 @@ import ListIcon from "@mui/icons-material/List";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SpaceDashboardSharpIcon from "@mui/icons-material/SpaceDashboardSharp";
 import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
-import axios from "axios";
 import {
   Box,
   Button,
@@ -23,29 +22,23 @@ import {
 } from "@mui/material";
 import AddMyTaskModal from "../../Modals/AddMyTaskModal";
 import TaskCards from "../../components/TaskCards";
-
-const fetchAllTask = async (token) => {
-  try {
-    const response = await axios.get("http://localhost:8000/api/task", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching tasks:", error);
-    return null;
-  }
-};
+import { fetchAllTask, deleteTask } from "../../services/taskService/index.js";
+import axios from "axios";
 
 const MyTask = () => {
   const [tasks, setTasks] = useState([]);
   const [showType, setShowType] = useState("table");
 
+  const handleDelete = async (id) => {
+    const token = localStorage.getItem("token");
+    // confrimation alet
+    deleteTask(id, token);
+    const updatedTasks = await fetchAllTask(token);
+    setTasks(updatedTasks);
+  };
   useEffect(() => {
     // Fetch JWT token
     const token = localStorage.getItem("token");
-
     // Call getAllTask with the token
     if (token) {
       fetchAllTask(token)
@@ -54,7 +47,7 @@ const MyTask = () => {
           setTasks(tasks);
         })
         .catch((error) => {
-          console.log(error);
+          console.log("Error fetching tasks:", error.message);
         });
     }
   }, []);
@@ -129,41 +122,61 @@ const MyTask = () => {
                   <TableCell>Actions </TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
-                {tasks.map((task, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>{task.task_title}</TableCell>
-                    <TableCell>{task.description}</TableCell>
-                    <TableCell>{task.date}</TableCell>
-                    <TableCell>{task.priority}</TableCell>
-                    <TableCell>
-                      <Chip
-                        size="small"
-                        label={task.status}
-                        color={
-                          task.status === "complete" ? "success" : "warning"
-                        }
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Stack direction={"row"} spacing={1}>
-                        <Box>
-                          <Link>
-                            <EditNoteTwoToneIcon />
-                          </Link>
-                        </Box>
-                        <Box>
-                          <Link sx={{ color: "red" }}>
-                            <DeleteIcon />
-                          </Link>
-                        </Box>
-                      </Stack>
+                {tasks.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={6} align="center">
+                      <Typography variant="subtitle1" color="textSecondary">
+                        No tasks found.
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        You haven't added any tasks yet. Click the "Add Task"
+                        button to get started.
+                      </Typography>
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  tasks.map((task, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>{task.task_title}</TableCell>
+                      <TableCell>{task.description}</TableCell>
+                      <TableCell>{task.date}</TableCell>
+                      <TableCell>{task.priority}</TableCell>
+                      <TableCell>
+                        <span>
+                          <Chip
+                            size="small"
+                            label={task.status}
+                            color={
+                              task.status === "complete" ? "success" : "warning"
+                            }
+                          />
+                        </span>
+                      </TableCell>
+
+                      <TableCell>
+                        <Stack direction={"row"} spacing={1}>
+                          <Box>
+                            <Link>
+                              <EditNoteTwoToneIcon />
+                            </Link>
+                          </Box>
+                          <Box>
+                            <Button onClick={() => handleDelete(task._id)}>
+                              <Link sx={{ color: "red" }}>
+                                <DeleteIcon />
+                              </Link>
+                            </Button>
+                          </Box>
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </Paper>
