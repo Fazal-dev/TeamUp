@@ -21,6 +21,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Link, Outlet } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import NavBar from "./NavBar";
+import { useNavigate } from "react-router-dom";
 
 import styled from "@emotion/styled";
 
@@ -73,9 +74,9 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 const MiniDrower = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [Listopen, ListsetOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -84,9 +85,9 @@ const MiniDrower = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  // project drop down
-  const handleClick = () => {
-    ListsetOpen(!Listopen);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   return (
@@ -243,34 +244,27 @@ const MiniDrower = () => {
         </List>
         {/* logout */}
         <List>
-          <Link
-            to={"/login"}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={handleLogout}
+            >
+              <ListItemIcon
                 sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={"Logout"}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Link>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Logout"} sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
       <Box

@@ -5,12 +5,12 @@ import {
   getAllTask,
   deleteTask,
 } from "../controller/TaskController.js";
-
+import { protect } from "../middleWare/authMiddleWare.js";
 const TaskRouter = express.Router();
 
-TaskRouter.post("/", createTask);
-TaskRouter.get("/", getAllTask);
-TaskRouter.patch("/:id", updateTask);
-TaskRouter.delete("/:id", deleteTask);
+TaskRouter.post("/", protect, createTask);
+TaskRouter.get("/", protect, getAllTask);
+TaskRouter.patch("/:id", protect, updateTask);
+TaskRouter.delete("/:id", protect, deleteTask);
 
 export default TaskRouter;

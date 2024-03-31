@@ -11,7 +11,8 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
+import { useSnackbar } from "notistack";
 const SignUpForm = () => {
   const [error, setError] = useState("fazal");
   const [userType, setUserType] = useState("");
@@ -21,6 +22,25 @@ const SignUpForm = () => {
     password: "",
     userType: "",
   });
+  const { enqueueSnackbar } = useSnackbar();
+
+  const registerUser = async () => {
+    try {
+      await axios.post("http://localhost:8000/api/user", formData);
+      enqueueSnackbar("account created succesfully", {
+        variant: "success",
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
+      navigate("/login");
+    } catch (error) {
+      enqueueSnackbar(error.response.data.error, {
+        variant: "error",
+        anchorOrigin: { vertical: "top", horizontal: "left" },
+      });
+      setFormData({ userName: "", email: "", password: "", userType: "" });
+      console.log(error);
+    }
+  };
   const navigate = useNavigate();
 
   const handleChangeData = (event) => {
@@ -36,8 +56,8 @@ const SignUpForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // register function here
+    registerUser();
     console.log("Form submitted:", formData);
-    navigate("/login");
   };
   return (
     <>
@@ -68,8 +88,8 @@ const SignUpForm = () => {
                 onChange={handleChangeUserType}
                 label="UserType"
               >
-                <MenuItem value={"Admin"}>Admin</MenuItem>
-                <MenuItem value={"Member"}>Member</MenuItem>
+                <MenuItem value={"admin"}>Admin</MenuItem>
+                <MenuItem value={"member"}>Member</MenuItem>
               </Select>
             </FormControl>
           </Grid>

@@ -9,13 +9,17 @@ export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await userModel.findOne({ email });
   if (user && (await bcrypt.compare(password, user.password))) {
-    res.json({ message: "succefully login", token: generateToken(user._id) });
+    res.json({
+      message: "succefully login",
+      userType: user.userType,
+      token: generateToken(user._id),
+    });
   } else {
     res.status(400).json({ error: "invalid user data" });
   }
 });
 
-// signup
+// signup user
 
 export const signUpUser = asyncHandler(async (req, res) => {
   const { email, password, userName, userType } = req.body;
@@ -50,12 +54,16 @@ export const signUpUser = asyncHandler(async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+// get authorized user id
 export const getMe = asyncHandler(async (req, res) => {
-  res.json({ msg: "get me" });
+  const { _id, email } = await userModel.findById(req.user.id);
+  res.status(201).json({
+    id: _id,
+    email,
+  });
 });
 
+// genarate jwt
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
-
-// genarate jwt

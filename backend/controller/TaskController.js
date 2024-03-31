@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 import Task from "../model/taskModel.js";
+import userModel from "../model/userModel.js";
 // create a task
 export const createTask = async (req, res) => {
   const { task_title, description, date, status, priority } = req.body;
   try {
     // Validate input data
-    if (!task_title || !description || !date || !priority || !status) {
+    if (!task_title || !description) {
       return res.status(400).json({ error: "Missing required fields." });
     }
     const task = await Task.create({
@@ -14,6 +15,7 @@ export const createTask = async (req, res) => {
       date,
       status,
       priority,
+      user: req.user.id,
     });
     res.status(200).json(task);
     console.log(task);
@@ -29,8 +31,24 @@ export const updateTask = async (req, res) => {
     return res.status(404).json({ message: "task not found" });
   }
   try {
-    const task = await Task.findByIdAndUpdate({ _id: id }, { ...req.body });
-    res.status(200).json(task);
+    // Find the task by ID
+    const task = await Task.findById(id);
+
+    // Check if the task exists
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    // Check if the logged-in user is authorized to update the task
+    if (task.user.toString() !== req.user.id) {
+      return res.status(401).json({ message: "User not authorized" });
+    }
+
+    // Update the task with the request body data
+    const updatedTask = await Task.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.status(200).json(updatedTask);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -38,7 +56,7 @@ export const updateTask = async (req, res) => {
 // get all the Task
 export const getAllTask = async (req, res) => {
   try {
-    const allTask = await Task.find({});
+    const allTask = await Task.find({ user: req.user.id });
     res.status(200).json(allTask);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -51,8 +69,22 @@ export const deleteTask = async (req, res) => {
     return res.status(404).json({ message: "task not found" });
   }
   try {
-    const task = await Task.findByIdAndDelete(id);
-    res.status(200).json(task);
+    // Find the task by ID
+    const task = await Task.findById(id);
+
+    // Check if the task exists
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    // Check if the logged-in user is authorized to delete the task
+    if (task.user.toString() !== req.user.id) {
+      return res.status(401).json({ message: "User not authorized" });
+    }
+
+    // Delete the task
+    const deletedTask = await Task.findByIdAndDelete(id);
+    res.status(200).json(deletedTask);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

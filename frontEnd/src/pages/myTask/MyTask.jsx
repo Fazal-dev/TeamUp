@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,7 +8,7 @@ import ListIcon from "@mui/icons-material/List";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SpaceDashboardSharpIcon from "@mui/icons-material/SpaceDashboardSharp";
 import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
-
+import axios from "axios";
 import {
   Box,
   Button,
@@ -23,66 +23,42 @@ import {
 } from "@mui/material";
 import AddMyTaskModal from "../../Modals/AddMyTaskModal";
 import TaskCards from "../../components/TaskCards";
-const tasks = [
-  {
-    task_title: "Task 1",
-    description: "Description of Task 1",
-    date: "2024-03-16",
-    priority: "High",
-    status: "complete",
-  },
-  {
-    task_title: "Task 2",
-    description: "Description of Task 2",
-    date: "2024-03-17",
-    priority: "Medium",
-    status: "complete",
-  },
-  {
-    task_title: "Task 3",
-    description: "Description of Task 3",
-    date: "2024-03-18",
-    priority: "Low",
-    status: "complete",
-  },
-  {
-    task_title: "Task 4",
-    description: "Description of Task 4",
-    date: "2024-03-19",
-    priority: "High",
-    status: "complete",
-  },
-  {
-    task_title: "Task 5",
-    description: "Description of Task 5",
-    date: "2024-03-20",
-    priority: "Medium",
-    status: "complete",
-  },
-  {
-    task_title: "Task 6",
-    description: "Description of Task 6",
-    date: "2024-03-21",
-    priority: "Low",
-    status: "complete",
-  },
-  {
-    task_title: "Task 7",
-    description: "Description of Task 7",
-    date: "2024-03-22",
-    priority: "High",
-    status: "incomplete",
-  },
-  {
-    task_title: "Task 8",
-    description: "Description of Task 8",
-    date: "2024-03-23",
-    priority: "Medium",
-    status: "complete",
-  },
-];
+
+const fetchAllTask = async (token) => {
+  try {
+    const response = await axios.get("http://localhost:8000/api/task", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+    return null;
+  }
+};
+
 const MyTask = () => {
+  const [tasks, setTasks] = useState([]);
   const [showType, setShowType] = useState("table");
+
+  useEffect(() => {
+    // Fetch JWT token
+    const token = localStorage.getItem("token");
+
+    // Call getAllTask with the token
+    if (token) {
+      fetchAllTask(token)
+        .then((tasks) => {
+          console.log(tasks);
+          setTasks(tasks);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
   return (
     <div>
       <Container sx={{ width: "100vw" }}>

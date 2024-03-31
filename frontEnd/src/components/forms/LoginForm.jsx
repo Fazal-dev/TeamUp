@@ -2,6 +2,8 @@ import React from "react";
 import { Grid, Typography, TextField, Button, Link } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useSnackbar } from "notistack";
 
 const LoginForm = () => {
   const [error, setError] = useState("fazal");
@@ -9,19 +11,55 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
+  const { enqueueSnackbar } = useSnackbar();
+  // login
+  const login = async () => {
+    try {
+      const user = await axios.post(
+        "http://localhost:8000/api/user/login",
+        formData
+      );
+      const token = user.data.token;
+      // store token in local storage
+      localStorage.setItem("token", token);
+
+      // alert show to user login sucessfully
+      enqueueSnackbar(user.data.message, {
+        variant: "success",
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
+
+      if (user.data.userType === "admin") {
+        navigate("/dashbord");
+      } else {
+        navigate("/memberTask");
+      }
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error.response.data.error, {
+        variant: "error",
+        anchorOrigin: { vertical: "top", horizontal: "left" },
+      });
+      setFormData({
+        email: "",
+        password: "",
+      });
+    }
+  };
   const navigate = useNavigate("/");
 
   const handleChange = ({ currentTarget: input }) => {
     setFormData({ ...formData, [input.name]: input.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // VALIDATE PASsWORD EMAIL HERE
-    navigate("/dashbord");
-    console.log(formData);
-    // login function todo here
 
+    // login function
+    await login();
+
+    console.log(formData);
     setFormData({ email: "", password: "" });
   };
 
