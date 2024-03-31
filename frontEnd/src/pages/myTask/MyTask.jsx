@@ -43,7 +43,6 @@ const MyTask = () => {
     if (token) {
       fetchAllTask(token)
         .then((tasks) => {
-          console.log(tasks);
           setTasks(tasks);
         })
         .catch((error) => {
@@ -166,11 +165,12 @@ const MyTask = () => {
                             </Link>
                           </Box>
                           <Box>
-                            <Button onClick={() => handleDelete(task._id)}>
-                              <Link sx={{ color: "red" }}>
-                                <DeleteIcon />
-                              </Link>
-                            </Button>
+                            <Link
+                              onClick={() => handleDelete(task._id)}
+                              sx={{ color: "red" }}
+                            >
+                              <DeleteIcon />
+                            </Link>
                           </Box>
                         </Stack>
                       </TableCell>

@@ -27,6 +27,7 @@ const LoginForm = () => {
       enqueueSnackbar(user.data.message, {
         variant: "success",
         anchorOrigin: { vertical: "top", horizontal: "right" },
+        autoHideDuration: 3000,
       });
 
       if (user.data.userType === "admin") {

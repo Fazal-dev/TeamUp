@@ -8,7 +8,7 @@ const TaskSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    task_title: {
+    taskTitle: {
       type: String,
       required: true,
     },

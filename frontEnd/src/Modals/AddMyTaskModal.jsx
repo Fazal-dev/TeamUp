@@ -21,6 +21,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import axios from "axios";
+import { format } from "date-fns";
+
 // custom style
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -37,7 +40,7 @@ const AddMyTaskModal = () => {
   const [formData, setFormData] = useState({
     taskTitle: "",
     description: "",
-    dueDate: null,
+    date: null,
   });
 
   const handleInputChange = (event) => {
@@ -63,16 +66,14 @@ const AddMyTaskModal = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Submitted", formData);
-    handleClose();
   };
   // date handle
   const handleDateChange = (date) => {
     setFormData({
       ...formData,
-      dueDate: date.toISOString(),
+      date: date,
     });
   };
   return (
@@ -168,18 +169,18 @@ const AddMyTaskModal = () => {
                 <DatePicker
                   label="Due Date"
                   name="dueDate"
-                  value={formData.dueDate}
+                  value={formData.date}
                   onChange={handleDateChange}
                 />
               </LocalizationProvider>
             </Box>
+            <DialogActions>
+              <Button type="submit" variant="contained" autoFocus>
+                Create
+              </Button>
+            </DialogActions>
           </form>
         </DialogContent>
-        <DialogActions>
-          <Button variant="contained" autoFocus onClick={handleOnSubmit}>
-            Create
-          </Button>
-        </DialogActions>
       </BootstrapDialog>
     </>
   );

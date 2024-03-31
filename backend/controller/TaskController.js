@@ -3,14 +3,14 @@ import Task from "../model/taskModel.js";
 import userModel from "../model/userModel.js";
 // create a task
 export const createTask = async (req, res) => {
-  const { task_title, description, date, status, priority } = req.body;
+  const { taskTitle, description, date, status, priority } = req.body;
   try {
     // Validate input data
-    if (!task_title || !description) {
+    if (!taskTitle || !description) {
       return res.status(400).json({ error: "Missing required fields." });
     }
     const task = await Task.create({
-      task_title,
+      taskTitle,
       description,
       date,
       status,
