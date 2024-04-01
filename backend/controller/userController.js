@@ -71,10 +71,11 @@ export const signUpUser = asyncHandler(async (req, res) => {
 });
 // get authorized user id
 export const getMe = asyncHandler(async (req, res) => {
-  const { _id, email } = await userModel.findById(req.user.id);
-  res.status(201).json({
+  const { _id, email, userType } = await userModel.findById(req.user.id);
+  res.status(201).send({
     id: _id,
     email,
+    userType,
   });
 });
 

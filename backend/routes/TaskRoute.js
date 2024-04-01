@@ -6,6 +6,7 @@ import {
   deleteTask,
 } from "../controller/TaskController.js";
 import { protect } from "../middleWare/authMiddleWare.js";
+
 const TaskRouter = express.Router();
 
 TaskRouter.post("/", protect, createTask);

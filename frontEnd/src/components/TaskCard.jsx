@@ -7,7 +7,13 @@ import React from "react";
 import Chip from "@mui/material/Chip";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
+import { deleteTask } from "../services/taskService/index.js";
 const TaskCard = ({ task }) => {
+  const handleDelete = async (id) => {
+    const token = localStorage.getItem("token");
+    // confrimation alet
+    const data = deleteTask(id, token);
+  };
   return (
     <>
       <Card
@@ -15,13 +21,13 @@ const TaskCard = ({ task }) => {
           maxWidth: 340,
           p: 1,
           borderRight: `4px solid ${
-            task.status === "complete" ? "#5cb85c" : "#ff4545"
+            task.status === "completed" ? "#5cb85c" : "#ff4545"
           }`,
         }}
       >
         <CardContent>
           <Typography variant="h6" color="text.secondary" gutterBottom>
-            {task.task_title}
+            {task.taskTitle}
           </Typography>
           <Typography color="text.secondary" gutterBottom>
             {task.description}
@@ -44,14 +50,17 @@ const TaskCard = ({ task }) => {
                   size="small"
                   variant="outlined"
                   label={task.status}
-                  color={task.status === "complete" ? "success" : "warning"}
+                  color={task.status === "completed" ? "success" : "warning"}
                 />
               </Typography>
             </Grid>
             <Grid item>
               <Stack direction={"row"} spacing={3}>
                 <Grid>
-                  <Link sx={{ color: "orange" }}>
+                  <Link
+                    onClick={() => handleDelete(task._id)}
+                    sx={{ color: "orange" }}
+                  >
                     <DeleteForeverIcon />
                   </Link>
                 </Grid>

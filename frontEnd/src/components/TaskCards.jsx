@@ -6,7 +6,7 @@ const TaskCards = ({ tasks }) => {
   return (
     <>
       <Grid container spacing={5} pt={2}>
-        {tasks.length == 0 ? (
+        {tasks === null || tasks.length === 0 ? (
           <Grid
             container
             alignItems={"center"}

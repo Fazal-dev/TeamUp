@@ -9,6 +9,9 @@ export const createTask = async (req, res) => {
     if (!taskTitle || !description) {
       return res.status(400).json({ error: "Missing required fields." });
     }
+    if (!req.user.id) {
+      console.log("error catch");
+    }
     const task = await Task.create({
       taskTitle,
       description,
@@ -17,11 +20,10 @@ export const createTask = async (req, res) => {
       priority,
       user: req.user.id,
     });
-    res.status(200).json(task);
-    console.log(task);
+    res.status(201).send(task);
   } catch (error) {
     console.error("Error creating task:", error);
-    res.status(500).json({ error: "Internal server error." });
+    res.status(500).send({ message: error.message });
   }
 };
 // update Task
@@ -50,7 +52,7 @@ export const updateTask = async (req, res) => {
     });
     res.status(200).json(updatedTask);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).send({ message: error.message });
   }
 };
 // get all the Task
@@ -59,7 +61,7 @@ export const getAllTask = async (req, res) => {
     const allTask = await Task.find({ user: req.user.id });
     res.status(200).json(allTask);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).send({ message: error.message });
   }
 };
 // delete Task
@@ -86,6 +88,6 @@ export const deleteTask = async (req, res) => {
     const deletedTask = await Task.findByIdAndDelete(id);
     res.status(200).json(deletedTask);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).send({ message: error.message });
   }
 };

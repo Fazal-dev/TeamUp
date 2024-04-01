@@ -20,8 +20,8 @@ export const protect = asyncHandler(async (req, res, next) => {
       req.user = await userModel.findById(decoded.id).select("-password");
       next();
     } catch (error) {
-      console.log(error);
-      res.status(401).json({ message: "not authorize" });
+      console.log(error.message);
+      res.status(401).send({ message: "not authorized" });
     }
   }
   if (!token) {

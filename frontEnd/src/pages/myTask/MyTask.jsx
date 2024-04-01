@@ -8,6 +8,7 @@ import ListIcon from "@mui/icons-material/List";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SpaceDashboardSharpIcon from "@mui/icons-material/SpaceDashboardSharp";
 import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
+import AddIcon from "@mui/icons-material/Add";
 import {
   Box,
   Button,
@@ -20,36 +21,47 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import AddMyTaskModal from "../../Modals/AddMyTaskModal";
 import TaskCards from "../../components/TaskCards";
-import { fetchAllTask, deleteTask } from "../../services/taskService/index.js";
+import { deleteTask } from "../../services/taskService/index.js";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { getToken } from "../../utility/index.js";
+import Spinner from "../../components/common/Spinner.jsx";
 
 const MyTask = () => {
   const [tasks, setTasks] = useState([]);
   const [showType, setShowType] = useState("table");
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  // Fetch JWT token
+  const token = getToken();
+  // Call getAllTask with the token
+
+  const fetchAllTask = async (token) => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/task", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTasks(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllTask(token);
+  }, []);
 
   const handleDelete = async (id) => {
-    const token = localStorage.getItem("token");
-    // confrimation alet
-    deleteTask(id, token);
-    const updatedTasks = await fetchAllTask(token);
-    setTasks(updatedTasks);
+    const token = getToken();
+    // confrimation alert
+    const data = await deleteTask(id, token);
+    fetchAllTask(token);
   };
-  useEffect(() => {
-    // Fetch JWT token
-    const token = localStorage.getItem("token");
-    // Call getAllTask with the token
-    if (token) {
-      fetchAllTask(token)
-        .then((tasks) => {
-          setTasks(tasks);
-        })
-        .catch((error) => {
-          console.log("Error fetching tasks:", error.message);
-        });
-    }
-  }, []);
 
   return (
     <div>
@@ -67,7 +79,13 @@ const MyTask = () => {
             <Typography variant="h5">To Do</Typography>
           </Box>
           <Box>
-            <AddMyTaskModal />
+            <Button
+              onClick={() => navigate("/AddTask")}
+              variant="contained"
+              startIcon={<AddIcon />}
+            >
+              Add new task
+            </Button>
           </Box>
         </Box>
 
@@ -108,7 +126,9 @@ const MyTask = () => {
           </Grid>
         </Stack>
 
-        {showType === "table" ? (
+        {loading ? (
+          <Spinner />
+        ) : showType === "table" ? (
           <Paper elevation={2} sx={{ p: 2 }}>
             <Table>
               <TableHead>
@@ -123,7 +143,7 @@ const MyTask = () => {
               </TableHead>
 
               <TableBody>
-                {tasks.length === 0 ? (
+                {tasks === null || tasks.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={6} align="center">
                       <Typography variant="subtitle1" color="textSecondary">
@@ -141,7 +161,7 @@ const MyTask = () => {
                       key={index}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell>{task.task_title}</TableCell>
+                      <TableCell>{task.taskTitle}</TableCell>
                       <TableCell>{task.description}</TableCell>
                       <TableCell>{task.date}</TableCell>
                       <TableCell>{task.priority}</TableCell>
@@ -151,7 +171,9 @@ const MyTask = () => {
                             size="small"
                             label={task.status}
                             color={
-                              task.status === "complete" ? "success" : "warning"
+                              task.status === "completed"
+                                ? "success"
+                                : "warning"
                             }
                           />
                         </span>

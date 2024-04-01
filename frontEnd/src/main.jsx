@@ -7,6 +7,7 @@ import theme from "./theme.js";
 import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import { SnackbarProvider } from "notistack";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ThemeProvider theme={theme}>
     <SnackbarProvider>

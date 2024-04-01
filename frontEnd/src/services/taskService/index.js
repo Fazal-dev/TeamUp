@@ -16,11 +16,15 @@ export const fetchAllTask = async (token) => {
 // DELETE THE TASK
 export const deleteTask = async (id, token) => {
   try {
-    const data = await axios.delete(`http://localhost:8000/api/task/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    await axios
+      .delete(`http://localhost:8000/api/task/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        res.data;
+      });
   } catch (error) {
     console.log("Error fetching tasks:", error.message);
   }

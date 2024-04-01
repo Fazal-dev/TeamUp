@@ -22,7 +22,7 @@ const LoginForm = () => {
       const token = user.data.token;
       // store token in local storage
       localStorage.setItem("token", token);
-      localStorage.setItem("isloggedIn", true);
+
       // alert show to user login sucessfully
       enqueueSnackbar(user.data.message, {
         variant: "success",
@@ -56,7 +56,12 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // VALIDATE PASsWORD EMAIL HERE
-
+    if (formData.password.length < 4) {
+      enqueueSnackbar("please enter valid password ", {
+        variant: "error",
+        anchorOrigin: { vertical: "top", horizontal: "left" },
+      });
+    }
     // login function
     await login();
 
