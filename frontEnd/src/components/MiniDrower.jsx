@@ -217,13 +217,13 @@ const MiniDrower = () => {
         </List>
 
         {/* create project */}
-
         <List>
           <ListItem disablePadding sx={{ display: "block" }}>
             <CreateProjectModal open={open} />
           </ListItem>
         </List>
         <Divider />
+
         {/* profile */}
         <List>
           <Link
@@ -255,6 +255,7 @@ const MiniDrower = () => {
             </ListItem>
           </Link>
         </List>
+
         {/* logout */}
         <List>
           <ListItem disablePadding sx={{ display: "block" }}>
