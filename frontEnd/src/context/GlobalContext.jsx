@@ -20,3 +20,4 @@ const GlobalContextProvider = ({ children }) => {
     </GlobalContext.Provider>
   );
 };
+export { GlobalContext, GlobalContextProvider };

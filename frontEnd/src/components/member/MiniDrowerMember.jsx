@@ -19,7 +19,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Link, Outlet } from "react-router-dom";
 import NavBar from "../NavBar";
 import styled from "@emotion/styled";
-
+import Swal from "sweetalert2";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -76,6 +76,23 @@ const MiniDrowerMember = () => {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Confirm Logout",
+      text: "Are you sure you want to log out?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Log out",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    });
   };
   return (
     <Box sx={{ display: "flex" }}>
@@ -192,34 +209,27 @@ const MiniDrowerMember = () => {
         </List>
         {/* logout */}
         <List>
-          <Link
-            to={"/login"}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              onClick={handleLogout}
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
                 sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={"Logout"}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Link>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Logout"} sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
       <Box

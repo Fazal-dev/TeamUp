@@ -22,7 +22,7 @@ import { Link, Outlet } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import NavBar from "./NavBar";
 import { useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2";
 import styled from "@emotion/styled";
 
 import CreateProjectModal from "../Modals/CreateProjectModal";
@@ -86,9 +86,21 @@ const MiniDrower = () => {
     setOpen(false);
   };
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("isloggedIn");
-    navigate("/login");
+    Swal.fire({
+      title: "Confirm Logout",
+      text: "Are you sure you want to log out?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Log out",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    });
   };
 
   return (

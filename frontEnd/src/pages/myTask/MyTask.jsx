@@ -1,14 +1,3 @@
-import React, { useEffect, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import ListIcon from "@mui/icons-material/List";
-import DeleteIcon from "@mui/icons-material/Delete";
-import SpaceDashboardSharpIcon from "@mui/icons-material/SpaceDashboardSharp";
-import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
-import AddIcon from "@mui/icons-material/Add";
 import {
   Box,
   Button,
@@ -21,6 +10,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import ListIcon from "@mui/icons-material/List";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SpaceDashboardSharpIcon from "@mui/icons-material/SpaceDashboardSharp";
+import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
+import AddIcon from "@mui/icons-material/Add";
 import TaskCards from "../../components/TaskCards";
 import { deleteTask } from "../../services/taskService/index.js";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +28,7 @@ import axios from "axios";
 import { getToken } from "../../utility/index.js";
 import Spinner from "../../components/common/Spinner.jsx";
 import { useSnackbar } from "notistack";
+import Swal from "sweetalert2";
 
 const MyTask = () => {
   // all the states
@@ -60,15 +61,28 @@ const MyTask = () => {
 
   const handleDelete = async (id) => {
     const token = getToken();
-    // confrimation alert todo
-    const data = await deleteTask(id, token);
-    // sucess notify
-    enqueueSnackbar("succefully delete a task ", {
-      variant: "success",
-      autoHideDuration: "1000",
-      anchorOrigin: { vertical: "top", horizontal: "right" },
+    // confrimation alert
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // DELETE TASK
+        deleteTask(id, token).then(() => {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your task has been deleted.",
+            icon: "success",
+          });
+          fetchAllTask(token);
+        });
+      }
     });
-    fetchAllTask(token);
   };
 
   return (
