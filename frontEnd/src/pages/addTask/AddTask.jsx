@@ -17,7 +17,12 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { useSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
+
 const AddTask = () => {
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [formData, setFormData] = useState({
@@ -58,13 +63,8 @@ const AddTask = () => {
   };
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    // validate the fileds
     // fileds cant be empty
 
-    if (!status || !priority) {
-      console.log("empty");
-      return;
-    }
     getUserInfo();
 
     const updatedFormData = {
@@ -92,6 +92,12 @@ const AddTask = () => {
     }
 
     // console.log(updatedFormData);
+    enqueueSnackbar("succefully add a task ", {
+      variant: "success",
+      autoHideDuration: "1000",
+      anchorOrigin: { vertical: "top", horizontal: "right" },
+    });
+    navigate("/MyTasks");
     setFormData({
       taskTitle: "",
       description: "",

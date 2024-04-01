@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Grid,
   Typography,
@@ -13,8 +13,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+
 const SignUpForm = () => {
-  const [error, setError] = useState("fazal");
   const [userType, setUserType] = useState("");
   const [formData, setFormData] = useState({
     userName: "",
@@ -50,12 +50,12 @@ const SignUpForm = () => {
 
   const handleChangeUserType = (event) => {
     setUserType(event.target.value);
-    setFormData({ ...formData, userType: event.target.value }); // Update userType in formData
+    setFormData({ ...formData, userType: event.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // register function here
+    // user registartion
     registerUser();
     console.log("Form submitted:", formData);
   };
@@ -82,6 +82,7 @@ const SignUpForm = () => {
             <FormControl fullWidth size="normal">
               <InputLabel id="demo-select-small-label">UserType</InputLabel>
               <Select
+                required
                 labelId="demo-select-small-label"
                 id="demo-select-small"
                 value={userType}

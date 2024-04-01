@@ -27,16 +27,18 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getToken } from "../../utility/index.js";
 import Spinner from "../../components/common/Spinner.jsx";
+import { useSnackbar } from "notistack";
 
 const MyTask = () => {
+  // all the states
   const [tasks, setTasks] = useState([]);
   const [showType, setShowType] = useState("table");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   // Fetch JWT token
   const token = getToken();
-  // Call getAllTask with the token
 
   const fetchAllTask = async (token) => {
     try {
@@ -58,8 +60,14 @@ const MyTask = () => {
 
   const handleDelete = async (id) => {
     const token = getToken();
-    // confrimation alert
+    // confrimation alert todo
     const data = await deleteTask(id, token);
+    // sucess notify
+    enqueueSnackbar("succefully delete a task ", {
+      variant: "success",
+      autoHideDuration: "1000",
+      anchorOrigin: { vertical: "top", horizontal: "right" },
+    });
     fetchAllTask(token);
   };
 
@@ -80,7 +88,7 @@ const MyTask = () => {
           </Box>
           <Box>
             <Button
-              onClick={() => navigate("/AddTask")}
+              onClick={() => navigate("/addTask")}
               variant="contained"
               startIcon={<AddIcon />}
             >

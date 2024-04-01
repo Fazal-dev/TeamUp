@@ -6,20 +6,23 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 
 const LoginForm = () => {
-  const [error, setError] = useState("fazal");
+  const navigate = useNavigate("/");
+  const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const { enqueueSnackbar } = useSnackbar();
-  // login
+
+  // login functoin
   const login = async () => {
     try {
       const user = await axios.post(
         "http://localhost:8000/api/user/login",
         formData
       );
+
       const token = user.data.token;
+
       // store token in local storage
       localStorage.setItem("token", token);
 
@@ -29,7 +32,7 @@ const LoginForm = () => {
         anchorOrigin: { vertical: "top", horizontal: "right" },
         autoHideDuration: 3000,
       });
-
+      // navigate the user based on user type
       if (user.data.userType === "admin") {
         navigate("/dashbord");
       } else {
@@ -41,13 +44,13 @@ const LoginForm = () => {
         variant: "error",
         anchorOrigin: { vertical: "top", horizontal: "left" },
       });
+      // reset the state
       setFormData({
         email: "",
         password: "",
       });
     }
   };
-  const navigate = useNavigate("/");
 
   const handleChange = ({ currentTarget: input }) => {
     setFormData({ ...formData, [input.name]: input.value });
@@ -55,9 +58,9 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // VALIDATE PASsWORD EMAIL HERE
+    // VALIDATE PASsWORD HERE
     if (formData.password.length < 4) {
-      enqueueSnackbar("please enter valid password ", {
+      enqueueSnackbar("Please enter valid password !!", {
         variant: "error",
         anchorOrigin: { vertical: "top", horizontal: "left" },
       });
@@ -98,7 +101,6 @@ const LoginForm = () => {
               type="password"
               fullWidth
             />
-            {error && <div>error</div>}
           </Grid>
           <Grid item xs={12}>
             <Button
