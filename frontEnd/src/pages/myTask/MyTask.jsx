@@ -29,7 +29,6 @@ import { getToken } from "../../utility/index.js";
 import Spinner from "../../components/common/Spinner.jsx";
 import { useSnackbar } from "notistack";
 import Swal from "sweetalert2";
-
 const MyTask = () => {
   // all the states
   const [tasks, setTasks] = useState([]);
@@ -85,6 +84,31 @@ const MyTask = () => {
     });
   };
 
+  // update status
+  const handleStatus = async (id, status) => {
+    // toggle the status
+    const newStatus = status === "completed" ? "incomplete" : "completed";
+    try {
+      const res = await axios.patch(
+        `http://localhost:8000/api/task/${id}`,
+        { status: newStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      fetchAllTask(token);
+      enqueueSnackbar("succefully update a task status", {
+        variant: "success",
+        autoHideDuration: "10",
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log("Error fetching tasks:", error.message);
+    }
+  };
   return (
     <div>
       <Container sx={{ width: "100vw" }}>
@@ -188,7 +212,9 @@ const MyTask = () => {
                       <TableCell>{task.date}</TableCell>
                       <TableCell>{task.priority}</TableCell>
                       <TableCell>
-                        <span>
+                        <span
+                          onClick={() => handleStatus(task._id, task.status)}
+                        >
                           <Chip
                             size="small"
                             label={task.status}

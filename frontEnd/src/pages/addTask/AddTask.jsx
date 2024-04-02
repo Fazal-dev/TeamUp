@@ -21,6 +21,7 @@ import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 
 const AddTask = () => {
+  // ALL THE STATES
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [status, setStatus] = useState("");
@@ -52,6 +53,7 @@ const AddTask = () => {
   const decodedToken = jwtDecode(token);
   const userId = decodedToken.id;
   const [user, setUser] = useState({});
+  // get user details
   const getUserInfo = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/user/me`);
@@ -63,7 +65,6 @@ const AddTask = () => {
   };
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    // fileds cant be empty
 
     getUserInfo();
 
@@ -77,6 +78,7 @@ const AddTask = () => {
     };
 
     try {
+      // ADD NEW TASK
       const res = await axios.post(
         "http://localhost:8000/api/task",
         updatedFormData,
@@ -90,8 +92,6 @@ const AddTask = () => {
     } catch (error) {
       console.error("Error fetching user information:", error);
     }
-
-    // console.log(updatedFormData);
     enqueueSnackbar("succefully add a task ", {
       variant: "success",
       autoHideDuration: "1000",
@@ -106,7 +106,7 @@ const AddTask = () => {
     setPriority("");
     setStatus("");
   };
-  // date handle
+  // DATE SET
   const handleDateChange = (date) => {
     setFormData({
       ...formData,

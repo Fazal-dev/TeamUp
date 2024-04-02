@@ -1,4 +1,6 @@
 import axios from "axios";
+const task = [];
+// add new task
 // GET ALL THE TASK
 export const fetchAllTask = async (token) => {
   try {
@@ -29,3 +31,4 @@ export const deleteTask = async (id, token) => {
     console.log("Error fetching tasks:", error.message);
   }
 };
+// update task
