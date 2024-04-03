@@ -109,6 +109,7 @@ const MyTask = () => {
       console.log("Error fetching tasks:", error.message);
     }
   };
+
   return (
     <div>
       <Container sx={{ width: "100vw" }}>
@@ -230,7 +231,9 @@ const MyTask = () => {
                       <TableCell>
                         <Stack direction={"row"} spacing={1}>
                           <Box>
-                            <Link>
+                            <Link
+                              onClick={() => navigate(`/editTask/${task._id}`)}
+                            >
                               <EditNoteTwoToneIcon />
                             </Link>
                           </Box>

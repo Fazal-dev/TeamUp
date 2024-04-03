@@ -12,6 +12,7 @@ import MemberLayout from "../layout/MemberLayout";
 import ProjectsMember from "../components/member/ProjectsMember";
 import TaskMember from "../components/member/TaskMember";
 import AddTask from "../pages/addTask/AddTask";
+import EditTask from "../pages/EditTask/EditTask";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/addTask",
         element: <AddTask />,
+      },
+      {
+        path: "/editTask/:id",
+        element: <EditTask />,
       },
       {
         path: "/projectTask",

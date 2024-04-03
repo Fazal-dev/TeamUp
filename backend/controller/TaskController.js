@@ -91,3 +91,13 @@ export const deleteTask = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+// get single task by id
+export const getTask = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const task = await Task.findById(id);
+    res.status(200).send(task);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};

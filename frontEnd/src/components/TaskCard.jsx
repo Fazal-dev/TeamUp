@@ -11,7 +11,6 @@ import { deleteTask } from "../services/taskService/index.js";
 const TaskCard = ({ task }) => {
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
-    // confrimation alet
     const data = deleteTask(id, token);
   };
   return (
