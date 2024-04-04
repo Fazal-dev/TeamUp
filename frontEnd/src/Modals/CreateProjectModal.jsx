@@ -13,9 +13,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { IconButton } from "@mui/material";
-
 import AddIcon from "@mui/icons-material/Add";
+import { IconButton } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -29,6 +28,7 @@ const CreateProjectModal = ({ open }) => {
   const [endDate, setEndDate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState({});
 
   const handleClickOpen = () => {
     setModalOpen(true);
@@ -36,24 +36,26 @@ const CreateProjectModal = ({ open }) => {
 
   const handleClose = () => {
     setModalOpen(false);
-    setProjectName();
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setProjectName("");
     setDescription("");
     setStartDate(null);
     setEndDate(null);
-    setError("");
     setError(null);
   };
-  const [user, setUser] = useState({});
-  // get user details
+
   const getUserInfo = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/user/me`);
       setUser(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching user information:", error);
     }
   };
+
   const validateDates = () => {
     if (startDate && endDate && startDate >= endDate) {
       setError("End date must be after the start date.");
@@ -61,6 +63,7 @@ const CreateProjectModal = ({ open }) => {
     }
     return true;
   };
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -70,7 +73,6 @@ const CreateProjectModal = ({ open }) => {
     }
     getUserInfo();
     try {
-      // Make HTTP POST request to create project
       const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8000/api/project",
@@ -89,11 +91,7 @@ const CreateProjectModal = ({ open }) => {
       );
       console.log("Project created:", response.data);
       setLoading(false);
-      setProjectName();
-      setDescription("");
-      setStartDate(null);
-      setEndDate(null);
-      setError("");
+      resetForm();
       handleClose();
     } catch (error) {
       console.error("Error creating project:", error);
@@ -179,6 +177,7 @@ const CreateProjectModal = ({ open }) => {
                     value={startDate}
                     onChange={(date) => setStartDate(date)}
                     textField={<TextField />}
+                    required
                   />
                 </LocalizationProvider>
               </Grid>
@@ -189,6 +188,7 @@ const CreateProjectModal = ({ open }) => {
                     value={endDate}
                     onChange={(date) => setEndDate(date)}
                     textField={<TextField />}
+                    required
                   />
                 </LocalizationProvider>
               </Grid>
