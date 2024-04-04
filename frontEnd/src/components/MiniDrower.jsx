@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import FormatListNumberedRtlIcon from "@mui/icons-material/FormatListNumberedRtl";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -76,7 +76,7 @@ const Drawer = styled(MuiDrawer, {
 const MiniDrower = () => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);

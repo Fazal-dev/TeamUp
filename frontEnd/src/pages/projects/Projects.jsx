@@ -1,4 +1,4 @@
-import { Box, Container, Link, Paper, Typography } from "@mui/material";
+import { Box, Button, Container, Link, Paper, Typography } from "@mui/material";
 import { Menu, MenuItem } from "@mui/material";
 import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
@@ -12,30 +12,31 @@ import axios from "axios";
 const Projects = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [projects, setProjects] = useState([]);
+
+  const fetchAllProjects = async (token) => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/project", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setProjects(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
+  const getUserInfo = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/user/me`);
+      setCreatedBy(response.data.createdBy);
+      console.log(response.data.userName);
+    } catch (error) {
+      console.error("Error fetching user information:", error);
+    }
+  };
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const getUserInfo = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/api/user/me`);
-        setCreatedBy(response.data.createdBy);
-        console.log(response.data.userName);
-      } catch (error) {
-        console.error("Error fetching user information:", error);
-      }
-    };
-    const fetchAllProjects = async (token) => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/project", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setProjects(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      }
-    };
     getUserInfo();
     fetchAllProjects(token);
   }, []);
@@ -46,6 +47,11 @@ const Projects = () => {
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+  const handleRefresh = () => {
+    const token = localStorage.getItem("token");
+    getUserInfo();
+    fetchAllProjects(token);
   };
   return (
     <div>
@@ -61,6 +67,7 @@ const Projects = () => {
         >
           <Box>
             <Typography variant="h5">Projects</Typography>
+            <Button onClick={handleRefresh}>refresh</Button>
           </Box>
         </Box>
         <Paper elevation={2} sx={{ p: 2 }}>
