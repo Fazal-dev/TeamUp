@@ -42,7 +42,7 @@ const LoginForm = () => {
       console.log(error);
       enqueueSnackbar(error.response.data.error, {
         variant: "error",
-        anchorOrigin: { vertical: "top", horizontal: "left" },
+        anchorOrigin: { vertical: "bottom", horizontal: "right" },
       });
       // reset the state
       setFormData({

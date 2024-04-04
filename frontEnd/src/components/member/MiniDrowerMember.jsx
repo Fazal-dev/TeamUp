@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import FormatListNumberedRtlIcon from "@mui/icons-material/FormatListNumberedRtl";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -20,6 +20,7 @@ import { Link, Outlet } from "react-router-dom";
 import NavBar from "../NavBar";
 import styled from "@emotion/styled";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -68,8 +69,9 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 const MiniDrowerMember = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const theme = useTheme();
+  const navigate = useNavigate();
   const handleDrawerOpen = () => {
     setOpen(true);
   };

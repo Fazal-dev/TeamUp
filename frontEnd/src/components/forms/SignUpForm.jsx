@@ -29,7 +29,7 @@ const SignUpForm = () => {
       await axios.post("http://localhost:8000/api/user", formData);
       enqueueSnackbar("account created succesfully", {
         variant: "success",
-        anchorOrigin: { vertical: "top", horizontal: "right" },
+        anchorOrigin: { vertical: "bottom", horizontal: "right" },
       });
       navigate("/login");
     } catch (error) {

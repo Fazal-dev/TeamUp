@@ -155,22 +155,6 @@ const MyTask = () => {
               card
             </Button>
           </Box>
-          <Grid container alignItems={"center"} justifyContent={"end"}>
-            <Grid
-              item
-              sx={{
-                paddingY: 1,
-                display: `${showType === "table" ? "block" : "none"}`,
-              }}
-            >
-              <TextField
-                size="small"
-                id="search"
-                label="Search for Task"
-                variant="filled"
-              />
-            </Grid>
-          </Grid>
         </Stack>
 
         {loading ? (

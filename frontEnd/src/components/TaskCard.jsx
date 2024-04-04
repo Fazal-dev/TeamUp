@@ -2,13 +2,16 @@ import { Box, Card, Grid, Link, Stack } from "@mui/material";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
+
 import Typography from "@mui/material/Typography";
 import React from "react";
 import Chip from "@mui/material/Chip";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { deleteTask } from "../services/taskService/index.js";
+import { useNavigate } from "react-router-dom";
 const TaskCard = ({ task }) => {
+  const navigate = useNavigate();
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
     const data = deleteTask(id, token);
@@ -64,7 +67,7 @@ const TaskCard = ({ task }) => {
                   </Link>
                 </Grid>
                 <Grid>
-                  <Link>
+                  <Link onClick={() => navigate(`/editTask/${task._id}`)}>
                     <BorderColorIcon />
                   </Link>
                 </Grid>

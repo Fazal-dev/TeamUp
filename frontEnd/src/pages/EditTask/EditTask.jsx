@@ -24,22 +24,39 @@ const EditTask = () => {
   const [user, setUser] = useState({});
   const [taskTitle, setTaskTitle] = useState("");
   const [description, setDescription] = useState("");
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const getUserInfo = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/api/user/me`, {
+  // UPDATE TASK
+  const updateTask = async (updatedFormData) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.patch(
+        `http://localhost:8000/api/task/${id}`,
+        updatedFormData,
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
-        setUser(response.data);
-      } catch (error) {
-        console.error("Error fetching user information:", error);
-      }
-    };
-    getUserInfo();
+        }
+      );
+    } catch (error) {
+      console.error("Error updating task:", error.message);
+    }
+  };
+  // GET USER INFOR
+  const getUserInfo = async (token) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/user/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(response.data);
+    } catch (error) {
+      console.error("Error fetching user information:", error);
+    }
+  };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    getUserInfo(token);
     axios
       .get(`http://localhost:8000/api/task/${id}`, {
         headers: {
@@ -49,7 +66,6 @@ const EditTask = () => {
       .then((res) => {
         setTaskTitle(res.data.taskTitle);
         setDescription(res.data.description);
-
         setPriority(res.data.priority);
         setStatus(res.data.status);
       })
@@ -70,35 +86,20 @@ const EditTask = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const updatedFormData = {
-        taskTitle,
-        description,
-        priority,
-        status,
-        user: user.id,
-      };
-      const token = localStorage.getItem("token");
-      const res = await axios.patch(
-        `http://localhost:8000/api/task/${id}`,
-        updatedFormData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(res.data);
-    } catch (error) {
-      console.error("Error updating task:", error.message);
-    }
+    const updatedFormData = {
+      taskTitle,
+      description,
+      priority,
+      status,
+      user: user.id,
+    };
 
+    updateTask(updatedFormData);
     enqueueSnackbar("Successfully updated a task ", {
       variant: "success",
-      autoHideDuration: 3000, // 3 seconds
+      autoHideDuration: 3000,
       anchorOrigin: { vertical: "top", horizontal: "right" },
     });
-
     navigate("/MyTasks");
     setDescription("");
     setTaskTitle("");
@@ -167,16 +168,6 @@ const EditTask = () => {
             </FormControl>
           </Grid>
         </Grid>
-        <Box sx={{ mb: 2 }}>
-          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Due Date"
-              name="date"
-              value={date}
-              onChange={handleDateChange}
-            />
-          </LocalizationProvider> */}
-        </Box>
         <Box>
           <Button type="submit" variant="contained" autoFocus>
             Update

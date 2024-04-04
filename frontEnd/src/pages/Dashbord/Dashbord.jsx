@@ -9,40 +9,78 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RadioButtonCheckedTwoToneIcon from "@mui/icons-material/RadioButtonCheckedTwoTone";
 import PersonIcon from "@mui/icons-material/Person";
 import PriorityChart from "../../components/PriorityChart";
-
-const CardData = [
-  {
-    title: "Total Task",
-    amount: 100,
-    icon: <ListAltIcon />,
-  },
-  {
-    title: "completed Task",
-    amount: 100,
-    icon: <CheckCircleIcon />,
-  },
-  {
-    title: "Incomplete  Task",
-    amount: 100,
-    icon: <RadioButtonCheckedTwoToneIcon />,
-  },
-  {
-    title: "My Tasks",
-    amount: 100,
-    icon: <PersonIcon />,
-  },
-];
-
+import { getToken } from "../../utility/index.js";
+import axios from "axios";
 const StyledCard = styled(Card)({ width: 40 + "%", height: 140 });
 
 const Dashbord = () => {
   const [value, setValue] = useState(new Date());
+  const [tasks, setTasks] = useState([]);
+
+  // Fetch JWT token
+  const token = getToken();
+
+  const fetchAllTask = async (token) => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/task", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTasks(response.data);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
 
   useEffect(() => {
-    // fetch total project
-    // fetch all complete
+    // fetch total my task
+    fetchAllTask(token);
   }, []);
 
+  const totalTask = tasks.length;
+
+  const incompleteTasks = tasks.filter((task) => task.status === "incomplete");
+  const completeTasks = tasks.filter((task) => task.status === "completed");
+  const highPriorityTasks = tasks.filter((task) => task.priority === "high");
+  const mediumPriorityTasks = tasks.filter(
+    (task) => task.priority === "medium"
+  );
+  const lowPriorityTasks = tasks.filter((task) => task.priority === "low");
+
+  const totalIncompleteTasks = incompleteTasks.length;
+  const totalCompletedTasks = completeTasks.length;
+  const totalHighPriorityTasks = highPriorityTasks.length;
+  const totalMediumPriorityTasks = mediumPriorityTasks.length;
+  const totalLowPriorityTasks = lowPriorityTasks.length;
+
+  const chartData = [
+    totalHighPriorityTasks,
+    totalMediumPriorityTasks,
+    totalLowPriorityTasks,
+  ];
+  const CardData = [
+    {
+      title: "Projects",
+      amount: 100,
+      icon: <ListAltIcon />,
+    },
+    {
+      title: "completed Task",
+      amount: totalCompletedTasks,
+      icon: <CheckCircleIcon />,
+    },
+    {
+      title: "Incomplete  Task",
+      amount: totalIncompleteTasks,
+      icon: <RadioButtonCheckedTwoToneIcon />,
+    },
+    {
+      title: "My Tasks",
+      amount: totalTask,
+      icon: <PersonIcon />,
+    },
+  ];
   return (
     <>
       <Box sx={{ flexGrow: 1, p: 3 }}>
@@ -72,7 +110,7 @@ const Dashbord = () => {
                         variant="body2"
                         color="text.secondary"
                       >
-                        <small>+</small> {card.amount}
+                        <small>+ </small> {card.amount}
                       </Typography>
                     </Box>
                   </CardContent>
@@ -88,7 +126,7 @@ const Dashbord = () => {
                 <CardContent>
                   <Box height={50 + "vh"}>
                     {/* bar chart */}
-                    <PriorityChart />
+                    <PriorityChart chartData={chartData} />
                   </Box>
                 </CardContent>
               </Card>

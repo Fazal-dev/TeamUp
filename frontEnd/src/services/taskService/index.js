@@ -1,8 +1,14 @@
 import axios from "axios";
-const task = [];
+
+var token = localStorage.getItem("token");
+// get token
 // add new task
+// get one task
 // GET ALL THE TASK
-export const fetchAllTask = async (token) => {
+// update task
+// get user infor
+// DELETE THE TASK
+export default async (token) => {
   try {
     const response = await axios.get("http://localhost:8000/api/task", {
       headers: {
@@ -15,7 +21,7 @@ export const fetchAllTask = async (token) => {
     return null;
   }
 };
-// DELETE THE TASK
+
 export const deleteTask = async (id, token) => {
   try {
     await axios
@@ -31,4 +37,11 @@ export const deleteTask = async (id, token) => {
     console.log("Error fetching tasks:", error.message);
   }
 };
-// update task
+
+const getuserInfor = async () => {
+  const user = await axios.get(`http://localhost:8000/api/user/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

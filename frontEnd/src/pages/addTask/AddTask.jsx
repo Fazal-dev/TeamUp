@@ -11,7 +11,6 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -57,7 +56,6 @@ const AddTask = () => {
   const getUserInfo = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/user/me`);
-      console.log(response.data);
       setUser(response.data);
     } catch (error) {
       console.error("Error fetching user information:", error);
