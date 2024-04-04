@@ -16,9 +16,23 @@ const StyledCard = styled(Card)({ width: 40 + "%", height: 140 });
 const Dashbord = () => {
   const [value, setValue] = useState(new Date());
   const [tasks, setTasks] = useState([]);
+  const [projects, setProjects] = useState([]);
 
   // Fetch JWT token
   const token = getToken();
+  const fetchAllProjects = async (token) => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/project", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setProjects(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
 
   const fetchAllTask = async (token) => {
     try {
@@ -34,12 +48,13 @@ const Dashbord = () => {
   };
 
   useEffect(() => {
-    // fetch total my task
     // TODO fetch total projects
+    fetchAllProjects(token);
     fetchAllTask(token);
   }, []);
 
   const totalTask = tasks.length;
+  const totalProject = projects.length;
   // filter task
   const incompleteTasks = tasks.filter((task) => task.status === "incomplete");
   const completeTasks = tasks.filter((task) => task.status === "completed");
@@ -63,7 +78,7 @@ const Dashbord = () => {
   const CardData = [
     {
       title: "Projects",
-      amount: 100,
+      amount: totalProject,
       icon: <ListAltIcon />,
     },
     {

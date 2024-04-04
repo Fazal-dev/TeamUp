@@ -7,20 +7,20 @@ import {
   getAllMembersInProject,
   addMemberToProject,
 } from "../controller/ProjectController.js";
-
+import { protect } from "../middleWare/authMiddleWare.js";
 const ProjectRouter = express.Router();
 
-ProjectRouter.post("/", createProject);
+ProjectRouter.post("/", protect, createProject);
 
-ProjectRouter.get("/", getAllProject);
+ProjectRouter.get("/", protect, getAllProject);
 
-ProjectRouter.get("/:projectId/members", getAllMembersInProject);
+// ProjectRouter.get("/:projectId/members", protect, getAllMembersInProject);
 
-ProjectRouter.post("/:projectId/members", addMemberToProject);
+// ProjectRouter.post("/:projectId/members", protect, addMemberToProject);
 
 // ProjectRouter.get("/:id", getSingleProjectTask);
 
-ProjectRouter.patch("/:id", updateProject);
-ProjectRouter.delete("/:id", deleteProject);
+ProjectRouter.patch("/:id", protect, updateProject);
+ProjectRouter.delete("/:id", protect, deleteProject);
 
 export default ProjectRouter;

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import DefoultLayout from "../layout/DefoultLayout";
 import GuestLayout from "../layout/GuestLayout";
 import Login from "../pages/login/Login";
@@ -19,6 +19,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <DefoultLayout />,
     children: [
+      {
+        path: "*",
+        element: <Navigate to="/login" />,
+      },
+
       {
         path: "/dashbord",
         element: <Dashbord />,
@@ -49,6 +54,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <GuestLayout />,
     children: [
+      {
+        path: "*",
+        element: <Navigate to="/login" />,
+      },
       {
         path: "/login",
         element: <Login />,

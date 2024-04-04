@@ -1,21 +1,25 @@
 import mongoose from "mongoose";
 import Project from "../model/projectModel.js";
+import moment from "moment";
 // create a project
 export const createProject = async (req, res) => {
   const { projectName, description, startDate, endDate, createdBy } = req.body;
+  if (!req.user.id) {
+    console.log("error catch");
+  }
+
   try {
-    // Validate input data
-    if (!projectName || !description || !startDate || !endDate || !createdBy) {
-      return res.status(400).json({ error: "Missing required fields." });
-    }
+    const formattedStartDate = moment(startDate).utc().format("YYYY-MM-DD");
+    const formattedEndDate = moment(endDate).utc().format("YYYY-MM-DD");
+
     const project = await Project.create({
       projectName,
       description,
-      startDate,
-      endDate,
-      createdBy,
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+      createdBy: req.user.id,
     });
-    res.status(200).json(project);
+    res.status(200).send(project);
     console.log(project);
   } catch (error) {
     console.error("Error creating project :", error);
@@ -25,7 +29,7 @@ export const createProject = async (req, res) => {
 // getall the Project
 export const getAllProject = async (req, res) => {
   try {
-    const allProject = await Project.find({});
+    const allProject = await Project.find({ createdBy: req.user.id });
     res.status(200).json(allProject);
   } catch (error) {
     res.status(400).json({ error: error.message });
