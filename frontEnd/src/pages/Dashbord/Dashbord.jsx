@@ -35,11 +35,12 @@ const Dashbord = () => {
 
   useEffect(() => {
     // fetch total my task
+    // TODO fetch total projects
     fetchAllTask(token);
   }, []);
 
   const totalTask = tasks.length;
-
+  // filter task
   const incompleteTasks = tasks.filter((task) => task.status === "incomplete");
   const completeTasks = tasks.filter((task) => task.status === "completed");
   const highPriorityTasks = tasks.filter((task) => task.priority === "high");
@@ -47,7 +48,7 @@ const Dashbord = () => {
     (task) => task.priority === "medium"
   );
   const lowPriorityTasks = tasks.filter((task) => task.priority === "low");
-
+  // total counts
   const totalIncompleteTasks = incompleteTasks.length;
   const totalCompletedTasks = completeTasks.length;
   const totalHighPriorityTasks = highPriorityTasks.length;
@@ -81,6 +82,20 @@ const Dashbord = () => {
       icon: <PersonIcon />,
     },
   ];
+  const getBackgroundColor = (title) => {
+    switch (title) {
+      case "Projects":
+        return "#E57373";
+      case "completed Task":
+        return "#81C784";
+      case "Incomplete  Task":
+        return "#FFD54F";
+      case "My Tasks":
+        return "#64B5F6";
+      default:
+        return "transparent";
+    }
+  };
   return (
     <>
       <Box sx={{ flexGrow: 1, p: 3 }}>
@@ -102,7 +117,15 @@ const Dashbord = () => {
                           {card.title}
                         </Typography>
                       </Box>
-                      <Box>{card.icon}</Box>
+                      <Box
+                        sx={{
+                          p: 1,
+                          bgcolor: `${getBackgroundColor(card.title)}`,
+                          borderRadius: "100px",
+                        }}
+                      >
+                        {card.icon}
+                      </Box>
                     </Stack>
                     <Box sx={{ textAlign: "center" }}>
                       <Typography
