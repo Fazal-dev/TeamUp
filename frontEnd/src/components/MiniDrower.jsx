@@ -91,8 +91,8 @@ const MiniDrower = () => {
       text: "Are you sure you want to log out?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, Log out",
       cancelButtonText: "Cancel",
     }).then((result) => {

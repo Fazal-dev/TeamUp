@@ -18,6 +18,7 @@ import { IconButton } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import Alert from "@mui/material/Alert";
 import axios from "axios";
 
 const CreateProjectModal = ({ open }) => {
@@ -58,7 +59,18 @@ const CreateProjectModal = ({ open }) => {
 
   const validateDates = () => {
     if (startDate && endDate && startDate >= endDate) {
-      setError("End date must be after the start date.");
+      setError(
+        "The project end date must be after the start date. Please review and adjust accordingly."
+      );
+      return false;
+    }
+    return true;
+  };
+  const validateFields = () => {
+    if (!projectName || !description || !startDate || !endDate) {
+      setError(
+        "All fields are required. Please make sure to fill out all fields before proceeding."
+      );
       return false;
     }
     return true;
@@ -74,6 +86,11 @@ const CreateProjectModal = ({ open }) => {
     getUserInfo();
     try {
       const token = localStorage.getItem("token");
+
+      if (!validateFields()) {
+        setLoading(false);
+        return;
+      }
       const response = await axios.post(
         "http://localhost:8000/api/project",
         {
@@ -194,6 +211,11 @@ const CreateProjectModal = ({ open }) => {
               </Grid>
             </Grid>
           </form>
+          {error && (
+            <Box sx={{ p: 1, textAlign: "center" }}>
+              <Alert severity="error">{error}</Alert>
+            </Box>
+          )}
         </DialogContent>
         <DialogActions>
           <Button
@@ -204,7 +226,6 @@ const CreateProjectModal = ({ open }) => {
             {loading ? "Creating..." : "Create"}
           </Button>
         </DialogActions>
-        {error && <Box sx={{ color: "red" }}>{error}</Box>}
       </Dialog>
     </>
   );
