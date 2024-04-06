@@ -29,7 +29,12 @@ export const loginUser = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
     });
   } else {
-    res.status(400).json({ error: "invalid user data" });
+    res
+      .status(401)
+      .json({
+        error:
+          "Invalid email or password. Please check your credentials and try again.",
+      });
   }
 });
 

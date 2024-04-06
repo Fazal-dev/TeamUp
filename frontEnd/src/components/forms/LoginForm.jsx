@@ -1,5 +1,13 @@
 import React from "react";
-import { Grid, Typography, TextField, Button, Link } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  Link,
+  Box,
+  Alert,
+} from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,7 +15,9 @@ import { useSnackbar } from "notistack";
 
 const LoginForm = () => {
   const navigate = useNavigate("/");
+  const [error, setError] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -32,18 +42,17 @@ const LoginForm = () => {
         anchorOrigin: { vertical: "top", horizontal: "right" },
         autoHideDuration: 3000,
       });
-      navigate("/dashbord");
-    } catch (error) {
-      console.log(error);
-      enqueueSnackbar(error.response.data.error, {
-        variant: "error",
-        anchorOrigin: { vertical: "bottom", horizontal: "right" },
-      });
       // reset the state
       setFormData({
         email: "",
         password: "",
       });
+      setLoading(false);
+      navigate("/dashbord");
+    } catch (error) {
+      console.log(error);
+      // error
+      setError(error.response.data.error);
     }
   };
 
@@ -53,18 +62,23 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // VALIDATE PASsWORD HERE
-    if (formData.password.length < 4) {
-      enqueueSnackbar("Please enter valid password !!", {
-        variant: "error",
-        anchorOrigin: { vertical: "top", horizontal: "left" },
-      });
+    setLoading(true);
+    // Validate password length
+    const { password } = formData;
+    if (password.length < 4) {
+      setError("Password must be at least 4 characters long.");
+      setLoading(false);
+      return;
     }
     // login function
-    await login();
-
-    console.log(formData);
-    setFormData({ email: "", password: "" });
+    try {
+      await login();
+      setLoading(false);
+    } catch (error) {
+      setError("An unexpected error occurred. Please try again later.");
+      setLoading(false);
+      console.error("Login failed:", error);
+    }
   };
 
   return (
@@ -74,6 +88,11 @@ const LoginForm = () => {
           <Grid item xs={12} textAlign={"center"}>
             <Typography variant="h5">Sign In</Typography>
           </Grid>
+          {error && (
+            <Grid xs={12} item sx={{ textAlign: "center" }}>
+              <Alert severity="error">{error}</Alert>
+            </Grid>
+          )}
           <Grid item xs={12}>
             <TextField
               label="Email"
@@ -104,10 +123,12 @@ const LoginForm = () => {
               fullWidth
               type="submit"
               sx={{ height: "45px" }}
+              disabled={loading}
             >
-              Sign In
+              {loading ? "Sign In.." : "Sign In"}
             </Button>
           </Grid>
+
           <Grid item xs={12}>
             <Grid
               item
@@ -117,7 +138,7 @@ const LoginForm = () => {
             >
               <em>
                 Don't have an account?
-                <Link href={"/signup"}>{" Sign Up"}</Link>
+                <Link href="/signup">{" Sign Up here"}</Link>
               </em>
             </Grid>
           </Grid>
