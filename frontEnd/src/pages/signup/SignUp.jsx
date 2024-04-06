@@ -13,10 +13,10 @@ const SignUp = () => {
         <Grid container spacing={3}>
           {/* left side: Welcome Text */}
           <Grid marginTop={10} item xs={12} sm={6} textAlign={"center"}>
-            <Typography variant="h4" marginY={3}>
+            <Typography variant="h4" marginY={3} sx={{ fontWeight: 500 }}>
               Welcome to a smarter way to manage tasks!
             </Typography>
-            <Typography variant="body">
+            <Typography variant="body" sx={{ lineHeight: 1.5 }}>
               Sign up for{" "}
               <span style={{ color: "#673ab7", fontWeight: "800" }}>
                 Priority X

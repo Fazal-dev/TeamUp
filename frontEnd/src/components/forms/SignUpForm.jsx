@@ -10,6 +10,7 @@ const SignUpForm = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
 
   const registerUser = async () => {

@@ -91,7 +91,6 @@ const Projects = () => {
         handleRefresh();
       }
     });
-    // delete sucesss full or nothing happen
   };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
