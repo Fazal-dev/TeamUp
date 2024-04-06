@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Projects = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -35,6 +36,23 @@ const Projects = () => {
       console.error("Error fetching user information:", error);
     }
   };
+  // delete project
+  const deleteProject = async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios
+        .delete(`http://localhost:8000/api/project/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          res.data;
+        });
+    } catch (error) {
+      console.log("Error delete task :", error.message);
+    }
+  };
   useEffect(() => {
     const token = localStorage.getItem("token");
     getUserInfo();
@@ -44,15 +62,41 @@ const Projects = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
   const handleRefresh = () => {
     const token = localStorage.getItem("token");
     getUserInfo();
     fetchAllProjects(token);
   };
+  const handleDeleteProject = async (id) => {
+    getUserInfo();
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleClose();
+        // DELETE project
+        deleteProject(id).then(() => {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your task has been deleted.",
+            icon: "success",
+          });
+        });
+        handleRefresh();
+      }
+    });
+    // delete sucesss full or nothing happen
+  };
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
   return (
     <div>
       <Container sx={{ width: "100vw" }}>
@@ -110,7 +154,11 @@ const Projects = () => {
                         onClose={handleClose}
                       >
                         <MenuItem onClick={handleClose}>Edit</MenuItem>
-                        <MenuItem onClick={handleClose}>Delete</MenuItem>
+                        <MenuItem
+                          onClick={() => handleDeleteProject(project._id)}
+                        >
+                          Delete
+                        </MenuItem>
                         <Link underline="none" href="/projectTask">
                           <MenuItem onClick={handleClose}>View</MenuItem>
                         </Link>

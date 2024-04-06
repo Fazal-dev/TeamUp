@@ -21,11 +21,11 @@ const Login = () => {
         {/* left side: Welcome Text */}
         <Grid item xs={12} sm={6} textAlign={"center"}>
           <Typography variant="h4" marginY={3}>
-            Transform your work and life , finally
+            Simplify Your Workflow with [App Name]
           </Typography>
           <Typography variant="subtitle">
-            Become focused,organized with <span>TEAM UP</span>. The world's task
-            management app.
+            The Cloud-Based Task Management Revolution! Experience the power of
+            efficient task management at your fingertips
           </Typography>
         </Grid>
 
