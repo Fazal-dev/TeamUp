@@ -32,12 +32,7 @@ const LoginForm = () => {
         anchorOrigin: { vertical: "top", horizontal: "right" },
         autoHideDuration: 3000,
       });
-      // navigate the user based on user type
-      if (user.data.userType === "admin") {
-        navigate("/dashbord");
-      } else {
-        navigate("/memberTask");
-      }
+      navigate("/dashbord");
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error.response.data.error, {

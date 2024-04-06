@@ -118,6 +118,7 @@ const Projects = () => {
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell>No Project</TableCell>
                 <TableCell>Project Name</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Start Date</TableCell>
@@ -126,47 +127,62 @@ const Projects = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {projects.map((project) => (
-                <TableRow
-                  key={project._id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell>{project.projectName}</TableCell>
-                  <TableCell>{project.description}</TableCell>
-                  <TableCell>{project.startDate}</TableCell>
-                  <TableCell>{project.endDate}</TableCell>
-                  <TableCell>
-                    <div>
-                      <MoreVertSharpIcon onClick={handleMenu} />
-                      <Menu
-                        id="menu-appbar"
-                        anchorEl={anchorEl}
-                        anchorOrigin={{
-                          vertical: "top",
-                          horizontal: "left",
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                          vertical: "top",
-                          horizontal: "left",
-                        }}
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                      >
-                        <MenuItem onClick={handleClose}>Edit</MenuItem>
-                        <MenuItem
-                          onClick={() => handleDeleteProject(project._id)}
-                        >
-                          Delete
-                        </MenuItem>
-                        <Link underline="none" href="/projectTask">
-                          <MenuItem onClick={handleClose}>View</MenuItem>
-                        </Link>
-                      </Menu>
-                    </div>
+              {projects.length == 0 || projects === null ? (
+                <TableRow>
+                  <TableCell colSpan={6} rowSpan={6} align="center">
+                    <Typography variant="subtitle1" color="textSecondary">
+                      No projects found.
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      You haven't added any project yet. Click the "create
+                      Project" button to get started.
+                    </Typography>
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                projects.map((project, index) => (
+                  <TableRow
+                    key={project._id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{project.projectName}</TableCell>
+                    <TableCell>{project.description}</TableCell>
+                    <TableCell>{project.startDate}</TableCell>
+                    <TableCell>{project.endDate}</TableCell>
+                    <TableCell>
+                      <div>
+                        <MoreVertSharpIcon onClick={handleMenu} />
+                        <Menu
+                          id="menu-appbar"
+                          anchorEl={anchorEl}
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "left",
+                          }}
+                          keepMounted
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "left",
+                          }}
+                          open={Boolean(anchorEl)}
+                          onClose={handleClose}
+                        >
+                          <MenuItem onClick={handleClose}>Edit</MenuItem>
+                          <MenuItem
+                            onClick={() => handleDeleteProject(project._id)}
+                          >
+                            Delete
+                          </MenuItem>
+                          <Link underline="none" href="/projectTask">
+                            <MenuItem onClick={handleClose}>View</MenuItem>
+                          </Link>
+                        </Menu>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </Paper>

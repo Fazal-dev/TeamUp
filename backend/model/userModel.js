@@ -17,11 +17,6 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    userType: {
-      type: String,
-      enum: ["admin", "member"],
-      default: "member",
-    },
   },
   {
     timestamps: true,

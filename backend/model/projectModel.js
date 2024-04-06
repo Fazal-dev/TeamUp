@@ -10,7 +10,6 @@ const projectSchema = new Schema(
     description: String,
     startDate: Date,
     endDate: Date,
-    members: [{ type: Schema.Types.ObjectId, ref: "User" }],
     createdBy: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {

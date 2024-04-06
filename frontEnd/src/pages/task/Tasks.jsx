@@ -5,21 +5,12 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Chip, Menu, MenuItem } from "@mui/material";
+import { Chip, Menu, MenuItem, Typography } from "@mui/material";
 import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
-import { Box, Container, Paper, Typography } from "@mui/material";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-import Members from "../members/Members";
+import { Box, Container, Paper } from "@mui/material";
 const Tasks = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  // tab
-  const [value, setValue] = React.useState("Task");
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -98,99 +89,86 @@ const Tasks = () => {
     <div>
       <Container sx={{ width: "100vw" }}>
         <Box sx={{ width: "100%", typography: "body1" }}>
-          <TabContext value={value}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <TabList onChange={handleChange} aria-label="tab">
-                <Tab label="Task" value="Task" />
-                <Tab label="Members" value="Members" />
-              </TabList>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 5,
+              mt: 5,
+            }}
+          >
+            <Box>
+              <Typography variant="h5">Project Task</Typography>
             </Box>
-            <TabPanel value="Task">
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  mb: 5,
-                  mt: 0,
-                }}
-              >
-                <Box></Box>
-                <Box>
-                  <AddTaskModal />
-                </Box>
-              </Box>
-              <Paper elevation={2} sx={{ p: 2 }}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Task Tittle</TableCell>
-                      <TableCell>Description</TableCell>
-                      <TableCell>Date</TableCell>
-                      <TableCell>Assignee</TableCell>
-                      <TableCell>priority</TableCell>
-                      <TableCell>Status</TableCell>
-                      <TableCell>Actions</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {tasks.map((task, index) => (
-                      <TableRow
-                        key={index}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell>{task.task_title}</TableCell>
-                        <TableCell>{task.description}</TableCell>
-                        <TableCell>{task.date}</TableCell>
-                        <TableCell>{task.assignee}</TableCell>
-                        <TableCell>{task.priority}</TableCell>
-                        <TableCell>
-                          <Chip
-                            size="small"
-                            variant="outlined"
-                            label={task.status}
-                            color={
-                              task.status === "completed"
-                                ? "success"
-                                : "warning"
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <div>
-                            <MoreVertSharpIcon onClick={handleMenu} />
-                            <Menu
-                              id="menu-appbar"
-                              anchorEl={anchorEl}
-                              anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                              }}
-                              keepMounted
-                              transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                              }}
-                              open={Boolean(anchorEl)}
-                              onClose={handleClose}
-                            >
-                              <MenuItem onClick={handleClose}>Edit</MenuItem>
-                              <MenuItem onClick={handleClose}>Delete</MenuItem>
-                            </Menu>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Paper>
-            </TabPanel>
-            <TabPanel value="Members">
-              <Members />
-            </TabPanel>
-          </TabContext>
+            <Box>
+              <AddTaskModal />
+            </Box>
+          </Box>
+          <Paper elevation={2} sx={{ p: 2 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>No Task</TableCell>
+                  <TableCell>Task Tittle</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>priority</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {tasks.map((task, index) => (
+                  <TableRow
+                    key={index}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                    }}
+                  >
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{task.task_title}</TableCell>
+                    <TableCell>{task.description}</TableCell>
+                    <TableCell>{task.date}</TableCell>
+                    <TableCell>{task.priority}</TableCell>
+                    <TableCell>
+                      <Chip
+                        size="small"
+                        variant="outlined"
+                        label={task.status}
+                        color={
+                          task.status === "completed" ? "success" : "warning"
+                        }
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <div>
+                        <MoreVertSharpIcon onClick={handleMenu} />
+                        <Menu
+                          id="menu-appbar"
+                          anchorEl={anchorEl}
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          keepMounted
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          open={Boolean(anchorEl)}
+                          onClose={handleClose}
+                        >
+                          <MenuItem onClick={handleClose}>Edit</MenuItem>
+                          <MenuItem onClick={handleClose}>Delete</MenuItem>
+                        </Menu>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
         </Box>
       </Container>
     </div>

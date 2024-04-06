@@ -1,26 +1,14 @@
 import { useState } from "react";
-import {
-  Grid,
-  Typography,
-  TextField,
-  Button,
-  Link,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Grid, Typography, TextField, Button, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 
 const SignUpForm = () => {
-  const [userType, setUserType] = useState("");
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
     password: "",
-    userType: "",
   });
   const { enqueueSnackbar } = useSnackbar();
 
@@ -37,7 +25,7 @@ const SignUpForm = () => {
         variant: "error",
         anchorOrigin: { vertical: "top", horizontal: "left" },
       });
-      setFormData({ userName: "", email: "", password: "", userType: "" });
+      setFormData({ userName: "", email: "", password: "" });
       console.log(error);
     }
   };
@@ -46,11 +34,6 @@ const SignUpForm = () => {
   const handleChangeData = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  const handleChangeUserType = (event) => {
-    setUserType(event.target.value);
-    setFormData({ ...formData, userType: event.target.value });
   };
 
   const handleSubmit = (event) => {
@@ -77,22 +60,6 @@ const SignUpForm = () => {
               value={formData.userName}
               onChange={handleChangeData}
             />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth size="normal">
-              <InputLabel id="demo-select-small-label">UserType</InputLabel>
-              <Select
-                required
-                labelId="demo-select-small-label"
-                id="demo-select-small"
-                value={userType}
-                onChange={handleChangeUserType}
-                label="UserType"
-              >
-                <MenuItem value={"admin"}>Admin</MenuItem>
-                <MenuItem value={"member"}>Member</MenuItem>
-              </Select>
-            </FormControl>
           </Grid>
           <Grid item xs={12}>
             <TextField

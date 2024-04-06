@@ -39,7 +39,6 @@ const AddTaskModal = () => {
   const [formData, setFormData] = useState({
     taskTitle: "",
     description: "",
-    assignedTo: "",
     dueDate: null,
   });
 
@@ -139,6 +138,7 @@ const AddTaskModal = () => {
                     id="demo-simple-select"
                     value={status}
                     label="Status"
+                    size="normal"
                     onChange={handleChange}
                   >
                     <MenuItem value={"complete"}>complete</MenuItem>
@@ -147,19 +147,8 @@ const AddTaskModal = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={6} sm={6}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="Due Date"
-                    name="dueDate"
-                    value={formData.dueDate ? dayjs(formData.dueDate) : null}
-                    onChange={(date) => handleDateChange(date)}
-                  />
-                </LocalizationProvider>
-              </Grid>
-            </Grid>
-            <Grid container spacing={2} sx={{ mb: 2 }}>
-              <Grid item xs={6} sm={6}>
-                <FormControl size="small" fullWidth>
+                {/* priority */}
+                <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
                     Priority
                   </InputLabel>
@@ -168,6 +157,7 @@ const AddTaskModal = () => {
                     id="demo-simple-select"
                     value={priority}
                     label="Priority"
+                    size="normal"
                     onChange={handlePriorityChange}
                   >
                     <MenuItem value={"High"}>High</MenuItem>
@@ -176,16 +166,16 @@ const AddTaskModal = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={6} sm={6}>
-                <TextField
-                  label="Assign to"
-                  name="assignedTo"
-                  value={formData.assignedTo}
-                  onChange={handleInputChange}
-                  size="small"
-                  fullWidth
+            </Grid>
+            <Grid sx={{ mb: 2 }}>
+              <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Due Date"
+                  name="dueDate"
+                  value={formData.dueDate ? dayjs(formData.dueDate) : null}
+                  onChange={(date) => handleDateChange(date)}
                 />
-              </Grid>
+              </LocalizationProvider>
             </Grid>
           </form>
         </DialogContent>

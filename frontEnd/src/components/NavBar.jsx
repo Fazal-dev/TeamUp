@@ -75,7 +75,7 @@ const NavBar = ({ open, handleDrawerOpen }) => {
           >
             <Grid item md={1}>
               <Typography variant="h6" noWrap component="div">
-                Team Up
+                Priority X
               </Typography>
             </Grid>
             <Grid item>

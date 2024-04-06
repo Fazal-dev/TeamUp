@@ -128,7 +128,12 @@ const Dashbord = () => {
                       spacing={2}
                     >
                       <Box>
-                        <Typography gutterBottom variant="h6" component="div">
+                        <Typography
+                          sx={{ color: "text.secondary" }}
+                          gutterBottom
+                          variant="h6"
+                          component="div"
+                        >
                           {card.title}
                         </Typography>
                       </Box>
@@ -143,12 +148,8 @@ const Dashbord = () => {
                       </Box>
                     </Stack>
                     <Box sx={{ textAlign: "center" }}>
-                      <Typography
-                        sx={{ fontSize: 25 }}
-                        variant="body2"
-                        color="text.secondary"
-                      >
-                        <small>+ </small> {card.amount}
+                      <Typography sx={{ fontSize: 25 }} variant="body2">
+                        <strong>{card.amount}</strong>
                       </Typography>
                     </Box>
                   </CardContent>

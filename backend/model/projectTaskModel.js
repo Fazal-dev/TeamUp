@@ -7,10 +7,6 @@ const projectTaskSchema = new Schema(
     taskTitle: String,
     description: String,
     date: Date,
-    assignedTo: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
     status: {
       type: String,
       enum: ["completed", "incomplete"],

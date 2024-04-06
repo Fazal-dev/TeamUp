@@ -26,7 +26,6 @@ export const loginUser = asyncHandler(async (req, res) => {
   if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       message: "succefully login",
-      userType: user.userType,
       token: generateToken(user._id),
     });
   } else {
@@ -37,7 +36,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 // signup user
 
 export const signUpUser = asyncHandler(async (req, res) => {
-  const { email, password, userName, userType } = req.body;
+  const { email, password, userName } = req.body;
 
   try {
     // Check if the email already exists
@@ -54,7 +53,6 @@ export const signUpUser = asyncHandler(async (req, res) => {
       email,
       password: hashPassword,
       userName,
-      userType: userType || "member",
     });
 
     // Respond with success message
@@ -71,13 +69,10 @@ export const signUpUser = asyncHandler(async (req, res) => {
 });
 // get authorized user id
 export const getMe = asyncHandler(async (req, res) => {
-  const { _id, email, userType, userName } = await userModel.findById(
-    req.user.id
-  );
+  const { _id, email, userName } = await userModel.findById(req.user.id);
   res.status(201).send({
     id: _id,
     email,
-    userType,
     userName,
   });
 });

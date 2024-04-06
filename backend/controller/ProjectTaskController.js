@@ -3,18 +3,12 @@ import ProjectTask from "../model/projectTaskModel.js";
 import Project from "../model/projectModel.js";
 // create a project task
 export const createProjectTask = async (req, res) => {
-  const { task_title, description, date, assignedTo, status, projectID } =
-    req.body;
+  const { task_title, description, date, status, projectID } = req.body;
   try {
-    // Validate input data
-    if (!task_title || !description || !date || !assignedTo || !status) {
-      return res.status(400).json({ error: "Missing required fields." });
-    }
     const task = await ProjectTask.create({
       task_title,
       description,
       date,
-      assignedTo,
       status,
       projectID,
     });

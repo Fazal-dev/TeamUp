@@ -20,6 +20,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
+import { useSnackbar } from "notistack";
 
 const CreateProjectModal = ({ open }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -30,7 +31,7 @@ const CreateProjectModal = ({ open }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [user, setUser] = useState({});
-
+  const { enqueueSnackbar } = useSnackbar();
   const handleClickOpen = () => {
     setModalOpen(true);
   };
@@ -109,6 +110,15 @@ const CreateProjectModal = ({ open }) => {
       console.log("Project created:", response.data);
       setLoading(false);
       resetForm();
+      enqueueSnackbar(
+        "Project successfully created. Please refresh the page to see the updates.",
+        {
+          variant: "success",
+          autoHideDuration: 6000,
+          anchorOrigin: { vertical: "top", horizontal: "right" },
+        }
+      );
+
       handleClose();
     } catch (error) {
       console.error("Error creating project:", error);

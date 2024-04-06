@@ -176,7 +176,7 @@ const MiniDrower = () => {
                   <FormatListNumberedRtlIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={"My Task"}
+                  primary={"To Do"}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>

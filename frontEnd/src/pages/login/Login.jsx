@@ -21,7 +21,10 @@ const Login = () => {
         {/* left side: Welcome Text */}
         <Grid item xs={12} sm={6} textAlign={"center"}>
           <Typography variant="h4" marginY={3}>
-            Simplify Your Workflow with [App Name]
+            Simplify Your Workflow with{" "}
+            <span style={{ color: "#673ab7", fontWeight: "bold" }}>
+              Priority X
+            </span>
           </Typography>
           <Typography variant="subtitle">
             The Cloud-Based Task Management Revolution! Experience the power of

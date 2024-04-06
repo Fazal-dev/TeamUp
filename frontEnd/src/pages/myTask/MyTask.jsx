@@ -164,6 +164,7 @@ const MyTask = () => {
             <Table>
               <TableHead>
                 <TableRow>
+                  <TableCell>No Task</TableCell>
                   <TableCell>Task Tittle</TableCell>
                   <TableCell>Description</TableCell>
                   <TableCell>Date</TableCell>
@@ -192,6 +193,7 @@ const MyTask = () => {
                       key={index}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
+                      <TableCell>{index + 1}</TableCell>
                       <TableCell>{task.taskTitle}</TableCell>
                       <TableCell>{task.description}</TableCell>
                       <TableCell>{task.date}</TableCell>

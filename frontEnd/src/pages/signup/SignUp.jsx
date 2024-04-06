@@ -16,9 +16,13 @@ const SignUp = () => {
             <Typography variant="h4" marginY={3}>
               Welcome to a smarter way to manage tasks!
             </Typography>
-            <Typography variant="body1">
-              Sign up for [App Name] and take the first step towards a more
-              organized and productive future.
+            <Typography variant="body">
+              Sign up for{" "}
+              <span style={{ color: "#673ab7", fontWeight: "800" }}>
+                Priority X
+              </span>{" "}
+              and take the first step towards a more organized and productive
+              future.
             </Typography>
           </Grid>
           {/* right side */}
