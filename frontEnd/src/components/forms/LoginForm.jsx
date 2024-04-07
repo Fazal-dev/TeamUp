@@ -29,7 +29,6 @@ const LoginForm = () => {
         "http://localhost:8000/api/user/login",
         formData
       );
-
       const token = user.data.token;
 
       // store token in local storage
