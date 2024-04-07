@@ -29,12 +29,10 @@ export const loginUser = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
     });
   } else {
-    res
-      .status(401)
-      .json({
-        error:
-          "Invalid email or password. Please check your credentials and try again.",
-      });
+    res.status(401).json({
+      error:
+        "Invalid email or password. Please check your credentials and try again.",
+    });
   }
 });
 
@@ -47,7 +45,11 @@ export const signUpUser = asyncHandler(async (req, res) => {
     // Check if the email already exists
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ error: "Email already exists" });
+      return res
+        .status(400)
+        .json({
+          error: "Email already exists. Please choose a different email .",
+        });
     }
     // hash pasword
     const salt = await bcrypt.genSalt(10);

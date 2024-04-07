@@ -5,7 +5,6 @@ import {
   TextField,
   Button,
   Link,
-  Box,
   Alert,
 } from "@mui/material";
 import { useState } from "react";
@@ -65,11 +64,17 @@ const LoginForm = () => {
     setLoading(true);
     // Validate password length
     const { password } = formData;
-    if (password.length < 4) {
-      setError("Password must be at least 4 characters long.");
+    const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(
+      password
+    );
+    if (!isPasswordValid) {
+      setError(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit."
+      );
       setLoading(false);
       return;
     }
+
     // login function
     try {
       await login();

@@ -196,7 +196,7 @@ const CreateProjectModal = ({ open }) => {
                 required
               />
             </Box>
-            <Grid container spacing={2} sx={{ mb: 2 }}>
+            <Grid container spacing={1} sx={{ mb: 2 }}>
               <Grid item xs={6} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
@@ -222,7 +222,7 @@ const CreateProjectModal = ({ open }) => {
             </Grid>
           </form>
           {error && (
-            <Box sx={{ p: 1, textAlign: "center" }}>
+            <Box sx={{ textAlign: "center" }}>
               <Alert severity="error">{error}</Alert>
             </Box>
           )}

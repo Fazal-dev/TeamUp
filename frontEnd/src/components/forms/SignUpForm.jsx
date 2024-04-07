@@ -1,10 +1,18 @@
 import { useState } from "react";
-import { Grid, Typography, TextField, Button, Link } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  Link,
+  Alert,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -16,21 +24,17 @@ const SignUpForm = () => {
   const registerUser = async () => {
     try {
       await axios.post("http://localhost:8000/api/user", formData);
-      enqueueSnackbar("account created succesfully", {
+      enqueueSnackbar("Account created succesfully", {
         variant: "success",
         anchorOrigin: { vertical: "bottom", horizontal: "right" },
       });
       navigate("/login");
-    } catch (error) {
-      enqueueSnackbar(error.response.data.error, {
-        variant: "error",
-        anchorOrigin: { vertical: "top", horizontal: "left" },
-      });
       setFormData({ userName: "", email: "", password: "" });
+    } catch (error) {
+      setError(error.response.data.error);
       console.log(error);
     }
   };
-  const navigate = useNavigate();
 
   const handleChangeData = (event) => {
     const { name, value } = event.target;
@@ -39,6 +43,21 @@ const SignUpForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const password = formData.password;
+
+    // Validate password
+    const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(
+      password
+    );
+
+    if (!isPasswordValid) {
+      // Provide feedback to the user about password requirements
+      setError(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit."
+      );
+      return;
+    }
     // user registartion
     registerUser();
     console.log("Form submitted:", formData);
@@ -50,6 +69,11 @@ const SignUpForm = () => {
           <Grid item xs={12} textAlign={"center"}>
             <Typography variant="h5">Sign Up</Typography>
           </Grid>
+          {error && (
+            <Grid xs={12} item sx={{ textAlign: "center" }}>
+              <Alert severity="error">{error}</Alert>
+            </Grid>
+          )}
           <Grid item xs={12}>
             <TextField
               label="User Name"
