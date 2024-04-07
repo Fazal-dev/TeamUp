@@ -32,6 +32,7 @@ const CreateProjectModal = ({ open }) => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState({});
   const { enqueueSnackbar } = useSnackbar();
+
   const handleClickOpen = () => {
     setModalOpen(true);
   };
@@ -67,6 +68,7 @@ const CreateProjectModal = ({ open }) => {
     }
     return true;
   };
+
   const validateFields = () => {
     if (!projectName || !description || !startDate || !endDate) {
       setError(
@@ -110,6 +112,7 @@ const CreateProjectModal = ({ open }) => {
       console.log("Project created:", response.data);
       setLoading(false);
       resetForm();
+
       enqueueSnackbar(
         "Project successfully created. Please refresh the page to see the updates.",
         {
@@ -122,7 +125,7 @@ const CreateProjectModal = ({ open }) => {
       handleClose();
     } catch (error) {
       console.error("Error creating project:", error);
-      setError("Failed to create project. Please try again.");
+      setError("Failed to create project. Please try again.", error);
       setLoading(false);
     }
   };

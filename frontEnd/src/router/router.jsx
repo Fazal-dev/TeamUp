@@ -1,6 +1,10 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
+
+// import layouts
 import DefoultLayout from "../layout/DefoultLayout";
 import GuestLayout from "../layout/GuestLayout";
+
+// import components
 import Login from "../pages/login/Login";
 import SignUp from "../pages/signup/SignUp";
 import NotFound from "../pages/NotFound";
@@ -12,6 +16,7 @@ import AddTask from "../pages/addTask/AddTask";
 import EditTask from "../pages/EditTask/EditTask";
 
 const router = createBrowserRouter([
+  // Define routes for guest users
   {
     path: "/",
     element: <GuestLayout />,
@@ -30,6 +35,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // Define routes for logged-in users
   {
     path: "/",
     element: <DefoultLayout />,
@@ -65,7 +71,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-
+  // Route for any unknown paths
   {
     path: "*",
     element: <NotFound />,

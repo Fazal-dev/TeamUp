@@ -47,6 +47,7 @@ const Projects = () => {
           },
         })
         .then((res) => {
+          console.log(res.data.message);
           res.data;
         });
     } catch (error) {

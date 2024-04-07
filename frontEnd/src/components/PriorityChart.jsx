@@ -16,7 +16,7 @@ const PriorityChart = ({ chartData }) => {
     labels: ["High", "Medium", "Low"],
     datasets: [
       {
-        label: ["Task priority"],
+        label: "Task priority",
         data: chartData,
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",

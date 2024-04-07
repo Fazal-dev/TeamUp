@@ -25,6 +25,7 @@ const AddTask = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
+  const [user, setUser] = useState({});
   const [formData, setFormData] = useState({
     taskTitle: "",
     description: "",
@@ -51,7 +52,13 @@ const AddTask = () => {
   const token = localStorage.getItem("token");
   const decodedToken = jwtDecode(token);
   const userId = decodedToken.id;
-  const [user, setUser] = useState({});
+  // DATE SET
+  const handleDateChange = (date) => {
+    setFormData({
+      ...formData,
+      date: date,
+    });
+  };
   // get user details
   const getUserInfo = async () => {
     try {
@@ -90,9 +97,9 @@ const AddTask = () => {
     } catch (error) {
       console.error("Error fetching user information:", error);
     }
-    enqueueSnackbar("succefully add a task ", {
+    enqueueSnackbar("Task added successfully ", {
       variant: "success",
-      autoHideDuration: "1000",
+      autoHideDuration: 1000,
       anchorOrigin: { vertical: "top", horizontal: "right" },
     });
     navigate("/MyTasks");
@@ -104,13 +111,7 @@ const AddTask = () => {
     setPriority("");
     setStatus("");
   };
-  // DATE SET
-  const handleDateChange = (date) => {
-    setFormData({
-      ...formData,
-      date: date,
-    });
-  };
+
   return (
     <>
       <Paper sx={{ p: 10 }}>
