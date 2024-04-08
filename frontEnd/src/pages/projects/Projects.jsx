@@ -9,11 +9,11 @@ import TableRow from "@mui/material/TableRow";
 import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { useNavigate } from "react-router-dom";
 const Projects = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [projects, setProjects] = useState([]);
-
+  const navigate = useNavigate();
   const fetchAllProjects = async (token) => {
     try {
       const response = await axios.get("http://localhost:8000/api/project", {
@@ -168,7 +168,13 @@ const Projects = () => {
                           open={Boolean(anchorEl)}
                           onClose={handleClose}
                         >
-                          <MenuItem onClick={handleClose}>Edit</MenuItem>
+                          <MenuItem
+                            onClick={() =>
+                              navigate(`/editProject/${project._id}`)
+                            }
+                          >
+                            Edit
+                          </MenuItem>
                           <MenuItem
                             onClick={() => handleDeleteProject(project._id)}
                           >

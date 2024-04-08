@@ -57,6 +57,7 @@ const EditTask = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     getUserInfo(token);
+
     axios
       .get(`http://localhost:8000/api/task/${id}`, {
         headers: {

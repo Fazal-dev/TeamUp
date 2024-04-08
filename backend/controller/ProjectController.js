@@ -36,6 +36,17 @@ export const getAllProject = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+// get single project
+export const getProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = await Project.findById(id);
+    console.log(project);
+    res.status(200).send(project);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
 // update Project
 export const updateProject = async (req, res) => {
   const { id } = req.params;
