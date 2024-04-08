@@ -1,8 +1,6 @@
-import { Box, Card, Grid, Link, Stack } from "@mui/material";
+import { Card, Grid, Link, Stack } from "@mui/material";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-
 import Typography from "@mui/material/Typography";
 import React from "react";
 import Chip from "@mui/material/Chip";
@@ -10,11 +8,31 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { deleteTask } from "../services/taskService/index.js";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const TaskCard = ({ task }) => {
   const navigate = useNavigate();
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
-    const data = deleteTask(id, token);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // DELETE TASK
+        deleteTask(id, token).then(() => {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your task has been deleted.",
+            icon: "success",
+          });
+        });
+      }
+    });
   };
   return (
     <>

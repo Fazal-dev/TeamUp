@@ -57,6 +57,21 @@ const MyTask = () => {
   useEffect(() => {
     fetchAllTask(token);
   }, []);
+  const sortTasks = (tasks) => {
+    // First, filter out high priority tasks
+    const highPriorityTasks = tasks.filter((task) => task.priority === "high");
+
+    // Sort high priority tasks alphabetically by task title
+    highPriorityTasks.sort((a, b) => a.taskTitle.localeCompare(b.taskTitle));
+
+    // Then, filter out non-high priority tasks
+    const otherTasks = tasks.filter((task) => task.priority !== "high");
+
+    // Combine high priority tasks and other tasks
+    const sortedTasks = [...highPriorityTasks, ...otherTasks];
+
+    return sortedTasks;
+  };
 
   const handleDelete = async (id) => {
     const token = getToken();
@@ -99,6 +114,7 @@ const MyTask = () => {
         }
       );
       fetchAllTask(token);
+      sortTasks(tasks);
       enqueueSnackbar("succefully update a task status", {
         variant: "success",
         autoHideDuration: "10",
@@ -188,7 +204,7 @@ const MyTask = () => {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  tasks.map((task, index) => (
+                  sortTasks(tasks).map((task, index) => (
                     <TableRow
                       key={index}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
