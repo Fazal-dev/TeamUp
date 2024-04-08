@@ -92,7 +92,6 @@ const EditProject = () => {
       } catch (error) {
         console.error("Error updating task:", error.message);
       }
-
       setLoading(false);
       resetForm();
       enqueueSnackbar("Project successfully updated", {
