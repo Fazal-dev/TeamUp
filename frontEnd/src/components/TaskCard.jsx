@@ -46,10 +46,29 @@ const TaskCard = ({ task }) => {
         }}
       >
         <CardContent>
-          <Typography variant="h6" color="text.secondary" gutterBottom>
+          <Typography
+            variant="h6"
+            color="text.secondary"
+            sx={{
+              display: "-webkit-box",
+              overflow: "hidden",
+              WebkitLineClamp: 1,
+              WebkitBoxOrient: "vertical",
+            }}
+            gutterBottom
+          >
             {task.taskTitle}
           </Typography>
-          <Typography color="text.secondary" gutterBottom>
+          <Typography
+            sx={{
+              display: "-webkit-box",
+              overflow: "hidden",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+            }}
+            color="text.secondary"
+            gutterBottom
+          >
             {task.description}
           </Typography>
           <Typography color="text.secondary" gutterBottom>

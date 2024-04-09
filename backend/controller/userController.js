@@ -2,8 +2,8 @@ import userModel from "../model/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import asyncHandler from "express-async-handler";
-// GET USER DETAILS BY ID
 
+// GET USER DETAILS BY ID
 export const getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -19,7 +19,6 @@ export const getUserById = async (req, res) => {
 };
 
 // login user
-
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await userModel.findOne({ email });
@@ -37,7 +36,6 @@ export const loginUser = asyncHandler(async (req, res) => {
 });
 
 // signup user
-
 export const signUpUser = asyncHandler(async (req, res) => {
   const { email, password, userName } = req.body;
 
@@ -45,11 +43,9 @@ export const signUpUser = asyncHandler(async (req, res) => {
     // Check if the email already exists
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      return res
-        .status(400)
-        .json({
-          error: "Email already exists. Please choose a different email .",
-        });
+      return res.status(400).json({
+        error: "Email already exists. Please choose a different email .",
+      });
     }
     // hash pasword
     const salt = await bcrypt.genSalt(10);
@@ -74,7 +70,7 @@ export const signUpUser = asyncHandler(async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-// get authorized user id
+// get authorized user details
 export const getMe = asyncHandler(async (req, res) => {
   const { _id, email, userName } = await userModel.findById(req.user.id);
   res.status(201).send({
