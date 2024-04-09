@@ -10,7 +10,7 @@ import {
 const ProjectTaskRouter = express.Router();
 
 ProjectTaskRouter.post("/", createProjectTask);
-ProjectTaskRouter.get("/", getAllProjectTask);
+ProjectTaskRouter.get("/:id", getAllProjectTask);
 ProjectTaskRouter.get("/:id", getSingleProjectTask);
 ProjectTaskRouter.patch("/:id", updateProjectTask);
 ProjectTaskRouter.delete("/:id", deleteProjectTask);

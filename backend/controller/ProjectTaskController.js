@@ -3,10 +3,10 @@ import ProjectTask from "../model/projectTaskModel.js";
 import Project from "../model/projectModel.js";
 // create a project task
 export const createProjectTask = async (req, res) => {
-  const { task_title, description, date, status, projectID } = req.body;
+  const { taskTitle, description, date, status, projectID } = req.body;
   try {
     const task = await ProjectTask.create({
-      task_title,
+      taskTitle,
       description,
       date,
       status,
@@ -22,7 +22,8 @@ export const createProjectTask = async (req, res) => {
 // getall the Project Task
 export const getAllProjectTask = async (req, res) => {
   try {
-    const allProjectTask = await ProjectTask.find({});
+    const { id } = req.params;
+    const allProjectTask = await ProjectTask.find({ projectID: id });
     res.status(200).json(allProjectTask);
   } catch (error) {
     res.status(400).json({ error: error.message });
