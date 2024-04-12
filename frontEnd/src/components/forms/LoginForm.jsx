@@ -66,6 +66,7 @@ const LoginForm = () => {
     const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(
       password
     );
+
     if (!isPasswordValid) {
       setError(
         "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit."

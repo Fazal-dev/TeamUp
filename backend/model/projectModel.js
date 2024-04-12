@@ -4,9 +4,7 @@ const { Schema, model } = mongoose;
 
 const projectSchema = new Schema(
   {
-    projectName: {
-      type: String,
-    },
+    projectName: String,
     description: String,
     startDate: Date,
     endDate: Date,

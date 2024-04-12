@@ -67,7 +67,7 @@ const router = createBrowserRouter([
         element: <EditProject />,
       },
       {
-        path: "/projectTask",
+        path: "/projectTask/:id",
         element: <Tasks />,
       },
       {

@@ -40,7 +40,7 @@ export const getAllProject = async (req, res) => {
 export const getProject = async (req, res) => {
   try {
     const { id } = req.params;
-    const project = await Project.findById(id);
+    const project = await Project.findById({ _id: id });
     console.log(project);
     res.status(200).send(project);
   } catch (error) {

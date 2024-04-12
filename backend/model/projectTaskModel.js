@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import User from "./userModel.js";
+import Project from "./projectModel.js";
 const { Schema, model } = mongoose;
 
 const projectTaskSchema = new Schema(
@@ -12,10 +13,14 @@ const projectTaskSchema = new Schema(
       enum: ["completed", "incomplete"],
       default: "incomplete",
     },
+    priority: {
+      type: String,
+      enum: ["high", "medium", "low"],
+      default: "low",
+    },
     projectID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
-      required: false,
     },
   },
   {

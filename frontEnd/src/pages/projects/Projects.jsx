@@ -1,19 +1,21 @@
 import { Box, Button, Container, Link, Paper, Typography } from "@mui/material";
-import { Menu, MenuItem } from "@mui/material";
 import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 const Projects = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const [projects, setProjects] = useState([]);
   const navigate = useNavigate();
+
   const fetchAllProjects = async (token) => {
     try {
       const response = await axios.get("http://localhost:8000/api/project", {
@@ -60,9 +62,6 @@ const Projects = () => {
     fetchAllProjects(token);
   }, []);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const handleRefresh = () => {
     const token = localStorage.getItem("token");
     getUserInfo();
@@ -92,9 +91,6 @@ const Projects = () => {
         handleRefresh();
       }
     });
-  };
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
   };
 
   return (
@@ -151,40 +147,34 @@ const Projects = () => {
                     <TableCell>{project.startDate}</TableCell>
                     <TableCell>{project.endDate}</TableCell>
                     <TableCell>
-                      <div>
-                        <MoreVertSharpIcon onClick={handleMenu} />
-                        <Menu
-                          id="menu-appbar"
-                          anchorEl={anchorEl}
-                          anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "left",
-                          }}
-                          keepMounted
-                          transformOrigin={{
-                            vertical: "top",
-                            horizontal: "left",
-                          }}
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
-                        >
-                          <MenuItem
+                      <Stack direction={"row"} spacing={1}>
+                        <Box>
+                          <Link
                             onClick={() =>
                               navigate(`/editProject/${project._id}`)
                             }
                           >
-                            Edit
-                          </MenuItem>
-                          <MenuItem
-                            onClick={() => handleDeleteProject(project._id)}
-                          >
-                            Delete
-                          </MenuItem>
-                          <Link underline="none" href="/projectTask">
-                            <MenuItem onClick={handleClose}>View</MenuItem>
+                            <EditNoteTwoToneIcon />
                           </Link>
-                        </Menu>
-                      </div>
+                        </Box>
+                        <Box>
+                          <Link
+                            onClick={() => handleDeleteProject(project._id)}
+                            sx={{ color: "red" }}
+                          >
+                            <DeleteIcon />
+                          </Link>
+                        </Box>
+                        <Box>
+                          <Link
+                            onClick={() =>
+                              navigate(`/projectTask/${project._id}`)
+                            }
+                          >
+                            <InfoOutlinedIcon />
+                          </Link>
+                        </Box>
+                      </Stack>
                     </TableCell>
                   </TableRow>
                 ))

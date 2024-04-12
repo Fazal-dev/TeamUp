@@ -24,7 +24,7 @@ export const getAllProjectTask = async (req, res) => {
   try {
     const { id } = req.params;
     const allProjectTask = await ProjectTask.find({ projectID: id });
-    res.status(200).json(allProjectTask);
+    res.status(200).send(allProjectTask);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -38,7 +38,7 @@ export const getSingleProjectTask = async (req, res) => {
   }
 
   try {
-    const singleTask = await ProjectTask.findById(id);
+    const singleTask = await ProjectTask.findById({ projectID: id });
     res.status(200).json(singleTask);
   } catch (error) {
     res.status(400).json({ error: error.message });

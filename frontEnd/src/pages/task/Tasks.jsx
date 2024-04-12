@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddTaskModal from "../../Modals/AddTaskModal";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,83 +8,34 @@ import TableRow from "@mui/material/TableRow";
 import { Chip, Menu, MenuItem, Typography } from "@mui/material";
 import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
 import { Box, Container, Paper } from "@mui/material";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 const Tasks = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const [tasks, setTask] = useState([]);
+  const { id } = useParams();
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  // FETCH PROJECT TASKS
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/projectTask/${id}`
+      );
+      setTask(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.error("Error fetching project task information:", error.message);
+    }
+  };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const tasks = [
-    {
-      task_title: "Task 1",
-      description: "Description of Task 1",
-      date: "2024-03-16",
-      assignee: "John Doe",
-      priority: "High",
-      status: "completed",
-    },
-    {
-      task_title: "Task 2",
-      description: "Description of Task 2",
-      date: "2024-03-17",
-      assignee: "Jane Smith",
-      priority: "Medium",
-      status: "incomplete",
-    },
-    {
-      task_title: "Task 3",
-      description: "Description of Task 3",
-      date: "2024-03-18",
-      assignee: "Alice Johnson",
-      priority: "Low",
-      status: "completed",
-    },
-    {
-      task_title: "Task 4",
-      description: "Description of Task 4",
-      date: "2024-03-19",
-      assignee: "Bob Anderson",
-      priority: "High",
-      status: "completed",
-    },
-    {
-      task_title: "Task 5",
-      description: "Description of Task 5",
-      date: "2024-03-20",
-      assignee: "Emily Williams",
-      priority: "Medium",
-      status: "incomplete",
-    },
-    {
-      task_title: "Task 6",
-      description: "Description of Task 6",
-      date: "2024-03-21",
-      assignee: "David Brown",
-      priority: "Low",
-      status: "completed",
-    },
-    {
-      task_title: "Task 7",
-      description: "Description of Task 7",
-      date: "2024-03-22",
-      assignee: "Sarah Garcia",
-      priority: "High",
-      status: "completed",
-    },
-    {
-      task_title: "Task 8",
-      description: "Description of Task 8",
-      date: "2024-03-23",
-      assignee: "Michael Martinez",
-      priority: "Medium",
-      status: "incomplete",
-    },
-  ];
   return (
     <div>
       <Container sx={{ width: "100vw" }}>
@@ -127,7 +78,7 @@ const Tasks = () => {
                     }}
                   >
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{task.task_title}</TableCell>
+                    <TableCell>{task.taskTitle}</TableCell>
                     <TableCell>{task.description}</TableCell>
                     <TableCell>{task.date}</TableCell>
                     <TableCell>{task.priority}</TableCell>

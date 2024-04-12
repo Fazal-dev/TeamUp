@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Box, TextField, Grid } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { Button, Box, TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import Paper from "@mui/material/Paper";
-
 import { useParams, useNavigate } from "react-router-dom";
+
 const EditProject = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { id } = useParams();
@@ -49,6 +46,7 @@ const EditProject = () => {
         console.error("Error fetching project information:", error.message);
       });
   }, []);
+
   const resetForm = () => {
     setProjectName("");
     setDescription("");
@@ -68,13 +66,11 @@ const EditProject = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const token = localStorage.getItem("token");
-
       if (!validateFields()) {
         setLoading(false);
         return;
       }
-      //   TODO UPDATE THE PROJECT
+      //    UPDATE THE PROJECT
       try {
         const token = localStorage.getItem("token");
         const res = await axios.patch(
