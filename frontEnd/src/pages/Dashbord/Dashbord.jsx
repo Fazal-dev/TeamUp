@@ -55,26 +55,32 @@ const Dashbord = () => {
 
   const totalTask = tasks.length;
   const totalProject = projects.length;
-  // filter task
-  const incompleteTasks = tasks.filter((task) => task.status === "incomplete");
-  const completeTasks = tasks.filter((task) => task.status === "completed");
-  const highPriorityTasks = tasks.filter((task) => task.priority === "high");
-  const mediumPriorityTasks = tasks.filter(
-    (task) => task.priority === "medium"
-  );
-  const lowPriorityTasks = tasks.filter((task) => task.priority === "low");
-  // total counts
-  const totalIncompleteTasks = incompleteTasks.length;
-  const totalCompletedTasks = completeTasks.length;
-  const totalHighPriorityTasks = highPriorityTasks.length;
-  const totalMediumPriorityTasks = mediumPriorityTasks.length;
-  const totalLowPriorityTasks = lowPriorityTasks.length;
+  const totalIncompleteTasks = tasks.filter(
+    (task) => task.status === "incomplete"
+  ).length;
+  const totalCompletedTasks = tasks.filter(
+    (task) => task.status === "completed"
+  ).length;
 
-  const chartData = [
-    totalHighPriorityTasks,
-    totalMediumPriorityTasks,
-    totalLowPriorityTasks,
-  ];
+  function genarateChartData(tasks) {
+    const totalHighPriorityTasks = tasks.filter(
+      (task) => task.priority === "high"
+    ).length;
+    const totalMediumPriorityTasks = tasks.filter(
+      (task) => task.priority === "medium"
+    ).length;
+    const totalLowPriorityTasks = tasks.filter(
+      (task) => task.priority === "low"
+    ).length;
+    return [
+      totalHighPriorityTasks,
+      totalMediumPriorityTasks,
+      totalLowPriorityTasks,
+    ];
+  }
+
+  const chartData = genarateChartData(tasks);
+
   const CardData = [
     {
       title: "Projects",
