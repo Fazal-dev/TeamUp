@@ -28,6 +28,20 @@ const projectTaskSchema = new Schema(
   }
 );
 
+projectTaskSchema.set("toJSON", {
+  getters: true,
+});
+
+projectTaskSchema.path("date").get(function (date) {
+  return formatDate(date);
+});
+
+const formatDate = (date) => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  return `${year}/${month}/${day}`;
+};
 const ProjectTask = model("ProjectTask", projectTaskSchema);
 
 export default ProjectTask;

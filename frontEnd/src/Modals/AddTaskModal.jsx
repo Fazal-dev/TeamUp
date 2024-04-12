@@ -36,20 +36,9 @@ const AddTaskModal = () => {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
-  const [formData, setFormData] = useState({
-    taskTitle: "",
-    description: "",
-    dueDate: null,
-  });
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
+  const [taskTitle, setTaskTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState(null);
   // PRIORITY
   const handlePriorityChange = (event) => {
     setPriority(event.target.value);
@@ -65,18 +54,24 @@ const AddTaskModal = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  // reset the states
+  const refreshTheForm = () => {
+    setDate(null);
+    setDescription("");
+    setPriority("");
+    setStatus("");
+    setTaskTitle("");
+  };
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Submitted", formData);
+    console.log(status, priority, description, taskTitle, date);
+    // send to db
+    // show message to the user
+    refreshTheForm();
+    // all the fileds fill
     handleClose();
   };
-  // date handle
-  const handleDateChange = (date) => {
-    setFormData({
-      ...formData,
-      dueDate: date ? date.toISOString() : null,
-    });
-  };
+
   return (
     <>
       <Button
@@ -113,8 +108,8 @@ const AddTaskModal = () => {
               <TextField
                 label="Task title"
                 name="taskTitle"
-                value={formData.taskTitle}
-                onChange={handleInputChange}
+                value={taskTitle}
+                onChange={(e) => setTaskTitle(e.target.value)}
                 size="small"
                 fullWidth
               />
@@ -123,8 +118,8 @@ const AddTaskModal = () => {
               <TextField
                 label="Description"
                 name="description"
-                value={formData.description}
-                onChange={handleInputChange}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 size="small"
                 fullWidth
               />
@@ -139,7 +134,7 @@ const AddTaskModal = () => {
                     value={status}
                     label="Status"
                     size="normal"
-                    onChange={handleChange}
+                    onChange={(e) => setStatus(e.target.value)}
                   >
                     <MenuItem value={"complete"}>complete</MenuItem>
                     <MenuItem value={"incomplete"}>incomplete</MenuItem>
@@ -171,9 +166,11 @@ const AddTaskModal = () => {
               <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Due Date"
-                  name="dueDate"
-                  value={formData.dueDate ? dayjs(formData.dueDate) : null}
-                  onChange={(date) => handleDateChange(date)}
+                  name="date"
+                  value={date}
+                  onChange={(date) => setDate(date)}
+                  textField={<TextField />}
+                  required
                 />
               </LocalizationProvider>
             </Grid>

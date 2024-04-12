@@ -10,6 +10,7 @@ import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
 import { Box, Container, Paper } from "@mui/material";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Grid from "@mui/material/Grid";
 const Tasks = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [tasks, setTask] = useState([]);
@@ -69,54 +70,69 @@ const Tasks = () => {
                   <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
-                {tasks.map((task, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{task.taskTitle}</TableCell>
-                    <TableCell>{task.description}</TableCell>
-                    <TableCell>{task.date}</TableCell>
-                    <TableCell>{task.priority}</TableCell>
-                    <TableCell>
-                      <Chip
-                        size="small"
-                        variant="outlined"
-                        label={task.status}
-                        color={
-                          task.status === "completed" ? "success" : "warning"
-                        }
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <div>
-                        <MoreVertSharpIcon onClick={handleMenu} />
-                        <Menu
-                          id="menu-appbar"
-                          anchorEl={anchorEl}
-                          anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                          }}
-                          keepMounted
-                          transformOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                          }}
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
-                        >
-                          <MenuItem onClick={handleClose}>Edit</MenuItem>
-                          <MenuItem onClick={handleClose}>Delete</MenuItem>
-                        </Menu>
-                      </div>
+                {tasks.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} sx={{ textAlign: "center" }}>
+                      <Typography variant="subtitle1" color="textSecondary">
+                        No tasks found.
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" mt={2}>
+                        Get organized by adding some tasks! You can create new
+                        tasks using add new task button.
+                      </Typography>
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  tasks.map((task, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
+                    >
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{task.taskTitle}</TableCell>
+                      <TableCell>{task.description}</TableCell>
+                      <TableCell>{task.date}</TableCell>
+                      <TableCell>{task.priority}</TableCell>
+                      <TableCell>
+                        <Chip
+                          size="small"
+                          variant="outlined"
+                          label={task.status}
+                          color={
+                            task.status === "completed" ? "success" : "warning"
+                          }
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <div>
+                          <MoreVertSharpIcon onClick={handleMenu} />
+                          <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                              vertical: "top",
+                              horizontal: "right",
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                              vertical: "top",
+                              horizontal: "right",
+                            }}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                          >
+                            <MenuItem onClick={handleClose}>Edit</MenuItem>
+                            <MenuItem onClick={handleClose}>Delete</MenuItem>
+                          </Menu>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </Paper>

@@ -14,6 +14,7 @@ const projectSchema = new Schema(
     timestamps: true,
   }
 );
+
 projectSchema.set("toJSON", {
   getters: true,
 });
