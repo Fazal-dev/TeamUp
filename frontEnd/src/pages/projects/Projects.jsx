@@ -12,10 +12,11 @@ import Swal from "sweetalert2";
 import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { useSnackbar } from "notistack";
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const navigate = useNavigate();
-
+  const { enqueueSnackbar } = useSnackbar();
   const fetchAllProjects = async (token) => {
     try {
       const response = await axios.get("http://localhost:8000/api/project", {
@@ -49,7 +50,11 @@ const Projects = () => {
           },
         })
         .then((res) => {
-          console.log(res.data.message);
+          enqueueSnackbar(res.data.message, {
+            variant: "success",
+            autoHideDuration: 5000,
+            anchorOrigin: { vertical: "top", horizontal: "right" },
+          });
           res.data;
         });
     } catch (error) {
@@ -79,15 +84,8 @@ const Projects = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        handleClose();
         // DELETE project
-        deleteProject(id).then(() => {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your task has been deleted.",
-            icon: "success",
-          });
-        });
+        deleteProject(id);
         handleRefresh();
       }
     });

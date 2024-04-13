@@ -15,6 +15,7 @@ import Projects from "../pages/projects/Projects";
 import AddTask from "../pages/addTask/AddTask";
 import EditTask from "../pages/EditTask/EditTask";
 import EditProject from "../pages/editProject/EditProject";
+import EditProjectTask from "../pages/editProjecTask/EditProjectTask";
 
 const router = createBrowserRouter([
   // Define routes for guest users
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "/projectTask/:id",
         element: <Tasks />,
+      },
+      {
+        path: "/editProjectTask/:id",
+        element: <EditProjectTask />,
       },
       {
         path: "/projects",

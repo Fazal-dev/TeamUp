@@ -5,18 +5,20 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Chip, Menu, MenuItem, Typography } from "@mui/material";
-import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
+import { Chip, Stack, Typography } from "@mui/material";
 import { Box, Container, Paper } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const Tasks = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const [tasks, setTasks] = useState([]);
   const { id } = useParams();
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const [projectName, setProjectName] = useState("");
+  const [user, setUser] = useState({});
+  const navigate = useNavigate();
   // FETCH PROJECT TASKS
   const fetchData = async () => {
     try {
@@ -29,11 +31,39 @@ const Tasks = () => {
       console.error("Error fetching project task information:", error.message);
     }
   };
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+  const getUserInfo = async (token) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/user/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(response.data);
+    } catch (error) {
+      console.error("Error fetching user information:", error);
+    }
   };
+  const handleDelete = (id) => {
+    console.log(id);
+  };
+
   useEffect(() => {
     fetchData();
+    const token = localStorage.getItem("token");
+    getUserInfo(token);
+    axios
+      .get(`http://localhost:8000/api/project/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setProjectName(res.data.projectName);
+      })
+      .catch((error) => {
+        alert("An error happened, please check console");
+        console.error("Error fetching project information:", error.message);
+      });
   }, []);
 
   return (
@@ -50,7 +80,11 @@ const Tasks = () => {
             }}
           >
             <Box>
-              <Typography variant="h5">Project Task</Typography>
+              <Typography variant="h5">
+                <b>Project Name :</b>{" "}
+                {projectName.charAt(0).toUpperCase() +
+                  projectName.slice(1).toLowerCase()}
+              </Typography>
             </Box>
             <Box>
               <AddTaskModal projectID={id} setTasks={setTasks} />
@@ -107,27 +141,25 @@ const Tasks = () => {
                         />
                       </TableCell>
                       <TableCell>
-                        <div>
-                          <MoreVertSharpIcon onClick={handleMenu} />
-                          <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                              vertical: "top",
-                              horizontal: "right",
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                              vertical: "top",
-                              horizontal: "right",
-                            }}
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                          >
-                            <MenuItem onClick={handleClose}>Edit</MenuItem>
-                            <MenuItem onClick={handleClose}>Delete</MenuItem>
-                          </Menu>
-                        </div>
+                        <Stack direction={"row"} spacing={1}>
+                          <Box>
+                            <Link
+                              onClick={() =>
+                                navigate(`/editProjectTask/${task._id}`)
+                              }
+                            >
+                              <EditNoteTwoToneIcon />
+                            </Link>
+                          </Box>
+                          <Box>
+                            <Link
+                              onClick={() => handleDelete(task._id)}
+                              sx={{ color: "red" }}
+                            >
+                              <DeleteIcon />
+                            </Link>
+                          </Box>
+                        </Stack>
                       </TableCell>
                     </TableRow>
                   ))
