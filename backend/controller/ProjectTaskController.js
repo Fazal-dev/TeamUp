@@ -3,13 +3,15 @@ import ProjectTask from "../model/projectTaskModel.js";
 import Project from "../model/projectModel.js";
 // create a project task
 export const createProjectTask = async (req, res) => {
-  const { taskTitle, description, date, status, projectID } = req.body;
+  const { taskTitle, priority, description, date, status, projectID } =
+    req.body;
   try {
     const task = await ProjectTask.create({
       taskTitle,
       description,
       date,
       status,
+      priority,
       projectID,
     });
     res.status(200).json(task);

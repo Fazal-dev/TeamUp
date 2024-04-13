@@ -12,6 +12,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  Alert,
 } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
@@ -21,39 +22,27 @@ import CloseIcon from "@mui/icons-material/Close";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
+import axios from "axios";
+import { useSnackbar } from "notistack";
 // custom style
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
-    padding: theme.spacing(3),
+    padding: theme.spacing(4),
   },
   "& .MuiDialogActions-root": {
-    padding: theme.spacing(2),
+    padding: theme.spacing(4),
   },
 }));
 
-const AddTaskModal = () => {
+const AddTaskModal = ({ projectID, setTasks }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(null);
-  // PRIORITY
-  const handlePriorityChange = (event) => {
-    setPriority(event.target.value);
-  };
-  // STATUS
-  const handleChange = (event) => {
-    setStatus(event.target.value);
-  };
-  // MODAL OPEN
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [error, setError] = useState("");
   // reset the states
   const refreshTheForm = () => {
     setDate(null);
@@ -61,15 +50,55 @@ const AddTaskModal = () => {
     setPriority("");
     setStatus("");
     setTaskTitle("");
+    setError("");
   };
+  // create task
+  function createTask() {
+    try {
+      const formData = {
+        status,
+        priority,
+        description,
+        taskTitle,
+        date,
+        projectID,
+      };
+      axios
+        .post(`http://localhost:8000/api/projectTask`, formData)
+        .then((res) => {
+          setTasks((prev) => [...prev, res.data]);
+          // show message to the user
+          enqueueSnackbar("Task added successfully ", {
+            variant: "success",
+            autoHideDuration: 5000,
+            anchorOrigin: { vertical: "top", horizontal: "right" },
+          });
+          // reset the form
+          refreshTheForm();
+          handleClose();
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  // MODAL OPEN
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    refreshTheForm();
+  };
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log(status, priority, description, taskTitle, date);
+    // Validate fields
+    if (!status || !priority || !taskTitle || !description || !date) {
+      setError("Please fill out all the fields");
+      return;
+    }
     // send to db
-    // show message to the user
-    refreshTheForm();
-    // all the fileds fill
-    handleClose();
+    createTask();
   };
 
   return (
@@ -110,7 +139,7 @@ const AddTaskModal = () => {
                 name="taskTitle"
                 value={taskTitle}
                 onChange={(e) => setTaskTitle(e.target.value)}
-                size="small"
+                size="normal"
                 fullWidth
               />
             </Box>
@@ -120,7 +149,7 @@ const AddTaskModal = () => {
                 name="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                size="small"
+                size="normal"
                 fullWidth
               />
             </Box>
@@ -136,7 +165,7 @@ const AddTaskModal = () => {
                     size="normal"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <MenuItem value={"complete"}>complete</MenuItem>
+                    <MenuItem value={"completed"}>complete</MenuItem>
                     <MenuItem value={"incomplete"}>incomplete</MenuItem>
                   </Select>
                 </FormControl>
@@ -153,11 +182,11 @@ const AddTaskModal = () => {
                     value={priority}
                     label="Priority"
                     size="normal"
-                    onChange={handlePriorityChange}
+                    onChange={(e) => setPriority(e.target.value)}
                   >
-                    <MenuItem value={"High"}>High</MenuItem>
+                    <MenuItem value={"high"}>High</MenuItem>
                     <MenuItem value={"medium"}>Medium</MenuItem>
-                    <MenuItem value={"Low"}>Low</MenuItem>
+                    <MenuItem value={"low"}>Low</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -174,6 +203,11 @@ const AddTaskModal = () => {
                 />
               </LocalizationProvider>
             </Grid>
+            {error && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {error}
+              </Alert>
+            )}
           </form>
         </DialogContent>
         <DialogActions>

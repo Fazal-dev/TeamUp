@@ -99,7 +99,7 @@ const AddTask = () => {
     }
     enqueueSnackbar("Task added successfully ", {
       variant: "success",
-      autoHideDuration: 1000,
+      autoHideDuration: 5000,
       anchorOrigin: { vertical: "top", horizontal: "right" },
     });
     navigate("/MyTasks");

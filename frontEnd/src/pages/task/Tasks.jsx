@@ -10,10 +10,9 @@ import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
 import { Box, Container, Paper } from "@mui/material";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Grid from "@mui/material/Grid";
 const Tasks = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [tasks, setTask] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const { id } = useParams();
   const handleClose = () => {
     setAnchorEl(null);
@@ -24,7 +23,7 @@ const Tasks = () => {
       const res = await axios.get(
         `http://localhost:8000/api/projectTask/${id}`
       );
-      setTask(res.data);
+      setTasks(res.data);
       console.log(res.data);
     } catch (error) {
       console.error("Error fetching project task information:", error.message);
@@ -54,7 +53,7 @@ const Tasks = () => {
               <Typography variant="h5">Project Task</Typography>
             </Box>
             <Box>
-              <AddTaskModal />
+              <AddTaskModal projectID={id} setTasks={setTasks} />
             </Box>
           </Box>
           <Paper elevation={2} sx={{ p: 2 }}>
