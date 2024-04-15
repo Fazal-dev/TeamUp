@@ -8,14 +8,14 @@ import TableRow from "@mui/material/TableRow";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Chip, Stack, Typography } from "@mui/material";
 import { Box, Container, Paper } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useSnackbar } from "notistack";
-import EditProjectTaskModal from "../../Modals/EditProjectTaskModal";
-
+import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
 const Tasks = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
   const { id } = useParams();
   const [projectName, setProjectName] = useState("");
@@ -199,17 +199,17 @@ const Tasks = () => {
                       <TableCell>
                         <Stack direction={"row"} spacing={1}>
                           <Box>
-                            <EditProjectTaskModal
-                              task={task}
-                              fetchData={fetchData}
-                            />
+                            <Link
+                              onClick={() =>
+                                navigate(`/editProjectTask/${task._id}`)
+                              }
+                            >
+                              <EditNoteTwoToneIcon />
+                            </Link>
                           </Box>
                           <Box>
-                            <Link
-                              onClick={() => handleDelete(task._id)}
-                              sx={{ color: "red" }}
-                            >
-                              <DeleteIcon />
+                            <Link onClick={() => handleDelete(task._id)}>
+                              <DeleteIcon sx={{ color: "red" }} />
                             </Link>
                           </Box>
                         </Stack>

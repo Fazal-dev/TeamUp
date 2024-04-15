@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   FormControl,
@@ -48,7 +48,25 @@ const EditProjectTaskModal = ({ task, fetchData }) => {
     setTaskTitle("");
     setError("");
   };
-  // create task
+  // MODAL OPEN
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const fetchProjectTask = () => {
+    try {
+      axios
+        .get(`http://localhost:8000/api/projectTask/task/${id}`)
+        .then((res) => console.log(res.data));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // update  task
   function updateTask() {
     try {
       const formData = {
@@ -60,27 +78,24 @@ const EditProjectTaskModal = ({ task, fetchData }) => {
       axios
         .patch(`http://localhost:8000/api/projectTask/${id}`, formData)
         .then((res) => {
-          fetchData();
           // show message to the user
           enqueueSnackbar("Task updated successfully ", {
             variant: "success",
             autoHideDuration: 5000,
             anchorOrigin: { vertical: "top", horizontal: "right" },
           });
+          refreshTheForm();
           handleClose();
         });
     } catch (error) {
+      enqueueSnackbar("Failed to update task. Please try again later.", {
+        variant: "error",
+        autoHideDuration: 5000,
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
       console.log(error.message);
     }
   }
-  // MODAL OPEN
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-    refreshTheForm();
-  };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -89,9 +104,12 @@ const EditProjectTaskModal = ({ task, fetchData }) => {
       setError("Please fill out all the fields");
       return;
     }
-    // send to db
-    updateTask();
+    // update to db
+
+    // updateTask();
+    // fetchData();
   };
+
   return (
     <>
       <Link onClick={handleClickOpen}>

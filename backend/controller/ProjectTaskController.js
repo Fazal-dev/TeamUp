@@ -33,14 +33,14 @@ export const getAllProjectTask = async (req, res) => {
 };
 // get single Project Task
 export const getSingleProjectTask = async (req, res) => {
-  const { id } = req.params;
+  const { taskId } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (!mongoose.Types.ObjectId.isValid(taskId)) {
     return res.status(404).json({ error: "task not found" });
   }
 
   try {
-    const singleTask = await ProjectTask.findById({ projectID: id });
+    const singleTask = await ProjectTask.findById(taskId);
     res.status(200).json(singleTask);
   } catch (error) {
     res.status(400).json({ error: error.message });

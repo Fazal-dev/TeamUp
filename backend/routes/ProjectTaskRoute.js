@@ -11,7 +11,7 @@ const ProjectTaskRouter = express.Router();
 
 ProjectTaskRouter.post("/", createProjectTask);
 ProjectTaskRouter.get("/:id", getAllProjectTask);
-ProjectTaskRouter.get("/:id", getSingleProjectTask);
+ProjectTaskRouter.get("/task/:taskId", getSingleProjectTask);
 ProjectTaskRouter.patch("/:id", updateProjectTask);
 ProjectTaskRouter.delete("/:id", deleteProjectTask);
 
