@@ -42,6 +42,7 @@ const AddTaskModal = ({ projectID, setTasks }) => {
   const [taskTitle, setTaskTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(null);
+  const [project, setProject] = useState({});
   const [error, setError] = useState("");
   // reset the states
   const refreshTheForm = () => {
@@ -92,13 +93,30 @@ const AddTaskModal = ({ projectID, setTasks }) => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    // Validate fields
-    if (!status || !priority || !taskTitle || !description || !date) {
-      setError("Please fill out all the fields");
-      return;
-    }
-    // send to db
-    createTask();
+
+    const token = localStorage.getItem("token");
+    axios
+      .get(`http://localhost:8000/api/project/${projectID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        const p = res.data;
+        setProject(res.data);
+
+        // Validate fields
+        if (!status || !priority || !taskTitle || !description || !date) {
+          setError("Please fill out all the fields");
+          return;
+        }
+        // send to db
+        createTask();
+      })
+      .catch((error) => {
+        alert("An error happened, please check console");
+        console.error("Error fetching project information:", error.message);
+      });
   };
 
   return (
