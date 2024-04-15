@@ -16,7 +16,7 @@ import { useSnackbar } from "notistack";
 import { useNavigate, useParams } from "react-router-dom";
 const EditProjectTask = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id, projectId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
@@ -66,7 +66,7 @@ const EditProjectTask = () => {
             anchorOrigin: { vertical: "top", horizontal: "right" },
           });
           refreshTheForm();
-          navigate("/projects");
+          navigate(`/projectTask/${projectId}`);
         });
     } catch (error) {
       enqueueSnackbar("Failed to update task. Please try again later.", {

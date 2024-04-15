@@ -201,7 +201,7 @@ const Tasks = () => {
                           <Box>
                             <Link
                               onClick={() =>
-                                navigate(`/editProjectTask/${task._id}`)
+                                navigate(`/editProjectTask/${task._id}/${id}`)
                               }
                             >
                               <EditNoteTwoToneIcon />

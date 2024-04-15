@@ -72,7 +72,7 @@ const router = createBrowserRouter([
         element: <Tasks />,
       },
       {
-        path: "/editProjectTask/:id",
+        path: "/editProjectTask/:id/:projectId",
         element: <EditProjectTask />,
       },
       {
