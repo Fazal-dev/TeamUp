@@ -12,9 +12,12 @@ import { Box, Container, Paper } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2";
+import { useSnackbar } from "notistack";
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
+
   const { id } = useParams();
   const [projectName, setProjectName] = useState("");
   const [user, setUser] = useState({});
@@ -43,8 +46,42 @@ const Tasks = () => {
       console.error("Error fetching user information:", error);
     }
   };
-  const handleDelete = (id) => {
-    console.log(id);
+  const deleteTask = (id) => {
+    try {
+      axios
+        .delete(`http://localhost:8000/api/projectTask/${id}`)
+        .then((res) => {
+          console.log(res.data);
+        });
+    } catch (error) {
+      console.log("error when delete" + error.message);
+    }
+  };
+  const handleDelete = async (id) => {
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // DELETE TASK
+          deleteTask(id);
+          setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
+          enqueueSnackbar("Task deleted successfully ", {
+            variant: "success",
+            autoHideDuration: 5000,
+            anchorOrigin: { vertical: "top", horizontal: "right" },
+          });
+        }
+      });
+    } catch (error) {
+      console.log("error delete the task:", error.message);
+    }
   };
 
   useEffect(() => {
