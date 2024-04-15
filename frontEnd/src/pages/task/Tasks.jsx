@@ -6,23 +6,21 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
 import { Chip, Stack, Typography } from "@mui/material";
 import { Box, Container, Paper } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useSnackbar } from "notistack";
-const Tasks = () => {
-  const [tasks, setTasks] = useState([]);
-  const { enqueueSnackbar } = useSnackbar();
+import EditProjectTaskModal from "../../Modals/EditProjectTaskModal";
 
+const Tasks = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [tasks, setTasks] = useState([]);
   const { id } = useParams();
   const [projectName, setProjectName] = useState("");
-  const [user, setUser] = useState({});
-  const navigate = useNavigate();
-  // FETCH PROJECT TASKS
+
+  // fetch project task
   const fetchData = async () => {
     try {
       const res = await axios.get(
@@ -34,18 +32,8 @@ const Tasks = () => {
       console.error("Error fetching project task information:", error.message);
     }
   };
-  const getUserInfo = async (token) => {
-    try {
-      const response = await axios.get(`http://localhost:8000/api/user/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setUser(response.data);
-    } catch (error) {
-      console.error("Error fetching user information:", error);
-    }
-  };
+
+  // delete the task
   const deleteTask = (id) => {
     try {
       axios
@@ -57,6 +45,8 @@ const Tasks = () => {
       console.log("error when delete" + error.message);
     }
   };
+
+  // handle delete the task
   const handleDelete = async (id) => {
     try {
       Swal.fire({
@@ -83,11 +73,29 @@ const Tasks = () => {
       console.log("error delete the task:", error.message);
     }
   };
-
-  useEffect(() => {
-    fetchData();
+  // handle status update
+  const handleStatus = async (id, status) => {
+    // toggle the status
+    const newStatus = status === "completed" ? "incomplete" : "completed";
+    try {
+      const res = await axios.patch(
+        `http://localhost:8000/api/projectTask/${id}`,
+        { status: newStatus }
+      );
+      fetchData();
+      enqueueSnackbar("succefully update a project task status", {
+        variant: "success",
+        autoHideDuration: "10",
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log("Error fetching tasks:", error.message);
+    }
+  };
+  // fetch project name
+  const fetchProjctName = () => {
     const token = localStorage.getItem("token");
-    getUserInfo(token);
     axios
       .get(`http://localhost:8000/api/project/${id}`, {
         headers: {
@@ -101,6 +109,11 @@ const Tasks = () => {
         alert("An error happened, please check console");
         console.error("Error fetching project information:", error.message);
       });
+  };
+
+  useEffect(() => {
+    fetchData();
+    fetchProjctName();
   }, []);
 
   return (
@@ -168,25 +181,28 @@ const Tasks = () => {
                       <TableCell>{task.date}</TableCell>
                       <TableCell>{task.priority}</TableCell>
                       <TableCell>
-                        <Chip
-                          size="small"
-                          variant="outlined"
-                          label={task.status}
-                          color={
-                            task.status === "completed" ? "success" : "warning"
-                          }
-                        />
+                        <span
+                          onClick={() => handleStatus(task._id, task.status)}
+                        >
+                          <Chip
+                            size="small"
+                            variant="outlined"
+                            label={task.status}
+                            color={
+                              task.status === "completed"
+                                ? "success"
+                                : "warning"
+                            }
+                          />
+                        </span>
                       </TableCell>
                       <TableCell>
                         <Stack direction={"row"} spacing={1}>
                           <Box>
-                            <Link
-                              onClick={() =>
-                                navigate(`/editProjectTask/${task._id}`)
-                              }
-                            >
-                              <EditNoteTwoToneIcon />
-                            </Link>
+                            <EditProjectTaskModal
+                              task={task}
+                              fetchData={fetchData}
+                            />
                           </Box>
                           <Box>
                             <Link
