@@ -6,12 +6,13 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Chip, Stack, Typography } from "@mui/material";
+import { Button, Chip, Stack, Typography } from "@mui/material";
 import { Box, Container, Paper } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useSnackbar } from "notistack";
+import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
 const Tasks = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -123,6 +124,29 @@ const Tasks = () => {
         return "default";
     }
   };
+  // Function to sort tasks based on priority and status
+  const sortTasks = (tasks) => {
+    const sortedTasks = tasks.sort((a, b) => {
+      const priorityOrder = {
+        high: 1,
+        medium: 2,
+        low: 3,
+      };
+      const priorityComparison =
+        priorityOrder[a.priority] - priorityOrder[b.priority];
+      if (priorityComparison !== 0) {
+        return priorityComparison;
+      }
+
+      const statusOrder = {
+        completed: 1,
+        incomplete: 2,
+      };
+      return statusOrder[a.status] - statusOrder[b.status];
+    });
+
+    return sortedTasks;
+  };
 
   useEffect(() => {
     fetchData();
@@ -150,6 +174,15 @@ const Tasks = () => {
               </Typography>
             </Box>
             <Box>
+              <Button
+                sx={{ mr: 2 }}
+                variant="outlined"
+                onClick={() => navigate(`/ProjectDashboard/${id}`)}
+                startIcon={<DashboardCustomizeIcon />}
+              >
+                project Dashbord
+              </Button>
+
               <AddTaskModal projectID={id} setTasks={setTasks} />
             </Box>
           </Box>
@@ -181,7 +214,7 @@ const Tasks = () => {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  tasks.map((task, index) => (
+                  sortTasks(tasks).map((task, index) => (
                     <TableRow
                       key={index}
                       sx={{
