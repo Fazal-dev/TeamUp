@@ -110,6 +110,19 @@ const Tasks = () => {
         console.error("Error fetching project information:", error.message);
       });
   };
+  //set color for priorty
+  const getColorForPriority = (priority) => {
+    switch (priority.toLowerCase()) {
+      case "high":
+        return "error";
+      case "medium":
+        return "warning";
+      case "low":
+        return "success";
+      default:
+        return "default";
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -179,7 +192,13 @@ const Tasks = () => {
                       <TableCell>{task.taskTitle}</TableCell>
                       <TableCell>{task.description}</TableCell>
                       <TableCell>{task.date}</TableCell>
-                      <TableCell>{task.priority}</TableCell>
+                      <TableCell>
+                        <Chip
+                          size="small"
+                          label={task.priority}
+                          color={getColorForPriority(task.priority)}
+                        />
+                      </TableCell>
                       <TableCell>
                         <span
                           onClick={() => handleStatus(task._id, task.status)}
