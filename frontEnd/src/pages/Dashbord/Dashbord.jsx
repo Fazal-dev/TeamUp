@@ -8,9 +8,10 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RadioButtonCheckedTwoToneIcon from "@mui/icons-material/RadioButtonCheckedTwoTone";
 import PersonIcon from "@mui/icons-material/Person";
-import PriorityChart from "../../components/PriorityChart";
+
 import { getToken } from "../../utility/index.js";
 import axios from "axios";
+import PriorityChart from "../../components/charts/PriorityChart.jsx";
 const StyledCard = styled(Card)({ width: 40 + "%", height: 140 });
 
 const Dashbord = () => {

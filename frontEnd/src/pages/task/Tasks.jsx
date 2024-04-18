@@ -174,14 +174,16 @@ const Tasks = () => {
               </Typography>
             </Box>
             <Box>
-              <Button
-                sx={{ mr: 2 }}
-                variant="outlined"
-                onClick={() => navigate(`/ProjectDashboard/${id}`)}
-                startIcon={<DashboardCustomizeIcon />}
-              >
-                project Dashbord
-              </Button>
+              {tasks.length > 0 && ( // Check if there are tasks available
+                <Button
+                  sx={{ mr: 2 }}
+                  variant="outlined"
+                  onClick={() => navigate(`/ProjectDashboard/${id}`)}
+                  startIcon={<DashboardCustomizeIcon />}
+                >
+                  Project Dashboard
+                </Button>
+              )}
 
               <AddTaskModal projectID={id} setTasks={setTasks} />
             </Box>

@@ -1,13 +1,20 @@
 import { Box, Button, Card, CardContent, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import PriorityChart from "../../components/PriorityChart";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import PriorityChart from "../../components/charts/PriorityChart";
+import ProgressChart from "../../components/charts/ProgressChart";
 const ProjectDashboard = () => {
   const [tasks, setTasks] = useState([]);
   const { projectId } = useParams();
   const navigate = useNavigate();
+  // Calculate completed and incomplete tasks count
+  const completedCount = tasks.filter(
+    (task) => task.status === "completed"
+  ).length;
+  const incompleteCount = tasks.length - completedCount;
+
   // fetch project task
   const fetchData = async () => {
     try {
@@ -38,12 +45,13 @@ const ProjectDashboard = () => {
 
     return [priorityCounts.high, priorityCounts.medium, priorityCounts.low];
   };
+
   return (
     <>
       <Box sx={{ mb: 2 }}>
         <Button
           variant="outlined"
-          color="success"
+          color="primary"
           size="large"
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate(`/projectTask/${projectId}`)}
@@ -56,18 +64,21 @@ const ProjectDashboard = () => {
           <Card sx={{ height: 60 + "vh", p: 2 }}>
             <CardContent>
               <Box height={100 + "vh"}>
-                {/* bar chart */}
+                {/* priority chart */}
                 <PriorityChart chartData={getChartData()} />
               </Box>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={6}>
-          <Card sx={{ height: 60 + "vh", p: 2 }}>
+          <Card sx={{ height: 90 + "vh", p: 2 }}>
             <CardContent>
               <Box height={100 + "vh"}>
-                {/* bar chart */}
-                <PriorityChart chartData={getChartData()} />
+                {/* progress chart */}
+                <ProgressChart
+                  completedCount={completedCount}
+                  incompleteCount={incompleteCount}
+                />
               </Box>
             </CardContent>
           </Card>
