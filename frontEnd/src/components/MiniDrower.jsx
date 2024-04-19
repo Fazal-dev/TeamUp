@@ -92,7 +92,7 @@ const MiniDrower = () => {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
+      cancelButtonColor: "grey",
       confirmButtonText: "Yes, Log out",
       cancelButtonText: "Cancel",
     }).then((result) => {

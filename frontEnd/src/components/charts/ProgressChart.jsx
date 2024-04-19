@@ -41,10 +41,10 @@ const ProgressChart = ({ completedCount, incompleteCount }) => {
     },
     layout: {
       padding: {
-        top: 10, // Adjust as needed
-        bottom: 250, // Adjust as needed
-        left: 20, // Adjust as needed
-        right: 20, // Adjust as needed
+        top: 10,
+        bottom: 250,
+        left: 20,
+        right: 20,
       },
     },
   };
