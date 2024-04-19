@@ -71,7 +71,7 @@ const ProjectDashboard = () => {
           </Card>
         </Grid>
         <Grid item xs={6}>
-          <Card sx={{ height: 90 + "vh", p: 2 }}>
+          <Card sx={{ height: 60 + "vh", p: 2 }}>
             <CardContent>
               <Box height={100 + "vh"}>
                 {/* progress chart */}

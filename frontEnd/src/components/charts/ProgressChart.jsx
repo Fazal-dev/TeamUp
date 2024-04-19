@@ -17,7 +17,7 @@ const ProgressChart = ({ completedCount, incompleteCount }) => {
     datasets: [
       {
         label: "Project Progress",
-        data: [completedPercentage, incompletePercentage], // Representing completed and remaining percentage
+        data: [completedPercentage, incompletePercentage],
         backgroundColor: ["#4CAF50", "#CCCCCC"],
         borderWidth: 1,
       },
@@ -38,32 +38,35 @@ const ProgressChart = ({ completedCount, incompleteCount }) => {
           },
         },
       },
-      legend: {
-        display: false,
+    },
+    layout: {
+      padding: {
+        top: 10, // Adjust as needed
+        bottom: 250, // Adjust as needed
+        left: 20, // Adjust as needed
+        right: 20, // Adjust as needed
       },
-      // Custom plugin to draw the completed percentage in the center
-      beforeDraw: function (chart) {
-        const ctx = chart.ctx;
-        const width = chart.width;
-        const height = chart.height;
-
-        ctx.restore();
-        const fontSize = (height / 114).toFixed(2);
-        ctx.font = `${fontSize}em sans-serif`;
-        ctx.textBaseline = "middle";
-
-        const text = `${completedPercentage}%`;
-        const textX = Math.round((width - ctx.measureText(text).width) / 2);
-        const textY = height / 2;
-
-        ctx.fillText(text, textX, textY);
-        ctx.save();
-      },
+    },
+  };
+  // Custom plugin to display the project completion percentage in the center
+  const textCenter = {
+    id: "textCenter",
+    beforeDraw(chart, args, pluginOptions) {
+      const { ctx, chartArea } = chart;
+      ctx.save();
+      ctx.font = "bolder 30px sans-serif";
+      ctx.fillStyle = "#d9534f";
+      const text = `${Math.floor(chart.data.datasets[0].data[0])}%`;
+      const textWidth = ctx.measureText(text).width;
+      const textX = (chartArea.left + chartArea.right - textWidth) / 2;
+      const textY = (chartArea.top + chartArea.bottom) / 2;
+      ctx.fillText(text, textX, textY);
+      ctx.restore();
     },
   };
   return (
     <>
-      <Doughnut data={data} options={options} />
+      <Doughnut data={data} options={options} plugins={[textCenter]} />
     </>
   );
 };
