@@ -1,4 +1,11 @@
-import { Box, Button, Card, CardContent, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -55,9 +62,10 @@ const ProjectDashboard = () => {
           size="large"
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate(`/projectTask/${projectId}`)}
-        >
-          back
-        </Button>
+        ></Button>
+      </Box>
+      <Box sx={{ mb: 6, mt: 6 }}>
+        <Typography variant="h5">Project Dashboard</Typography>
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={6} sx={{ width: 1000 }}>
