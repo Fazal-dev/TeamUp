@@ -6,7 +6,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Button, Chip, Stack, Typography } from "@mui/material";
+import { Button, Chip, Stack, Tooltip, Typography } from "@mui/material";
 import { Box, Container, Paper } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -253,18 +253,22 @@ const Tasks = () => {
                       <TableCell>
                         <Stack direction={"row"} spacing={1}>
                           <Box>
-                            <Link
-                              onClick={() =>
-                                navigate(`/editProjectTask/${task._id}/${id}`)
-                              }
-                            >
-                              <EditNoteTwoToneIcon />
-                            </Link>
+                            <Tooltip title="Edit Task">
+                              <Link
+                                onClick={() =>
+                                  navigate(`/editProjectTask/${task._id}/${id}`)
+                                }
+                              >
+                                <EditNoteTwoToneIcon />
+                              </Link>
+                            </Tooltip>
                           </Box>
                           <Box>
-                            <Link onClick={() => handleDelete(task._id)}>
-                              <DeleteIcon sx={{ color: "red" }} />
-                            </Link>
+                            <Tooltip title="Delete Task">
+                              <Link onClick={() => handleDelete(task._id)}>
+                                <DeleteIcon sx={{ color: "red" }} />
+                              </Link>
+                            </Tooltip>
                           </Box>
                         </Stack>
                       </TableCell>

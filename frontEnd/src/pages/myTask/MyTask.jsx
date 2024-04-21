@@ -3,11 +3,9 @@ import {
   Button,
   Chip,
   Container,
-  Grid,
   Link,
   Paper,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -29,6 +27,8 @@ import { getToken } from "../../utility/index.js";
 import Spinner from "../../components/common/Spinner.jsx";
 import { useSnackbar } from "notistack";
 import Swal from "sweetalert2";
+import Tooltip from "@mui/material/Tooltip";
+
 const MyTask = () => {
   // all the states
   const [tasks, setTasks] = useState([]);
@@ -233,19 +233,25 @@ const MyTask = () => {
                       <TableCell>
                         <Stack direction={"row"} spacing={1}>
                           <Box>
-                            <Link
-                              onClick={() => navigate(`/editTask/${task._id}`)}
-                            >
-                              <EditNoteTwoToneIcon />
-                            </Link>
+                            <Tooltip title="edit task">
+                              <Link
+                                onClick={() =>
+                                  navigate(`/editTask/${task._id}`)
+                                }
+                              >
+                                <EditNoteTwoToneIcon />
+                              </Link>
+                            </Tooltip>
                           </Box>
                           <Box>
-                            <Link
-                              onClick={() => handleDelete(task._id)}
-                              sx={{ color: "red" }}
-                            >
-                              <DeleteIcon />
-                            </Link>
+                            <Tooltip title="delete task">
+                              <Link
+                                onClick={() => handleDelete(task._id)}
+                                sx={{ color: "red" }}
+                              >
+                                <DeleteIcon />
+                              </Link>
+                            </Tooltip>
                           </Box>
                         </Stack>
                       </TableCell>

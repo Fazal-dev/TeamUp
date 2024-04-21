@@ -1,4 +1,12 @@
-import { Box, Button, Container, Link, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Link,
+  Paper,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,6 +20,7 @@ import Swal from "sweetalert2";
 import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import { useSnackbar } from "notistack";
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -105,7 +114,14 @@ const Projects = () => {
         >
           <Box>
             <Typography variant="h5">Projects</Typography>
-            <Button onClick={handleRefresh}>refresh</Button>
+            <Button
+              sx={{ mt: 2 }}
+              variant="outlined"
+              onClick={handleRefresh}
+              startIcon={<RefreshIcon />}
+            >
+              refresh
+            </Button>
           </Box>
         </Box>
         <Paper elevation={2} sx={{ p: 2 }}>
@@ -147,30 +163,36 @@ const Projects = () => {
                     <TableCell>
                       <Stack direction={"row"} spacing={1}>
                         <Box>
-                          <Link
-                            onClick={() =>
-                              navigate(`/editProject/${project._id}`)
-                            }
-                          >
-                            <EditNoteTwoToneIcon />
-                          </Link>
+                          <Tooltip title="Edit project">
+                            <Link
+                              onClick={() =>
+                                navigate(`/editProject/${project._id}`)
+                              }
+                            >
+                              <EditNoteTwoToneIcon />
+                            </Link>
+                          </Tooltip>
                         </Box>
                         <Box>
-                          <Link
-                            onClick={() => handleDeleteProject(project._id)}
-                            sx={{ color: "red" }}
-                          >
-                            <DeleteIcon />
-                          </Link>
+                          <Tooltip title="Delete project">
+                            <Link
+                              onClick={() => handleDeleteProject(project._id)}
+                              sx={{ color: "red" }}
+                            >
+                              <DeleteIcon />
+                            </Link>
+                          </Tooltip>
                         </Box>
                         <Box>
-                          <Link
-                            onClick={() =>
-                              navigate(`/projectTask/${project._id}`)
-                            }
-                          >
-                            <InfoOutlinedIcon />
-                          </Link>
+                          <Tooltip title="view Task">
+                            <Link
+                              onClick={() =>
+                                navigate(`/projectTask/${project._id}`)
+                              }
+                            >
+                              <InfoOutlinedIcon />
+                            </Link>
+                          </Tooltip>
                         </Box>
                       </Stack>
                     </TableCell>
