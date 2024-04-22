@@ -87,9 +87,15 @@ const TaskCard = ({ task }) => {
               <Typography color="text.secondary" gutterBottom>
                 <Chip
                   size="small"
-                  variant="outlined"
-                  label={task.status}
-                  color={task.status === "completed" ? "success" : "warning"}
+                  variant="contained"
+                  label={task.priority}
+                  color={
+                    task.priority === "high"
+                      ? "error"
+                      : task.priority === "medium"
+                      ? "warning"
+                      : "info"
+                  }
                 />
               </Typography>
             </Grid>

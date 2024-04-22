@@ -64,7 +64,7 @@ const ProjectDashboard = () => {
           onClick={() => navigate(`/projectTask/${projectId}`)}
         ></Button>
       </Box>
-      <Box sx={{ mb: 6, mt: 6 }}>
+      <Box sx={{ mb: 5, mt: 5 }}>
         <Typography variant="h5">Project Dashboard</Typography>
       </Box>
       <Grid container spacing={2}>
@@ -72,6 +72,9 @@ const ProjectDashboard = () => {
           <Card sx={{ height: 60 + "vh", p: 2 }}>
             <CardContent>
               <Box height={100 + "vh"}>
+                <Typography textAlign={"center"} sx={{ mb: 1 }} variant="h6">
+                  Project task priority
+                </Typography>
                 {/* priority chart */}
                 <PriorityChart chartData={getChartData()} />
               </Box>
@@ -82,6 +85,9 @@ const ProjectDashboard = () => {
           <Card sx={{ height: 60 + "vh", p: 2 }}>
             <CardContent>
               <Box height={100 + "vh"}>
+                <Typography textAlign={"center"} sx={{ mb: 1 }} variant="h6">
+                  Project Progress
+                </Typography>
                 {/* progress chart */}
                 <ProgressChart
                   completedCount={completedCount}
