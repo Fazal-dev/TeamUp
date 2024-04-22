@@ -125,7 +125,12 @@ const MyTask = () => {
       console.log("Error fetching tasks:", error.message);
     }
   };
-
+  // Define priority colors mapping
+  const priorityColors = {
+    high: "error",
+    medium: "warning",
+    low: "info",
+  };
   return (
     <div>
       <Container sx={{ width: "100vw" }}>
@@ -213,7 +218,15 @@ const MyTask = () => {
                       <TableCell>{task.taskTitle}</TableCell>
                       <TableCell>{task.description}</TableCell>
                       <TableCell>{task.date}</TableCell>
-                      <TableCell>{task.priority}</TableCell>
+                      <TableCell>
+                        <span>
+                          <Chip
+                            color={priorityColors[task.priority]}
+                            size="small"
+                            label={task.priority}
+                          />
+                        </span>
+                      </TableCell>
                       <TableCell>
                         <span
                           onClick={() => handleStatus(task._id, task.status)}

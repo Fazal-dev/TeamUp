@@ -1,29 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Typography, TextField, Button, Link } from "@mui/material";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 const LoginForm = () => {
-  const navigate = useNavigate("/");
-  const [errors, setErrors] = useState({ email: null, password: null });
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  const [errors, setErrors] = useState({ email: null, password: null });
   // login functoin
   const login = async () => {
     try {
@@ -132,19 +121,7 @@ const LoginForm = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              type={showPassword ? "text" : "password"}
-              endadornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                  </IconButton>
-                </InputAdornment>
-              }
+              type="password"
               label="Password"
               variant="outlined"
               name="password"
