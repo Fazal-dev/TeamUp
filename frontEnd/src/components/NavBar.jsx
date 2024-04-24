@@ -4,7 +4,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import MuiAppBar from "@mui/material/AppBar";
-import { Box, Grid, IconButton, Stack, Toolbar } from "@mui/material";
+import { Grid, IconButton, Toolbar } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 
