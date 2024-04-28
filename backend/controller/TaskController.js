@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Task from "../model/taskModel.js";
-import userModel from "../model/userModel.js";
+
 // create a task
 export const createTask = async (req, res) => {
   const { taskTitle, description, date, status, priority } = req.body;

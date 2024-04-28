@@ -13,6 +13,7 @@ export const getUserById = async (req, res) => {
     }
     return res.status(200).json(user);
   } catch (error) {
+    // Handle server errors
     console.error("Error fetching user:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
@@ -21,13 +22,16 @@ export const getUserById = async (req, res) => {
 // login user
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  // Check if the user exists
   const user = await userModel.findOne({ email });
   if (user && (await bcrypt.compare(password, user.password))) {
+    // If user exists and password is correct, generate JWT token
     res.json({
       message: "succefully login",
       token: generateToken(user._id),
     });
   } else {
+    // If user does not exist or password is incorrect, return error
     res.status(401).json({
       error:
         "Invalid email or password. Please check your credentials and try again.",
@@ -43,11 +47,12 @@ export const signUpUser = asyncHandler(async (req, res) => {
     // Check if the email already exists
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
+      // If email exists, return error
       return res.status(400).json({
         error: "Email already exists. Please choose a different email .",
       });
     }
-    // hash pasword
+    // Hash password before saving to the database
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
@@ -58,7 +63,7 @@ export const signUpUser = asyncHandler(async (req, res) => {
       userName,
     });
 
-    // Respond with success message
+    // Respond with success message and JWT token
     res.status(201).json({
       _id: user.id,
       email: user.email,
@@ -72,7 +77,9 @@ export const signUpUser = asyncHandler(async (req, res) => {
 });
 // get authorized user details
 export const getMe = asyncHandler(async (req, res) => {
+  // Get user details using the user ID from the JWT token
   const { _id, email, userName } = await userModel.findById(req.user.id);
+  // Return user details
   res.status(201).send({
     id: _id,
     email,
