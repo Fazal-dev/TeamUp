@@ -78,7 +78,6 @@ const SignUpForm = () => {
             <TextField
               label="Username"
               variant="outlined"
-              type="user name"
               fullWidth
               required
               name="userName"

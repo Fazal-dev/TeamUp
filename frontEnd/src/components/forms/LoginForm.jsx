@@ -3,7 +3,7 @@ import { Grid, Typography, TextField, Button, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
-import Alert from "@mui/material/Alert";
+
 const LoginForm = () => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -12,11 +12,7 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({
-    email: null,
-    password: null,
-    gentral: null,
-  });
+  const [errors, setErrors] = useState({ email: null, password: null });
   // login functoin
   const login = async () => {
     try {
@@ -48,10 +44,7 @@ const LoginForm = () => {
       if (error.response && error.response.status === 401) {
         setErrors({
           ...errors,
-          gentral:
-            "Invalid email or password. Please check your credentials and try again.",
-          password: null,
-          email: null,
+          password: "Invalid email or password.",
         });
       } else {
         // For other types of errors
@@ -88,6 +81,22 @@ const LoginForm = () => {
       setLoading(false);
       return;
     }
+    // Validate password length
+    const { password } = formData;
+
+    const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(
+      password
+    );
+
+    if (!isPasswordValid) {
+      setErrors({
+        ...errors,
+        password:
+          "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit.",
+      });
+      setLoading(false);
+      return;
+    }
 
     // login function
     try {
@@ -95,12 +104,6 @@ const LoginForm = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      setErrors({
-        ...errors,
-        gentral: "Invalid email or password.",
-        password: null,
-        email: null,
-      });
       console.error("Login failed:", error);
     }
   };
@@ -112,11 +115,6 @@ const LoginForm = () => {
           <Grid item xs={12} textAlign={"center"}>
             <Typography variant="h5">Sign In</Typography>
           </Grid>
-          {errors.gentral && (
-            <Grid item xs={12}>
-              <Alert severity="error">{errors.gentral}</Alert>
-            </Grid>
-          )}
           <Grid item xs={12}>
             <TextField
               label="Email"
