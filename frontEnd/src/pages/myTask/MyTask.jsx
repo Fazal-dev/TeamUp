@@ -188,8 +188,8 @@ const MyTask = () => {
                   <TableCell>No Task</TableCell>
                   <TableCell>Task Tittle</TableCell>
                   <TableCell>Description</TableCell>
-                  <TableCell>Date</TableCell>
                   <TableCell>priority</TableCell>
+                  <TableCell>Date</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Actions </TableCell>
                 </TableRow>
@@ -217,7 +217,6 @@ const MyTask = () => {
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{task.taskTitle}</TableCell>
                       <TableCell>{task.description}</TableCell>
-                      <TableCell>{task.date}</TableCell>
                       <TableCell>
                         <span>
                           <Chip
@@ -227,6 +226,7 @@ const MyTask = () => {
                           />
                         </span>
                       </TableCell>
+                      <TableCell>{task.date}</TableCell>
                       <TableCell>
                         <span
                           onClick={() => handleStatus(task._id, task.status)}

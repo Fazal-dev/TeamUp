@@ -40,13 +40,22 @@ const LoginForm = () => {
       setLoading(false);
       navigate("/dashbord");
     } catch (error) {
-      console.log(error);
-      // error
-      setErrors({
-        ...errors,
-        email: error.response.data.error.email || null,
-        password: error.response.data.error.password || null,
-      });
+      // If the error is due to incorrect credentials, set an appropriate error message
+      if (error.response && error.response.status === 401) {
+        setErrors({
+          ...errors,
+          password: "Invalid email or password.",
+        });
+      } else {
+        // For other types of errors
+        setErrors({
+          ...errors,
+          email: error.response.data.error.email || null,
+          password: error.response.data.error.password || null,
+        });
+      }
+      console.error("Login failed:", error);
+      setLoading(false);
     }
   };
 

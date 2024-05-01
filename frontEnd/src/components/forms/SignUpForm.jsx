@@ -76,7 +76,7 @@ const SignUpForm = () => {
           )}
           <Grid item xs={12}>
             <TextField
-              label="User Name"
+              label="Username"
               variant="outlined"
               type="user name"
               fullWidth
