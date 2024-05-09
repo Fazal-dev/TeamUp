@@ -60,6 +60,7 @@ const ProjectDashboard = () => {
           variant="outlined"
           color="primary"
           size="large"
+          sx={{ borderRadius: 100 + "%", p: 2 }}
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate(`/projectTask/${projectId}`)}
         ></Button>
