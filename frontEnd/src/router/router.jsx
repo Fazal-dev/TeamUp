@@ -18,6 +18,17 @@ import EditProject from "../pages/editProject/EditProject";
 import EditProjectTask from "../pages/editProjecTask/EditProjectTask";
 import ProjectDashboard from "../pages/projectDashbord/ProjectDashboard";
 
+const getToken = () => {
+  return localStorage.getItem("token");
+};
+
+// Function to check if the user is authenticated
+export const isAuthenticated = () => {
+  const token = getToken();
+  // Check if token exists and is not expired
+  return token !== null && token !== undefined && token !== "";
+};
+
 const router = createBrowserRouter([
   // Define routes for guest users
   {
@@ -41,7 +52,7 @@ const router = createBrowserRouter([
   // Define routes for logged-in users
   {
     path: "/",
-    element: <DefoultLayout />,
+    element: isAuthenticated() ? <DefoultLayout /> : <Navigate to="/login" />,
     children: [
       {
         path: "*",
