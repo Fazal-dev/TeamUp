@@ -118,6 +118,47 @@ const Dashbord = () => {
         return "transparent";
     }
   };
+  // dashbord insight card
+  const InsightCard = ({ card, getBackgroundColor }) => {
+    return (
+      <StyledCard>
+        <CardContent sx={{ maxWidth: 400 }}>
+          <Stack
+            m={2}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+            direction={"row"}
+            spacing={2}
+          >
+            <Box>
+              <Typography
+                sx={{ color: "text.secondary" }}
+                gutterBottom
+                variant="h6"
+                component="div"
+              >
+                {card.title}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                p: 1,
+                bgcolor: `${getBackgroundColor(card.title)}`,
+                borderRadius: "100px",
+              }}
+            >
+              {card.icon}
+            </Box>
+          </Stack>
+          <Box sx={{ textAlign: "center" }}>
+            <Typography sx={{ fontSize: 25 }} variant="body2">
+              <strong>{card.amount}</strong>
+            </Typography>
+          </Box>
+        </CardContent>
+      </StyledCard>
+    );
+  };
   return (
     <>
       <Box sx={{ flexGrow: 1, p: 3 }}>
@@ -125,42 +166,11 @@ const Dashbord = () => {
           <Grid item xs={12}>
             <Stack spacing={4} direction={"row"} justifyContent={"stretch"}>
               {CardData.map((card, index) => (
-                <StyledCard key={index}>
-                  <CardContent sx={{ maxWidth: 400 }}>
-                    <Stack
-                      m={2}
-                      alignItems={"center"}
-                      justifyContent={"space-between"}
-                      direction={"row"}
-                      spacing={2}
-                    >
-                      <Box>
-                        <Typography
-                          sx={{ color: "text.secondary" }}
-                          gutterBottom
-                          variant="h6"
-                          component="div"
-                        >
-                          {card.title}
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          p: 1,
-                          bgcolor: `${getBackgroundColor(card.title)}`,
-                          borderRadius: "100px",
-                        }}
-                      >
-                        {card.icon}
-                      </Box>
-                    </Stack>
-                    <Box sx={{ textAlign: "center" }}>
-                      <Typography sx={{ fontSize: 25 }} variant="body2">
-                        <strong>{card.amount}</strong>
-                      </Typography>
-                    </Box>
-                  </CardContent>
-                </StyledCard>
+                <InsightCard
+                  key={index}
+                  card={card}
+                  getBackgroundColor={getBackgroundColor}
+                />
               ))}
             </Stack>
           </Grid>
