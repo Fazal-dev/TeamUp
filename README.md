@@ -1,10 +1,10 @@
 Project Management Web App
 
-Introduction
+#Introduction
 
 This Project Management Web App is designed to help individuals manage their tasks and projects efficiently. Users can create projects, add tasks to those projects, prioritize tasks, and track their progress. The app provides a user-friendly dashboard that displays key metrics such as the total number of projects, completed tasks, incomplete tasks, and task priority charts.
 
-Features
+#Features
 
 User authentication
 Create, view, edit, and delete projects
@@ -17,7 +17,7 @@ Total incomplete tasks
 Task priority chart
 Project progress chart
 
-Technologies Used
+#Technologies Used
 
 Frontend: React.js
 Backend: Node.js with Express.js
@@ -70,18 +70,18 @@ Create a Project:
 Navigate to the "Create Project" page.
 Fill in the project details and submit.
 
-Add Tasks:
+2. Add Tasks:
 
 Open a project to view its details.
 Click "Add Task" to create new tasks within the project.
 Fill in task details and submit.
 
-Edit/Delete Tasks:
+3. Edit/Delete Tasks:
 
 Select a task to view its details.
 Edit the task details or delete the task as needed.
 
-View Dashboard:
+4. View Dashboard:
 
 Access the dashboard to view an overview of your projects and tasks.
 Check the total number of projects, completed tasks, incomplete tasks, and view charts for task priorities and project progress.
