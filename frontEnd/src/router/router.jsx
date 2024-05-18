@@ -18,9 +18,7 @@ import EditProject from "../pages/editProject/EditProject";
 import EditProjectTask from "../pages/editProjecTask/EditProjectTask";
 import ProjectDashboard from "../pages/projectDashbord/ProjectDashboard";
 
-const getToken = () => {
-  return localStorage.getItem("token");
-};
+import { getToken } from "../utility";
 
 // Function to check if the user is authenticated
 export const isAuthenticated = () => {

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -8,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -19,6 +20,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SpaceDashboardSharpIcon from "@mui/icons-material/SpaceDashboardSharp";
 import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
 import AddIcon from "@mui/icons-material/Add";
+import Tooltip from "@mui/material/Tooltip";
+
 import TaskCards from "../../components/TaskCards";
 import { deleteTask } from "../../services/taskService/index.js";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +30,6 @@ import { getToken } from "../../utility/index.js";
 import Spinner from "../../components/common/Spinner.jsx";
 import { useSnackbar } from "notistack";
 import Swal from "sweetalert2";
-import Tooltip from "@mui/material/Tooltip";
 
 const MyTask = () => {
   // all the states
