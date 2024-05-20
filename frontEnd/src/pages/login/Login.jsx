@@ -34,8 +34,8 @@ const Login = () => {
 
         {/* right side */}
         <Grid item xs={12} sm={6}>
-          <Paper elevation={3}>
-            <Card sx={{ p: 3 }}>
+          <Paper elevation={3} sx={{ borderRadius: "10px" }}>
+            <Card sx={{ p: 4 }}>
               {/* loginform */}
               <LoginForm />
             </Card>
