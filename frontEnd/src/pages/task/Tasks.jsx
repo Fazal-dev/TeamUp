@@ -1,19 +1,33 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+
 import AddTaskModal from "../../Modals/AddTaskModal";
+// mui components
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Button, Chip, Stack, Tooltip, Typography } from "@mui/material";
-import { Box, Container, Paper } from "@mui/material";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  Button,
+  Chip,
+  Stack,
+  Tooltip,
+  Typography,
+  Box,
+  Container,
+  Paper,
+} from "@mui/material";
+
+// icons
+import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
+import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
+// external imports
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useSnackbar } from "notistack";
-import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
-import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
+
 const Tasks = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
@@ -174,7 +188,8 @@ const Tasks = () => {
               </Typography>
             </Box>
             <Box>
-              {tasks.length > 0 && ( // Check if there are tasks available
+              {tasks.length > 0 && (
+                // Check if there are tasks available
                 <Button
                   sx={{ mr: 2 }}
                   variant="outlined"
