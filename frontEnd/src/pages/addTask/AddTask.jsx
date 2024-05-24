@@ -46,7 +46,10 @@ const AddTask = () => {
   };
   // STATUS
   const handleChange = (event) => {
-    setStatus(event.target.value);
+    if (!formData.date) {
+      const selectedStatus = event.target.value;
+      setStatus(selectedStatus);
+    }
   };
   // get user details
   const token = localStorage.getItem("token");
@@ -58,6 +61,10 @@ const AddTask = () => {
       ...formData,
       date: date,
     });
+    // Automatically update status based on selected date
+    const currentDate = new Date();
+    const selectedStatus = date < currentDate ? "completed" : "incomplete";
+    setStatus(selectedStatus);
   };
   // get user details
   const getUserInfo = async () => {
@@ -152,6 +159,7 @@ const AddTask = () => {
                   value={status}
                   label="Status"
                   onChange={handleChange}
+                  disabled={!!formData.date}
                 >
                   <MenuItem value={"completed"}>complete</MenuItem>
                   <MenuItem value={"incomplete"}>incomplete</MenuItem>
