@@ -77,7 +77,11 @@ const MiniDrower = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-
+  const menuItems = [
+    { text: "Dashboard", icon: <DashboardIcon />, path: "/dashbord" },
+    { text: "To Do", icon: <FormatListNumberedRtlIcon />, path: "/Mytasks" },
+    { text: "Projects", icon: <DvrIcon />, path: "/projects" },
+  ];
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -119,103 +123,22 @@ const MiniDrower = () => {
           </IconButton>
         </DrawerHeader>
         <Divider />
-
         <List>
-          {/* dashbord */}
-          <Link
-            to={"/dashbord"}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <DashboardIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={"Dashbord"}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Link>
+          {menuItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.text} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          ))}
         </List>
-
-        <List>
-          {/*tasks */}
-          <Link
-            to={"/Mytasks"}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <FormatListNumberedRtlIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={"To Do"}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-        </List>
-        <Divider />
-        {/* projects */}
-        <List>
-          <Link
-            to={"/projects"}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <DvrIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={"Projects"}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-        </List>
-
         {/* create project */}
         <List>
           <ListItem disablePadding sx={{ display: "block" }}>
