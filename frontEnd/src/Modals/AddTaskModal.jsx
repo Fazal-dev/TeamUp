@@ -82,6 +82,21 @@ const AddTaskModal = ({ projectID, setTasks }) => {
       console.log(error.message);
     }
   }
+  // status
+  const handleChange = (e) => {
+    if (!date) {
+      const selectedStatus = e.target.value;
+      setStatus(selectedStatus);
+    }
+  };
+  // DATE SET
+  const handleDateChange = (date) => {
+    setDate(date);
+    // Automatically update status based on selected date
+    const currentDate = new Date();
+    const selectedStatus = date < currentDate ? "completed" : "incomplete";
+    setStatus(selectedStatus);
+  };
   // MODAL OPEN
   const handleClickOpen = () => {
     setOpen(true);
@@ -181,7 +196,8 @@ const AddTaskModal = ({ projectID, setTasks }) => {
                     value={status}
                     label="Status"
                     size="normal"
-                    onChange={(e) => setStatus(e.target.value)}
+                    onChange={handleChange}
+                    disabled={!!date}
                   >
                     <MenuItem value={"completed"}>complete</MenuItem>
                     <MenuItem value={"incomplete"}>incomplete</MenuItem>
@@ -215,7 +231,7 @@ const AddTaskModal = ({ projectID, setTasks }) => {
                   label="Due Date"
                   name="date"
                   value={date}
-                  onChange={(date) => setDate(date)}
+                  onChange={handleDateChange}
                   textField={<TextField />}
                   required
                 />
