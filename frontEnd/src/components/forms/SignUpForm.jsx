@@ -129,7 +129,10 @@ const SignUpForm = () => {
             >
               <em>
                 All ready have an account ?
-                <Link href={"/login"}> Sign In </Link>
+                <Link sx={{ textDecoration: "none" }} href={"/login"}>
+                  {" "}
+                  Sign In{" "}
+                </Link>
               </em>
             </Grid>
           </Grid>
