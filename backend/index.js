@@ -6,6 +6,8 @@ import ProjectTaskRouter from "./routes/ProjectTaskRoute.js";
 import ProjectRouter from "./routes/ProjectRoute.js";
 import TaskRouter from "./routes/TaskRoute.js";
 import UserRouter from "./routes/UserRoute.js";
+import AuthRouter from "./routes/Auth2Route.js";
+
 const app = express();
 
 // middleware for parsing request body
@@ -25,6 +27,7 @@ app.use("/api/projectTask", ProjectTaskRouter);
 app.use("/api/project", ProjectRouter);
 app.use("/api/task", TaskRouter);
 app.use("/api/user", UserRouter);
+app.use("/api/auth", AuthRouter);
 
 app.get("/", function (req, res) {
   res.send("hello world");
