@@ -25,6 +25,6 @@ export const protect = asyncHandler(async (req, res, next) => {
     }
   }
   if (!token) {
-    res.status(401).send({ message: "not authorizes no token" });
+    return res.status(401).send({ message: "not authorizes no token" });
   }
 });
