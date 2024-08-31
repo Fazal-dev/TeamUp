@@ -7,6 +7,7 @@ import ProjectRouter from "./routes/ProjectRoute.js";
 import TaskRouter from "./routes/TaskRoute.js";
 import UserRouter from "./routes/UserRoute.js";
 import AuthRouter from "./routes/Auth2Route.js";
+import TokenRouter from "./routes/TokenRoute.js";
 
 const app = express();
 
@@ -27,7 +28,9 @@ app.use("/api/projectTask", ProjectTaskRouter);
 app.use("/api/project", ProjectRouter);
 app.use("/api/task", TaskRouter);
 app.use("/api/user", UserRouter);
+// oAuth 2 routes
 app.use("/api/auth", AuthRouter);
+app.use("/api/oauth", TokenRouter);
 
 app.get("/", function (req, res) {
   res.send("hello world");

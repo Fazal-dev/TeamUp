@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import userModel from "../model/userModel.js";
 
-export const authorize = (req, res) => {
-  const { username, password } = req.body;
-  const user = userModel.findOne({ username, password });
-  if (!user) {
+export const authorize = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await userModel.findOne({ email });
+  if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 
@@ -16,5 +16,8 @@ export const authorize = (req, res) => {
     { expiresIn: "10m" }
   );
 
-  res.json({ code: authorizationCode });
+  res.status(200).json({
+    redirect_URL: `${process.env.REDIRECT_URL}`,
+    code: authorizationCode,
+  });
 };

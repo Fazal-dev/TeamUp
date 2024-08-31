@@ -1,7 +1,6 @@
 import userModel from "../model/userModel.js";
 import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
-import { json } from "express";
 
 export const protect = asyncHandler(async (req, res, next) => {
   let token;
@@ -17,9 +16,13 @@ export const protect = asyncHandler(async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       //   get user from the token
-      req.user = await userModel.findById(decoded.id).select("-password");
+      req.user = await userModel.findById(decoded.userId).select("-password");
+
       next();
     } catch (error) {
+      if (error.name === "TokenExpiredError") {
+        return res.status(401).json({ message: "Token expired" });
+      }
       res.status(401).send({ message: "not authorized" });
       console.log(error.message);
     }
