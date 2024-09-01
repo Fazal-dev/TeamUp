@@ -84,7 +84,7 @@ const TaskCard = ({ task }) => {
             justifyContent={"space-between"}
           >
             <Grid item>
-              <Typography color="text.secondary" gutterBottom>
+              <Typography component={"div"} color="text.secondary" gutterBottom>
                 <Chip
                   size="small"
                   variant="contained"
