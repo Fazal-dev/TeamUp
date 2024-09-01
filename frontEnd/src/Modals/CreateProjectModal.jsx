@@ -52,7 +52,13 @@ const CreateProjectModal = ({ open }) => {
 
   const getUserInfo = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/user/me`);
+      const token = localStorage.getItem("token");
+
+      const response = await axios.get(`http://localhost:8000/api/user/me`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
       setUser(response.data);
     } catch (error) {
       console.error("Error fetching user information:", error);

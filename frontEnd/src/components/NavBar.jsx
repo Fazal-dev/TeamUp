@@ -34,7 +34,7 @@ const NavBar = ({ open, handleDrawerOpen }) => {
     // Fetch user ID from the token
     const token = localStorage.getItem("token");
     const decodedToken = jwtDecode(token);
-    const userId = decodedToken.id;
+    const userId = decodedToken.userId;
 
     // Fetch user name using user ID
     const fetchUserName = async (userId) => {

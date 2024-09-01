@@ -65,6 +65,70 @@ const LoginForm = () => {
       setLoading(false);
     }
   };
+  // oauth login
+  const oauth2 = async () => {
+    let authorizeCode;
+    // request for authorize code
+    try {
+      const authData = await axios.post(
+        "http://localhost:8000/api/auth/authorize",
+        formData
+      );
+      authorizeCode = authData.data.code;
+    } catch (error) {
+      console.log(error.response.data.message);
+      if (error.response && error.response.status === 401) {
+        setErrors({
+          ...errors,
+          gentral:
+            "Invalid email or password. Please check your credentials and try again.",
+          password: null,
+          email: null,
+        });
+      } else {
+        // For other types of errors
+        setErrors({
+          ...errors,
+          email: error.response.data.error.email || null,
+          password: error.response.data.error.password || null,
+        });
+      }
+      console.error("Login failed:", error);
+      setLoading(false);
+    }
+    // exchange the code for token and refresh token
+    if (!authorizeCode) {
+      return;
+    }
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/oauth/token",
+        {
+          code: authorizeCode,
+        }
+      );
+
+      // store the token in local strorage
+      localStorage.setItem("token", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+
+      // sucess message
+      enqueueSnackbar(response.data.message, {
+        variant: "success",
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+        autoHideDuration: 3000,
+      });
+      // reset the state
+      setFormData({
+        email: "",
+        password: "",
+      });
+      setLoading(false);
+      navigate("/dashbord");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = ({ currentTarget: input }) => {
     setFormData({ ...formData, [input.name]: input.value });
@@ -91,7 +155,8 @@ const LoginForm = () => {
 
     // login function
     try {
-      await login();
+      // await login();
+      await oauth2();
       setLoading(false);
     } catch (error) {
       setLoading(false);

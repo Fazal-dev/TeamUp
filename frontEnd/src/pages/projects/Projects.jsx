@@ -39,10 +39,14 @@ const Projects = () => {
       console.error("Error fetching projects:", error);
     }
   };
-  const getUserInfo = async () => {
+  const getUserInfo = async (token) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/user/me`);
-      setCreatedBy(response.data.createdBy);
+      const response = await axios.get(`http://localhost:8000/api/user/me`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
       console.log(response.data.userName);
     } catch (error) {
       console.error("Error fetching user information:", error);
@@ -72,17 +76,18 @@ const Projects = () => {
   };
   useEffect(() => {
     const token = localStorage.getItem("token");
-    getUserInfo();
+    getUserInfo(token);
     fetchAllProjects(token);
   }, []);
 
   const handleRefresh = () => {
     const token = localStorage.getItem("token");
-    getUserInfo();
+    getUserInfo(token);
     fetchAllProjects(token);
   };
   const handleDeleteProject = async (id) => {
-    getUserInfo();
+    const token = localStorage.getItem("token");
+    getUserInfo(token);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
