@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import Alert from "@mui/material/Alert";
+import environment from "../../../envirment.js";
+
 const LoginForm = () => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -21,7 +23,7 @@ const LoginForm = () => {
   const login = async () => {
     try {
       const user = await axios.post(
-        "http://localhost:8000/api/user/login",
+        `${environment.baseUrl}/api/user/login`,
         formData
       );
 
