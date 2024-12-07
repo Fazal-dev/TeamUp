@@ -1,4 +1,5 @@
 import axios from "axios";
+import environment from "../../../envirment.js";
 
 var token = localStorage.getItem("token");
 // TODO
@@ -11,7 +12,7 @@ var token = localStorage.getItem("token");
 // DELETE THE TASK
 export default async (token) => {
   try {
-    const response = await axios.get("http://localhost:8000/api/task", {
+    const response = await axios.get(`${environment.baseUrl}/api/task`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -26,7 +27,7 @@ export default async (token) => {
 export const deleteTask = async (id, token) => {
   try {
     await axios
-      .delete(`http://localhost:8000/api/task/${id}`, {
+      .delete(`${environment.baseUrl}/api/task/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -40,7 +41,7 @@ export const deleteTask = async (id, token) => {
 };
 
 const getuserInfor = async () => {
-  const user = await axios.get(`http://localhost:8000/api/user/me`, {
+  const user = await axios.get(`${environment.baseUrl}/api/user/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

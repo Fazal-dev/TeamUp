@@ -7,6 +7,7 @@ import MuiAppBar from "@mui/material/AppBar";
 import { Grid, IconButton, Toolbar } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import environment from "../../envirment.js";
 
 const drawerWidth = 240;
 
@@ -40,7 +41,7 @@ const NavBar = ({ open, handleDrawerOpen }) => {
     const fetchUserName = async (userId) => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/user/${userId}`
+          `${environment.baseUrl}/api/user/${userId}`
         );
         const userName = response.data.userName;
         setUserName(userName);

@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PriorityChart from "../../components/charts/PriorityChart";
 import ProgressChart from "../../components/charts/ProgressChart";
+import environment from "../../../envirment";
 const ProjectDashboard = () => {
   const [tasks, setTasks] = useState([]);
   const { projectId } = useParams();
@@ -26,7 +27,7 @@ const ProjectDashboard = () => {
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/projectTask/${projectId}`
+        `${environment.baseUrl}/api/projectTask/${projectId}`
       );
       setTasks(res.data);
       console.log(res.data);

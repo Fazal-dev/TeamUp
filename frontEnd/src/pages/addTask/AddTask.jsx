@@ -18,6 +18,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
+import environment from "../../../envirment";
 
 const AddTask = () => {
   // ALL THE STATES
@@ -69,7 +70,7 @@ const AddTask = () => {
   // get user details
   const getUserInfo = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/user/me`);
+      const response = await axios.get(`${environment.baseUrl}/api/user/me`);
       setUser(response.data);
     } catch (error) {
       console.error("Error fetching user information:", error);
@@ -92,7 +93,7 @@ const AddTask = () => {
     try {
       // ADD NEW TASK
       const res = await axios.post(
-        "http://localhost:8000/api/task",
+        `${environment.baseUrl}/api/task`,
         updatedFormData,
         {
           headers: {

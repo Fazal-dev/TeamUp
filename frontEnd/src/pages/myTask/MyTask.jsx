@@ -30,6 +30,7 @@ import { getToken } from "../../utility/index.js";
 import Spinner from "../../components/common/Spinner.jsx";
 import { useSnackbar } from "notistack";
 import Swal from "sweetalert2";
+import environment from "../../../envirment.js";
 
 const MyTask = () => {
   // all the states
@@ -44,7 +45,7 @@ const MyTask = () => {
 
   const fetchAllTask = async (token) => {
     try {
-      const response = await axios.get("http://localhost:8000/api/task", {
+      const response = await axios.get(`${environment.baseUrl}/api/task`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -107,7 +108,7 @@ const MyTask = () => {
     const newStatus = status === "completed" ? "incomplete" : "completed";
     try {
       const res = await axios.patch(
-        `http://localhost:8000/api/task/${id}`,
+        `${environment.baseUrl}/api/task/${id}`,
         { status: newStatus },
         {
           headers: {

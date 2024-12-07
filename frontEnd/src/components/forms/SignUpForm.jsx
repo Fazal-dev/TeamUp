@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import environment from "../../../envirment.js";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const SignUpForm = () => {
 
   const registerUser = async () => {
     try {
-      await axios.post("http://localhost:8000/api/user", formData);
+      await axios.post(`${environment.baseUrl}/api/user`, formData);
       enqueueSnackbar("Account created succesfully", {
         variant: "success",
         anchorOrigin: { vertical: "bottom", horizontal: "right" },

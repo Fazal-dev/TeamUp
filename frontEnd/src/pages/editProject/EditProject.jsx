@@ -5,6 +5,7 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 import Paper from "@mui/material/Paper";
 import { useParams, useNavigate } from "react-router-dom";
+import environment from "../../../envirment";
 
 const EditProject = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -17,7 +18,7 @@ const EditProject = () => {
   const [user, setUser] = useState({});
   const getUserInfo = async (token) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/user/me`, {
+      const response = await axios.get(`${environment.baseUrl}/api/user/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -32,7 +33,7 @@ const EditProject = () => {
     const token = localStorage.getItem("token");
     getUserInfo(token);
     axios
-      .get(`http://localhost:8000/api/project/${id}`, {
+      .get(`${environment.baseUrl}/api/project/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -74,7 +75,7 @@ const EditProject = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.patch(
-          `http://localhost:8000/api/project/${id}`,
+          `${environment.baseUrl}/api/project/${id}`,
           { projectName, description },
           {
             headers: {

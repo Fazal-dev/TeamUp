@@ -28,7 +28,7 @@ const Projects = () => {
   const { enqueueSnackbar } = useSnackbar();
   const fetchAllProjects = async (token) => {
     try {
-      const response = await axios.get("http://localhost:8000/api/project", {
+      const response = await axios.get(`${environment.baseUrl}/api/project`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -41,7 +41,7 @@ const Projects = () => {
   };
   const getUserInfo = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/user/me`);
+      const response = await axios.get(`${environment.baseUrl}/api/user/me`);
       setCreatedBy(response.data.createdBy);
       console.log(response.data.userName);
     } catch (error) {
@@ -53,7 +53,7 @@ const Projects = () => {
     const token = localStorage.getItem("token");
     try {
       await axios
-        .delete(`http://localhost:8000/api/project/${id}`, {
+        .delete(`${environment.baseUrl}/api/project/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

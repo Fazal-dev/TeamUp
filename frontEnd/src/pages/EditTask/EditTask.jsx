@@ -14,6 +14,7 @@ import {
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import { useNavigate, useParams } from "react-router-dom";
+import environment from "../../../envirment";
 
 const EditTask = () => {
   const { id } = useParams();
@@ -29,7 +30,7 @@ const EditTask = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.patch(
-        `http://localhost:8000/api/task/${id}`,
+        `${environment.baseUrl}/api/task/${id}`,
         updatedFormData,
         {
           headers: {
@@ -44,7 +45,7 @@ const EditTask = () => {
   // GET USER INFOR
   const getUserInfo = async (token) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/user/me`, {
+      const response = await axios.get(`${environment.baseUrl}/api/user/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,7 +60,7 @@ const EditTask = () => {
     getUserInfo(token);
 
     axios
-      .get(`http://localhost:8000/api/task/${id}`, {
+      .get(`${environment.baseUrl}/api/task/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

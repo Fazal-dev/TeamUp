@@ -39,7 +39,7 @@ const Tasks = () => {
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/projectTask/${id}`
+        `${environment.baseUrl}/api/projectTask/${id}`
       );
       setTasks(res.data);
       console.log(res.data);
@@ -52,7 +52,7 @@ const Tasks = () => {
   const deleteTask = (id) => {
     try {
       axios
-        .delete(`http://localhost:8000/api/projectTask/${id}`)
+        .delete(`${environment.baseUrl}/api/projectTask/${id}`)
         .then((res) => {
           console.log(res.data);
         });
@@ -94,7 +94,7 @@ const Tasks = () => {
     const newStatus = status === "completed" ? "incomplete" : "completed";
     try {
       const res = await axios.patch(
-        `http://localhost:8000/api/projectTask/${id}`,
+        `${environment.baseUrl}/api/projectTask/${id}`,
         { status: newStatus }
       );
       fetchData();
@@ -112,7 +112,7 @@ const Tasks = () => {
   const fetchProjctName = () => {
     const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:8000/api/project/${id}`, {
+      .get(`${environment.baseUrl}/api/project/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

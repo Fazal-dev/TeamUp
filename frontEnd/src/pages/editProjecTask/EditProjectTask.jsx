@@ -14,6 +14,7 @@ import {
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import { useNavigate, useParams } from "react-router-dom";
+import environment from "../../../envirment";
 const EditProjectTask = () => {
   const navigate = useNavigate();
   const { id, projectId } = useParams();
@@ -35,7 +36,7 @@ const EditProjectTask = () => {
   const fetchProjectTask = () => {
     try {
       axios
-        .get(`http://localhost:8000/api/projectTask/task/${id}`)
+        .get(`${environment.baseUrl}/api/projectTask/task/${id}`)
         .then((res) => {
           setDescription(res.data.description);
           setPriority(res.data.priority);
@@ -57,7 +58,7 @@ const EditProjectTask = () => {
         description,
       };
       axios
-        .patch(`http://localhost:8000/api/projectTask/${id}`, formData)
+        .patch(`${environment.baseUrl}/api/projectTask/${id}`, formData)
         .then((res) => {
           // show message to the user
           enqueueSnackbar("Task updated successfully ", {

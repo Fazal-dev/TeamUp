@@ -12,6 +12,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import { getToken } from "../../utility/index.js";
 import axios from "axios";
 import PriorityChart from "../../components/charts/PriorityChart.jsx";
+import environment from "../../../envirment.js";
 const StyledCard = styled(Card)({ width: 40 + "%", height: 140 });
 
 const Dashbord = () => {
@@ -23,7 +24,7 @@ const Dashbord = () => {
   const token = getToken();
   const fetchAllProjects = async (token) => {
     try {
-      const response = await axios.get("http://localhost:8000/api/project", {
+      const response = await axios.get(`${environment.baseUrl}/api/project`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,7 +38,7 @@ const Dashbord = () => {
 
   const fetchAllTask = async (token) => {
     try {
-      const response = await axios.get("http://localhost:8000/api/task", {
+      const response = await axios.get(`${environment.baseUrl}/api/task`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
