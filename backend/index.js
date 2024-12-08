@@ -10,7 +10,13 @@ const app = express();
 
 // middleware for parsing request body
 app.use(express.json());
-app.use(cors());
+
+const corsOptions = {
+  origin: "team-up-frontend.vercel.app",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 try {
   dbConnection();
