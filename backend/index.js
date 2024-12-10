@@ -15,7 +15,7 @@ const corsOptions = {
   origin: "https://team-up-frontend.vercel.app",
   credentials: true,
   optionSuccessStatus: 200,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
 };
 app.use(cors(corsOptions));
 
