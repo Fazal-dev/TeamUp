@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-  origin: "team-up-frontend.vercel.app",
+  origin: "https://team-up-frontend.vercel.app",
   credentials: true,
   optionSuccessStatus: 200,
   methods: ["GET", "POST", "PUT", "DELETE"],
